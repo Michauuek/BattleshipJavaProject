@@ -1,20 +1,48 @@
 plugins {
     id 'java'
-    id 'war'
+    id 'application'
 }
 
-group 'org.com.example'
+group 'com.example'
 version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
 }
 
+compileJava {
+    options.compilerArgs.addAll(['--release', '19'])
+    options.compilerArgs.addAll(['--enable-preview'])
+}
+
 dependencies {
+    // lombok
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    //gson
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.7'
+
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
-    implementation 'javax.websocket:javax.websocket-api:1.1'
-    implementation 'com.google.code.gson:gson:2.8.5'
+}
+
+application {
+    mainClass.set("mrhaki.Patterns")
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.compilerArgs += "--enable-preview"
+}
+
+tasks.withType(Test).configureEach {
+    jvmArgs += "--enable-preview"
+}
+
+tasks.withType(JavaExec).configureEach {
+    jvmArgs += '--enable-preview'
 }
 
 test {
