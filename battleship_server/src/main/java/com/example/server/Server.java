@@ -6,7 +6,6 @@ import lombok.Data;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -16,14 +15,14 @@ public class Server {
 
     private final static int SERVER_PORT= 8081;
     private ServerSocket serverSocket;
-    private Socket firstPlayerSocket;
-    private Socket secondPlayerSocket;
+    private Player firstPlayer;
+    private Player secondPlayer;
     ExecutorService executor = Executors.newVirtualThreadPerTaskExecutor();
 
     public void startServer()  {
         try {
             serverSocket = new ServerSocket(SERVER_PORT);
-            System.out.println("Starting server");
+            System.out.println("Server has started and listening to port: " + SERVER_PORT);
         } catch(IOException e) {
             e.printStackTrace();
             System.out.println("Error creating server");
@@ -31,19 +30,19 @@ public class Server {
 
         while(true) {
             try {
-                System.out.println("Server has started and listening to port: " + SERVER_PORT);
+                firstPlayer = new Player(serverSocket.accept());
+                new PrintWriter(firstPlayer.getSocket().getOutputStream()).println("Player 1");
+                System.out.println("Player 1 connected" + firstPlayer.getSocket().getLocalSocketAddress());
 
-                firstPlayerSocket = serverSocket.accept();
-                new PrintWriter(firstPlayerSocket.getOutputStream()).println("Player 1");
-                System.out.println("Player 1 connected" + firstPlayerSocket.getInetAddress().getHostAddress());
+                new PrintWriter(firstPlayer.getSocket().getOutputStream()).println("Waiting for player 2");
 
-                new PrintWriter(firstPlayerSocket.getOutputStream()).println("Waiting for player 2");
+                secondPlayer = new Player(serverSocket.accept());
+                new PrintWriter(secondPlayer.getSocket().getOutputStream()).println("Player 2");
+                System.out.println("Player 2 connected" + secondPlayer.getSocket().getLocalSocketAddress());
 
-                secondPlayerSocket = serverSocket.accept();
-                new PrintWriter(secondPlayerSocket.getOutputStream()).println("Player 2");
-                System.out.println("Player 2 connected" + secondPlayerSocket.getInetAddress().getHostAddress());
+                System.out.println("Server socket" + serverSocket.toString());
 
-                executor.execute(new GameSession(firstPlayerSocket, secondPlayerSocket));
+                executor.execute(new GameSession(firstPlayer, secondPlayer));
                 System.out.println("Started new game");
             } catch (IOException e) {
                 throw new RuntimeException(e);

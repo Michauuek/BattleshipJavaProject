@@ -9,15 +9,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class GameSession implements Runnable {
+    private Player firstPlayer;
+    private Player secondPlayer;
 
-    public static int PLAYER1 = 1;
-    public static int PLAYER2 = 2;
-
-    private Socket firstPlayer;
-    private Socket secondPlayer;
-
-
-    public GameSession(Socket firstPlayer, Socket secondPlayer) {
+    public GameSession(Player firstPlayer, Player secondPlayer) {
         this.firstPlayer = firstPlayer;
         this.secondPlayer = secondPlayer;
     }
@@ -25,27 +20,17 @@ public class GameSession implements Runnable {
     @Override
     public void run() {
         try {
-            BufferedReader fromPlayer1 = new BufferedReader(new InputStreamReader((this.firstPlayer.getInputStream())));
-            PrintWriter toPlayer1 = new PrintWriter(this.firstPlayer.getOutputStream(), true);
-            BufferedReader fromPlayer2 = new BufferedReader(new InputStreamReader((this.secondPlayer.getInputStream())));
-            PrintWriter toPlayer2 = new PrintWriter(this.secondPlayer.getOutputStream(), true);
-
             while (true) {
-                String move = fromPlayer1.readLine();
+                String move = firstPlayer.read();
                 System.out.println("Player1 " + move);
-                sendMove(toPlayer2, move);
+                secondPlayer.write(move);
 
-                move = fromPlayer2.readLine();
+                move = secondPlayer.read();
                 System.out.println("Player2 " + move);
-                sendMove(toPlayer1, move);
+                firstPlayer.write(move);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    private void sendMove(PrintWriter out, String move) throws IOException {
-        out.println(new Gson().toJson(move));
-        out.flush();
-    }
-
 }
