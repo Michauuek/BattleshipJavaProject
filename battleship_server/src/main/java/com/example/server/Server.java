@@ -31,16 +31,12 @@ public class Server {
         while(true) {
             try {
                 firstPlayer = new Player(serverSocket.accept());
-                new PrintWriter(firstPlayer.getSocket().getOutputStream()).println("Player 1");
                 System.out.println("Player 1 connected" + firstPlayer.getSocket().getLocalSocketAddress());
-
-                new PrintWriter(firstPlayer.getSocket().getOutputStream()).println("Waiting for player 2");
+                firstPlayer.write("Connected as Player1. Waiting for opponent");
 
                 secondPlayer = new Player(serverSocket.accept());
-                new PrintWriter(secondPlayer.getSocket().getOutputStream()).println("Player 2");
                 System.out.println("Player 2 connected" + secondPlayer.getSocket().getLocalSocketAddress());
-
-                System.out.println("Server socket" + serverSocket.toString());
+                secondPlayer.write("Connected as Player2. Game starting.");
 
                 executor.execute(new GameSession(firstPlayer, secondPlayer));
                 System.out.println("Started new game");

@@ -2,6 +2,7 @@ package com.example.server;
 
 import com.google.gson.Gson;
 import lombok.Data;
+import lombok.Getter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -9,7 +10,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-@Data
+@Getter
 public class Player {
     private Socket socket;
     private BufferedReader reader;
