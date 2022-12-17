@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="580.0" prefWidth="780.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.GameController">
+   <children>
+      <Pane layoutX="8.0" layoutY="34.0" prefHeight="536.0" prefWidth="765.0" styleClass="mainPane" stylesheets="@GameViewStyles.css" />
+      <Pane prefHeight="36.0" prefWidth="780.0" />
+   </children>
+</AnchorPane>
