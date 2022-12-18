@@ -2,9 +2,13 @@
 
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="580.0" prefWidth="780.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.GameController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.GameController">
    <children>
-      <Pane layoutX="8.0" layoutY="34.0" prefHeight="536.0" prefWidth="765.0" styleClass="mainPane" stylesheets="@GameViewStyles.css" />
+      <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css" />
       <Pane prefHeight="36.0" prefWidth="780.0" />
+      <GridPane fx:id="UserGrid" gridLinesVisible="true" layoutX="80.0" layoutY="222.0" opacity="0.8" prefHeight="350.0" prefWidth="350.0" styleClass="userBoard">
+
+      </GridPane>
+      <GridPane fx:id="EnemyGrid" gridLinesVisible="true" layoutX="550.0" layoutY="222.0" opacity="0.8" prefHeight="350.0" prefWidth="350.0" styleClass="userBoard" />
    </children>
 </AnchorPane>

@@ -13,7 +13,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/GameView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 780, 580);
+        Scene scene = new Scene(fxmlLoader.load(), 1024, 768);
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
         stage.setTitle("Battleship");

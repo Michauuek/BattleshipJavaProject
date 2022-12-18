@@ -1,6 +1,8 @@
 package com.example.server;
 
 
+import com.example.model.Coordinate;
+
 import java.io.IOException;
 
 

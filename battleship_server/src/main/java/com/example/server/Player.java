@@ -1,5 +1,6 @@
 package com.example.server;
 
+import com.example.model.Coordinate;
 import com.google.gson.Gson;
 import lombok.Data;
 import lombok.Getter;
@@ -23,10 +24,11 @@ public class Player {
     }
 
     public String read() throws IOException {
+        //var ship = new Gson().fromJson(reader.readLine(), Coordinate.class);
         return reader.readLine();
     }
-    public void write(String move){
-        var converterJson = new Gson().toJson(move);
+    public void write(String coordinate){
+        var converterJson = new Gson().toJson(coordinate);
         this.writer.println(converterJson);
         this.writer.flush();
     }

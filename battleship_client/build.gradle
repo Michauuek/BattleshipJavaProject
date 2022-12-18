@@ -16,8 +16,8 @@ ext {
     junitVersion = '5.9.1'
 }
 
-sourceCompatibility = '11'
-targetCompatibility = '11'
+sourceCompatibility = '17'
+targetCompatibility = '17'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -25,7 +25,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'com.example.battleship_client'
-    mainClass = 'com.example.battleship_client.HelloApplication'
+    mainClass = 'com.example.battleship_client.Main'
 }
 
 javafx {
@@ -34,11 +34,15 @@ javafx {
 }
 
 dependencies {
-    implementation 'org.slf4j:slf4j-api:2.0.5'
-    implementation 'log4j:log4j:1.2.17'
-    compileClasspath group: 'javax.websocket', name: 'javax.websocket-client-api', version: '1.1'
-    //implementation group: 'org.glassfish.tyrus.bundles', name: 'tyrus-standalone-client', version: '1.8.3'
-    //implementation group: 'org.glassfish.tyrus', name: 'tyrus-client', version: '2.1.2'
+    //gson
+    implementation 'com.google.code.gson:gson:2.10'
+
+    // lombok
+    compileOnly 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+    testCompileOnly 'org.projectlombok:lombok:1.18.24'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.24'
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }
