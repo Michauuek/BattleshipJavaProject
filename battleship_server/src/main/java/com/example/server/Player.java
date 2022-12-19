@@ -2,6 +2,7 @@ package com.example.server;
 
 import com.example.model.Coordinate;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 import lombok.Getter;
 
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
+import java.util.Objects;
 
 @Getter
 public class Player {
@@ -23,11 +26,18 @@ public class Player {
         this.writer = new PrintWriter(socket.getOutputStream(), true);
     }
 
-    public String read() throws IOException {
-        //var ship = new Gson().fromJson(reader.readLine(), Coordinate.class);
+    public Coordinate read() throws IOException {
+        return new Gson().fromJson(reader.readLine(), Coordinate.class);
+    }
+
+    public List<Coordinate> readShip() throws IOException {
+        return new Gson().fromJson(reader.readLine(), new TypeToken<List<Coordinate>>(){}.getType());
+    }
+
+    public String readMessage() throws IOException {
         return reader.readLine();
     }
-    public void write(String coordinate){
+    public void write(Object coordinate){
         var converterJson = new Gson().toJson(coordinate);
         this.writer.println(converterJson);
         this.writer.flush();

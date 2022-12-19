@@ -4,6 +4,7 @@ package com.example.server;
 import com.example.model.Coordinate;
 
 import java.io.IOException;
+import java.util.List;
 
 
 public class GameSession implements Runnable {
@@ -18,12 +19,15 @@ public class GameSession implements Runnable {
     @Override
     public void run() {
         try {
+            firstPlayer.write(firstPlayer.readMessage());
+            secondPlayer.write(secondPlayer.readMessage());
+
             while (true) {
-                String move = firstPlayer.read();
+                List<Coordinate> move = firstPlayer.readShip();
                 System.out.println("Player1 " + move);
                 secondPlayer.write(move);
 
-                move = secondPlayer.read();
+                move = secondPlayer.readShip();
                 System.out.println("Player2 " + move);
                 firstPlayer.write(move);
             }

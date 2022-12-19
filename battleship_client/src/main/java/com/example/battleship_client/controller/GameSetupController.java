@@ -2,55 +2,34 @@ package com.example.battleship_client.controller;
 
 import com.example.battleship_client.model.BoardSquare;
 import com.example.battleship_client.model.Coordinate;
-import com.example.battleship_client.networking.DataReader;
-import com.example.battleship_client.networking.DataWriter;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
-import java.io.IOException;
-import java.net.InetAddress;
-import java.net.Socket;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
-public class GameController implements Initializable {
-
+public class GameSetupController implements Initializable {
     @FXML
     private GridPane UserGrid;
-
     @FXML
-    private GridPane EnemyGrid;
+    private VBox Ships;
 
-    private DataWriter dataWriter;
-
-    public GameController() {
-        ExecutorService executorService = Executors.newSingleThreadExecutor();
-        try{
-            Socket socket = new Socket(InetAddress.getLocalHost(), 8082);
-            dataWriter = new DataWriter(socket);
-
-            //future = executorService.submit(new DataReader(socket));
-            Thread thread1 = new Thread(new DataReader(socket));
-            thread1.start();
-        } catch (IOException e){
-            System.err.print("Server not found");
-        }
-    }
-
+    private double startX;
+    private double startY;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        createBoard(UserGrid);
         initializeGrid(UserGrid);
-        initializeGrid(EnemyGrid);
-        //createBoard(UserGrid);
-        createBoard(EnemyGrid);
+        createShips();
     }
 
+    //TODO allow user add ship by dragging to the board
     private void createBoard(GridPane grid) {
         for(int i=0;i<10;i++){
             for(int j=0;j<10;j++){
@@ -62,10 +41,29 @@ public class GameController implements Initializable {
                     square.setDisable(true);
                     var ship = new Coordinate(GridPane.getRowIndex(square), GridPane.getColumnIndex(square));
                     System.out.println(ship);
-                    dataWriter.sendData(ship);
                 });
             }
         }
+    }
+
+    //TODO add all 5 types of ships
+    private void createShips(){
+        var shipOne = new BoardSquare();
+        shipOne.setFill(Color.GREEN);
+        makeDraggable(shipOne);
+        Ships.getChildren().add(shipOne);
+    }
+
+    private void makeDraggable(Node node){
+        node.setOnMousePressed(e -> {
+            startX = e.getSceneX() - node.getTranslateX();
+            startY = e.getSceneY() - node.getTranslateY();
+        });
+
+        node.setOnMouseDragged(e -> {
+            node.setTranslateX(e.getSceneX() - startX);
+            node.setTranslateY(e.getSceneY() - startY);
+        });
     }
 
     private void initializeGrid(GridPane grid){

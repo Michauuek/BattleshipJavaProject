@@ -13,7 +13,7 @@ import java.util.concurrent.Executors;
 @Data
 public class Server {
 
-    private final static int SERVER_PORT= 8081;
+    private final static int SERVER_PORT= 8082;
     private ServerSocket serverSocket;
     private Player firstPlayer;
     private Player secondPlayer;

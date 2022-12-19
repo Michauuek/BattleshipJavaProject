@@ -17,9 +17,9 @@ public class DataWriter  {
         writer = new PrintWriter(socket.getOutputStream());
     }
 
-    public void sendData(String coordinate){
-        //var converterJson = new Gson().toJson(coordinate);
-        writer.println(coordinate);
+    public void sendData(Coordinate coordinate){
+        var converterJson = new Gson().toJson(coordinate);
+        writer.println(converterJson);
         writer.flush();
     }
 }

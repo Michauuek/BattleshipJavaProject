@@ -1,11 +1,13 @@
 package com.example.model;
 
 import lombok.Data;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@ToString
 public class Ship {
     private List<Coordinate> positions;
     private final int length;
@@ -22,7 +24,7 @@ public class Ship {
         this.positions = positions;
     }
 
-    public static Ship oneSquaresShip(ArrayList<Coordinate> positions) {
+    /*public static Ship oneSquaresShip(ArrayList<Coordinate> positions) {
         return positions.size() == 1 ? new Ship(1, positions) : new Ship(1);
     }
     public static Ship twoSquaresShip(ArrayList<Coordinate> positions) {
@@ -36,5 +38,5 @@ public class Ship {
     }
     public static Ship fiveSquaresShip(ArrayList<Coordinate> positions) {
         return positions.size() == 5 ? new Ship(5, positions) : new Ship(5);
-    }
+    }*/
 }

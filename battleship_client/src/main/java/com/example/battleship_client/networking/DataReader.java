@@ -22,13 +22,22 @@ public class DataReader implements Runnable {
 
     @Override
     public void run() {
+        readMessage();
         while(true){
             try{
-                String response = socketReader.readLine();
+                Coordinate response = new Gson().fromJson(socketReader.readLine(), Coordinate.class);
                 System.out.println("Server Response : " + response);
             } catch (IOException exception){
                 System.err.println("Error reading data");
             }
+        }
+    }
+
+    private void readMessage(){
+        try {
+            System.out.println(socketReader.readLine());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
