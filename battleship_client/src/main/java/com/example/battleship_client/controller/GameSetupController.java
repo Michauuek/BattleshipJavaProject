@@ -2,13 +2,14 @@ package com.example.battleship_client.controller;
 
 import com.example.battleship_client.model.BoardSquare;
 import com.example.battleship_client.model.Coordinate;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
@@ -45,6 +46,8 @@ public class GameSetupController implements Initializable {
             }
         }
     }
+
+    
 
     //TODO add all 5 types of ships
     private void createShips(){

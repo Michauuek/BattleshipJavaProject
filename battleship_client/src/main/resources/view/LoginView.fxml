@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.LoginController">
+    <children>
+        <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css" />
+
+
+
+        <Pane layoutX="294.0" layoutY="251.0" prefHeight="250.0" prefWidth="398.0" styleClass="loginPane">
+            <Label layoutX="138.0" layoutY="14.0" prefHeight="24.0" prefWidth="211.0" styleClass="titleLabel" text="Battleships" textAlignment="CENTER">
+                <font>
+                    <Font size="40.0" />
+                </font>
+            </Label>
+
+            <TextField fx:id="login" layoutX="135.0" layoutY="89.0" prefHeight="42.0" prefWidth="225.0" />
+            <Button fx:id="loginButton" layoutX="136.0" layoutY="176.0" mnemonicParsing="false" onAction="#loginClickHandle" prefHeight="42.0" prefWidth="225.0" text="Search game" />
+            <Label layoutX="215.0" layoutY="72.0" text="Username" />
+
+            <Label fx:id="messageLabel" alignment="CENTER" layoutX="98.0" layoutY="215.0" prefHeight="17.0" prefWidth="226.0" textAlignment="CENTER" />
+        </Pane>
+        
+    </children>
+</AnchorPane>

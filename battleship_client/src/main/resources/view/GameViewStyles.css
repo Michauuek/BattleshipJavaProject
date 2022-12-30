@@ -11,3 +11,8 @@
     -fx-background-color: #222;
     -fx-padding: 5;
 }
+
+.loginPane {
+    -fx-alignment: center;
+}
+
