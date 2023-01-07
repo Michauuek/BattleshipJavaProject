@@ -11,26 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Ship extends Rectangle {
-    /*private Direction direction;
-    private List<Coordinate> coordinates;
-    public Ship(List<Coordinate> coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    //private static List<Rectangle> squares;
-
-    public static Ship createShip(int length, Coordinate startPoint){
-        var coordinates = new ArrayList<Coordinate>();
-        for(int i = 0; i < length; i++){
-            coordinates.add(new Coordinate(startPoint.getRow()+ i, startPoint.getColumn()));
-        }
-        return new Ship(coordinates);
-    }
-
-    public List<Coordinate> getCoordinates() {
-        return coordinates;
-    }*/
-
     private List<Rectangle> shipCells;
     private final int gridX;
     private final int gridY;
