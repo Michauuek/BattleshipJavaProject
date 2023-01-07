@@ -40,11 +40,13 @@ public class Ship extends Rectangle {
     private double initialMouseY;
     private double initialShipTranslateX;
     private double initialShipTranslateY;
+    private boolean horizontal;
 
     public Ship(int length, int gridX, int gridY) {
         this.length = length;
         this.gridX = gridX;
         this.gridY = gridY;
+        this.horizontal = true;
 
         // Create the list of ship cells
         shipCells = new ArrayList<>();
@@ -82,6 +84,25 @@ public class Ship extends Rectangle {
             });
         }
     }
+    public void rotate(GridPane grid) {
+        horizontal = !horizontal;
+        if (horizontal) {
+            for (int i = 0; i < length; i++) {
+                shipCells.get(i).setWidth(35);
+                shipCells.get(i).setHeight(35);
+                grid.getChildren().remove(shipCells.get(i));
+                grid.add(shipCells.get(i), gridX + i, gridY);
+            }
+        } else {
+            for (int i = 0; i < length; i++) {
+                shipCells.get(i).setWidth(35);
+                shipCells.get(i).setHeight(35);
+                grid.getChildren().remove(shipCells.get(i));
+                grid.add(shipCells.get(i), gridX, gridY + i);
+            }
+        }
+    }
+
 
     public void addToGrid(GridPane grid) {
         for (int i = 0; i < length; i++) {
@@ -89,7 +110,4 @@ public class Ship extends Rectangle {
         }
     }
 
-    public int getLength() {
-        return length;
-    }
 }

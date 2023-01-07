@@ -48,14 +48,6 @@ public class GameSetupController implements Initializable {
                     DataWriter.sendData(ship);
                     System.out.println(ship);
                 });*/
-
-                /*square.setOnMouseEntered(event -> {
-                    Node node = (Node) event.getSource();
-                    currentShipColumn = GridPane.getColumnIndex(node);
-                    currentShipRow = GridPane.getRowIndex(node);
-
-                    System.out.println("Column " + currentShipColumn + " Row "+ currentShipRow);
-                });*/
             }
         }
     }
@@ -69,10 +61,6 @@ public class GameSetupController implements Initializable {
 
         var drag = new DragController(ship, true);
 
-/*        ship.setOnMouseReleased(event -> {
-            UserGrid.add(ship, currentShipColumn, currentShipRow);
-            ship.setDisable(true);
-        });*/
 
         ship.setOnMouseDragged(new EventHandler<MouseEvent>() {
             @Override
@@ -98,55 +86,15 @@ public class GameSetupController implements Initializable {
         });
     }
 
-    /*private void makeDraggable(Node node){
-        node.setOnMousePressed(e -> {
-            startX = e.getSceneX() - node.getTranslateX();
-            startY = e.getSceneY() - node.getTranslateY();
-        });
-
-        node.setOnMouseDragged(e -> {
-            node.setTranslateX(e.getSceneX() - startX);
-            node.setTranslateY(e.getSceneY() - startY);
-        });
-    }*/
-
-    private void initializeGrid(GridPane grid){
+    private void initializeGrid(GridPane grid) {
         grid.setHgap(4);
         grid.setVgap(4);
 
         var ship = new Ship(5, 2, 2);
+
         ship.addToGrid(grid);
 
-        /*var ship5 = Ship.createShip(5, new Coordinate(1,1));
-        addToBoard(ship5, Color.BLACK, grid);
+        ship.rotate(grid);
 
-        var ship4 = Ship.createShip(4, new Coordinate(2,3));
-        addToBoard(ship4, Color.RED, grid);
-
-        var ship3 = Ship.createShip(3, new Coordinate(3,5));
-        addToBoard(ship3, Color.BLUEVIOLET, grid);
-
-        var ship2 = Ship.createShip(2, new Coordinate(4,7));
-        addToBoard(ship2, Color.YELLOW, grid);
-
-        var ship1 = Ship.createShip(1, new Coordinate(5,9));
-        addToBoard(ship1, Color.GREEN, grid);*/
     }
-
-    /*private void addToBoard(Ship ship, Color color, GridPane grid){
-        for(var coordinate : ship.getCoordinates()){
-            var square = new BoardSquare();
-            square.setColor(color);
-            grid.add(square, coordinate.getRow(), coordinate.getColumn());
-
-            // Make the ship cell draggable
-            square.setOnMouseDragged((MouseEvent event) -> {
-                double newX = event.getSceneX() - square.getScene().getWindow().getX() - square.getScene().getX();
-                double newY = event.getSceneY() - square.getScene().getWindow().getY() - square.getScene().getY();
-                square.setTranslateX(newX - square.getLayoutX());
-                square.setTranslateY(newY - square.getLayoutY());
-            });
-        }
-
-    }*/
 }
