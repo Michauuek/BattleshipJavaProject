@@ -19,11 +19,11 @@ public class GameSession implements Runnable {
     @Override
     public void run() {
         try {
-            firstPlayer.write(firstPlayer.readMessage());
-            secondPlayer.write(secondPlayer.readMessage());
+            firstPlayer.write(secondPlayer.readMessage());
+            secondPlayer.write(firstPlayer.readMessage());
 
             while (true) {
-                List<Coordinate> move = firstPlayer.readShip();
+                Coordinate move = firstPlayer.readShip();
                 System.out.println("Player1 " + move);
                 secondPlayer.write(move);
 

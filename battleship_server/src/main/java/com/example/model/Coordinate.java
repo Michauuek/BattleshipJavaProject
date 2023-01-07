@@ -12,5 +12,4 @@ import lombok.ToString;
 public class Coordinate {
     private int row;
     private int column;
-
 }

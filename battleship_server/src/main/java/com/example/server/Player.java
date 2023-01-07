@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 import lombok.Getter;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,8 +31,9 @@ public class Player {
         return new Gson().fromJson(reader.readLine(), Coordinate.class);
     }
 
-    public List<Coordinate> readShip() throws IOException {
-        return new Gson().fromJson(reader.readLine(), new TypeToken<List<Coordinate>>(){}.getType());
+    public Coordinate readShip() throws IOException {
+        //return new Gson().fromJson(reader.readLine(), new TypeToken<List<Coordinate>>(){}.getType());
+        return new Gson().fromJson(reader.readLine(), new TypeToken<Coordinate>(){}.getType());
     }
 
     public String readMessage() throws IOException {
@@ -39,7 +41,15 @@ public class Player {
     }
     public void write(Object coordinate){
         var converterJson = new Gson().toJson(coordinate);
-        this.writer.println(converterJson);
+        System.out.println(converterJson);
+        this.writer.println(removeQuotesAndUnescape(converterJson));
+        System.out.println(converterJson);
         this.writer.flush();
+    }
+
+    private String removeQuotesAndUnescape(String uncleanJson) {
+        String noQuotes = uncleanJson.replaceAll("^\"|\"$", "");
+
+        return StringEscapeUtils.unescapeJava(noQuotes);
     }
 }
