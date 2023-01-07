@@ -11,4 +11,8 @@ public class BoardSquare extends Rectangle{
         this.setArcHeight(5.0);
         this.setFill(Color.WHITESMOKE);
     }
+
+    public void setColor(Color color){
+        this.setFill(color);
+    }
 }

@@ -47,7 +47,7 @@ public class GameController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initializeGrid(UserGrid);
         initializeGrid(EnemyGrid);
-        //createBoard(UserGrid);
+        createBoard(UserGrid);
         createBoard(EnemyGrid);
     }
 

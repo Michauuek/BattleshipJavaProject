@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.Callable;
 
+
 public class DataReader implements Runnable {
     private Socket socket;
     private BufferedReader socketReader;
@@ -25,7 +26,9 @@ public class DataReader implements Runnable {
         readMessage();
         while(true){
             try{
-                Coordinate response = new Gson().fromJson(socketReader.readLine(), Coordinate.class);
+                var ship = socketReader.readLine();
+                System.out.println("Ship: " + ship);
+                Coordinate response = new Gson().fromJson(ship, Coordinate.class);
                 System.out.println("Server Response : " + response);
             } catch (IOException exception){
                 System.err.println("Error reading data");
