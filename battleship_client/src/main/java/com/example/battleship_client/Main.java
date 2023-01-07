@@ -17,7 +17,7 @@ public class Main extends Application {
         scene.setFill(Color.TRANSPARENT);
         stage.setScene(scene);
         stage.setTitle("Battleship");
-        stage.initStyle(StageStyle.TRANSPARENT);
+        //stage.initStyle(StageStyle.TRANSPARENT);
         stage.setResizable(false);
         stage.show();
     }

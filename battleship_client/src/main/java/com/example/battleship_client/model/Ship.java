@@ -22,7 +22,7 @@ public class Ship extends Rectangle {
     private double initialShipTranslateY;
     private boolean horizontal;
 
-    public Ship(int length, int gridX, int gridY) {
+    private Ship(int length, int gridX, int gridY, Color color) {
         this.length = length;
         this.gridX = gridX;
         this.gridY = gridY;
@@ -31,7 +31,7 @@ public class Ship extends Rectangle {
         // Create the list of ship cells
         shipCells = new ArrayList<>();
         for (int i = 0; i < length; i++) {
-            Rectangle cell = new Rectangle(35, 35, Color.BLUE);
+            Rectangle cell = new Rectangle(35, 35, color);
             cell.setArcWidth(5.0);
             cell.setArcHeight(5.0);
             shipCells.add(cell);
@@ -64,6 +64,22 @@ public class Ship extends Rectangle {
             });
         }
     }
+
+    public static final Ship fiveHolesShip(int gridX, int gridY){
+        return new Ship(5, gridX, gridY, Color.DARKRED);
+    }
+    public static final Ship fourHolesShip(int gridX, int gridY){
+        return new Ship(4, gridX, gridY, Color.PURPLE);
+    }
+    public static final Ship threeHolesShip(int gridX, int gridY){
+        return new Ship(3, gridX, gridY, Color.DARKGREEN);
+    }
+    public static final Ship twoHolesShip(int gridX, int gridY){
+        return new Ship(2, gridX, gridY, Color.DARKSLATEBLUE);
+    }
+    public static final Ship oneHolesShip(int gridX, int gridY){
+        return new Ship(1, gridX, gridY, Color.CADETBLUE);
+    }
     public void rotate(GridPane grid) {
         horizontal = !horizontal;
         if (horizontal) {
@@ -82,8 +98,6 @@ public class Ship extends Rectangle {
             }
         }
     }
-
-
     public void addToGrid(GridPane grid) {
         for (int i = 0; i < length; i++) {
             grid.add(shipCells.get(i), gridX + i, gridY);

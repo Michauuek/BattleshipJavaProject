@@ -20,8 +20,6 @@ public class GameSetupController implements Initializable {
     @FXML
     private VBox Ships;
 
-    private double startX;
-    private double startY;
 
     private BoardSquare ship;
 
@@ -90,11 +88,21 @@ public class GameSetupController implements Initializable {
         grid.setHgap(4);
         grid.setVgap(4);
 
-        var ship = new Ship(5, 2, 2);
-
+        var ship = Ship.fiveHolesShip(2,2);
         ship.addToGrid(grid);
 
-        ship.rotate(grid);
+        var ship2 = Ship.fourHolesShip(8,1);
+        ship2.addToGrid(grid);
+        ship2.rotate(grid);
 
+        var ship3 = Ship.threeHolesShip(3,6);
+        ship3.addToGrid(grid);
+        ship3.rotate(grid);
+
+        var ship4 = Ship.twoHolesShip(7,7);
+        ship4.addToGrid(grid);
+
+        var ship5 = Ship.oneHolesShip(9,9);
+        ship5.addToGrid(grid);
     }
 }
