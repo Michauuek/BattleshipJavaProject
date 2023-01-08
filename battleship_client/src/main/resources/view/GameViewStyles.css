@@ -1,12 +1,23 @@
 .root {
-    -fx-background-color: #222;
-    -fx-background-radius: 28;
+    -fx-background-color: #101B27;
 }
+/*-fx-background-color: linear-gradient(to bottom, #fafafa, #94bbe9);-fx-background-radius: 15 15 25 25;*/
 .mainPane {
-    -fx-background-color: linear-gradient(to bottom, #fafafa, #94bbe9);
-    -fx-background-radius: 15 15 25 25;
+    -fx-background-color: #101B27;
+
+}
+.titlePane {
+    -fx-background-color: rgba(112, 135, 157, 0.6);
+    -fx-background-radius: 10 10 3 3;
+}
+.labelText {
+    -fx-alignment: center;
 }
 
+.fieldBackground {
+    -fx-background-color: rgba(112, 135, 157, 0.21);
+    -fx-background-radius: 6 6 6 6;
+}
 .userBoard {
     -fx-background-color: #222;
     -fx-padding: 5;

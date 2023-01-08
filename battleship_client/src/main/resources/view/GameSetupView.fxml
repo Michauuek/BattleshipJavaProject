@@ -1,15 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.GameSetupController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.GameSetupController">
 
     <children>
-        <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css" />
         <Pane layoutX="12.0" prefHeight="29.0" prefWidth="1006.0" styleClass="root" />
-        <GridPane fx:id="UserGrid" gridLinesVisible="true" layoutX="80.0" layoutY="222.0" opacity="0.8" prefHeight="350.0" prefWidth="350.0" styleClass="userBoard">
+        <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
+         <children>
+            <Button layoutX="741.0" layoutY="579.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="141.0" text="Redy">
+               <font>
+                  <Font name="Century Gothic" size="24.0" />
+               </font>
+            </Button>
+         </children></Pane>
+        <Pane fx:id="TitlePane" layoutX="80.0" layoutY="197.0" prefHeight="85.0" prefWidth="395.0" styleClass="titlePane">
+         <children>
+            <Label layoutX="94.0" layoutY="27.0" prefHeight="44.0" prefWidth="208.0" styleClass="labelText" text="Set up your boats" textFill="WHITE">
+               <font>
+                  <Font name="Century Gothic" size="24.0" />
+               </font></Label>
+         </children></Pane>
+        <GridPane fx:id="UserGrid" gridLinesVisible="true" layoutX="80.0" layoutY="282.0" opacity="0.8" prefHeight="350.0" prefWidth="350.0" styleClass="userBoard">
         </GridPane>
-      <VBox fx:id="Ships" layoutX="700.0" layoutY="183.0" prefHeight="419.0" prefWidth="253.0" styleClass="ships" />
+      <VBox fx:id="Ships" layoutX="700.0" layoutY="183.0" prefHeight="179.0" prefWidth="253.0" styleClass="ships" />
     </children>
 
 </AnchorPane>

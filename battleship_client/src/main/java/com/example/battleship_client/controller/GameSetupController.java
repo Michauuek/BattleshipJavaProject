@@ -20,11 +20,10 @@ public class GameSetupController implements Initializable {
     @FXML
     private VBox Ships;
 
+    @FXML
+    private Pane TitlePane;
 
-    private BoardSquare ship;
 
-    private int currentShipColumn = 0;
-    private int currentShipRow = 0;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         createBoard(UserGrid);
@@ -52,7 +51,7 @@ public class GameSetupController implements Initializable {
 
     //TODO add all 5 types of ships
     private void createShips(GridPane grid){
-        ship = new BoardSquare();
+        /*ship = new BoardSquare();
         ship.setFill(Color.GREEN);
         //makeDraggable(shipOne);
         Ships.getChildren().add(ship);
@@ -81,7 +80,7 @@ public class GameSetupController implements Initializable {
                 // Add the ship to the GridPane
                 grid.add(ship, (int) x / gridSize, (int) y / gridSize);
             }
-        });
+        });*/
     }
 
     private void initializeGrid(GridPane grid) {

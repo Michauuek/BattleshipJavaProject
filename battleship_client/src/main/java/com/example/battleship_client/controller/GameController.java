@@ -13,11 +13,9 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
-import java.net.UnknownHostException;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public class GameController implements Initializable {
 
@@ -48,10 +46,19 @@ public class GameController implements Initializable {
         initializeGrid(UserGrid);
         initializeGrid(EnemyGrid);
         createBoard(UserGrid);
-        createBoard(EnemyGrid);
+        createEnemyBoard(EnemyGrid);
     }
 
     private void createBoard(GridPane grid) {
+        for(int i=0;i<10;i++){
+            for(int j=0;j<10;j++){
+                var square = new BoardSquare();
+                grid.add(square, i, j);
+            }
+        }
+    }
+
+    private void createEnemyBoard(GridPane grid) {
         for(int i=0;i<10;i++){
             for(int j=0;j<10;j++){
                 var square = new BoardSquare();

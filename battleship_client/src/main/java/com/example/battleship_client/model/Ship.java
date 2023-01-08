@@ -14,7 +14,7 @@ public class Ship extends Rectangle {
     private List<Rectangle> shipCells;
     private final int gridX;
     private final int gridY;
-    private int length;
+    private final int length;
 
     private double initialMouseX;
     private double initialMouseY;
@@ -32,8 +32,8 @@ public class Ship extends Rectangle {
         shipCells = new ArrayList<>();
         for (int i = 0; i < length; i++) {
             Rectangle cell = new Rectangle(35, 35, color);
-            cell.setArcWidth(5.0);
-            cell.setArcHeight(5.0);
+            cell.setArcWidth(8.0);
+            cell.setArcHeight(8.0);
             shipCells.add(cell);
 
             // Make the ship cell draggable
@@ -55,8 +55,6 @@ public class Ship extends Rectangle {
                 // Snap the ship to the nearest grid cell
                 double snappedX = Math.round(cell.getTranslateX() / 39.0) * 39;
                 double snappedY = Math.round(cell.getTranslateY() / 39.0) * 39;
-                System.out.println(snappedX);
-                System.out.println(snappedY);
                 for (Rectangle c : shipCells) {
                     c.setTranslateX(snappedX);
                     c.setTranslateY(snappedY);
