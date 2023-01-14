@@ -10,7 +10,7 @@
         <Pane layoutX="12.0" prefHeight="29.0" prefWidth="1006.0" styleClass="root" />
         <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
          <children>
-            <Button layoutX="741.0" layoutY="579.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="141.0" text="Redy">
+            <Button fx:id="readyButton" layoutX="741.0" layoutY="579.0" onAction="#readyClickHandle" mnemonicParsing="false" prefHeight="68.0" prefWidth="141.0" text="Redy">
                <font>
                   <Font name="Century Gothic" size="24.0" />
                </font>

@@ -4,14 +4,22 @@ import com.example.battleship_client.model.BoardSquare;
 import com.example.battleship_client.model.Coordinate;
 import com.example.battleship_client.model.Ship;
 import com.example.battleship_client.networking.DataWriter;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class GameSetupController implements Initializable {
@@ -19,9 +27,10 @@ public class GameSetupController implements Initializable {
     private GridPane UserGrid;
     @FXML
     private VBox Ships;
-
     @FXML
     private Pane TitlePane;
+    @FXML
+    private Button readyButton;
 
 
     @Override
@@ -47,6 +56,13 @@ public class GameSetupController implements Initializable {
                 });*/
             }
         }
+    }
+    @FXML
+    public void readyClickHandle(ActionEvent event) throws IOException {
+        Stage stage = (Stage) readyButton.getScene().getWindow();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/GameView.fxml")));
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     //TODO add all 5 types of ships
