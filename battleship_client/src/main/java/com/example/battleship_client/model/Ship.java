@@ -67,16 +67,16 @@ public class Ship extends Rectangle {
         return new Ship(5, gridX, gridY, Color.DARKRED);
     }
     public static final Ship fourHolesShip(int gridX, int gridY){
-        return new Ship(4, gridX, gridY, Color.PURPLE);
+        return new Ship(4, gridX, gridY, Color.DARKSALMON);
     }
     public static final Ship threeHolesShip(int gridX, int gridY){
         return new Ship(3, gridX, gridY, Color.DARKGREEN);
     }
     public static final Ship twoHolesShip(int gridX, int gridY){
-        return new Ship(2, gridX, gridY, Color.DARKSLATEBLUE);
+        return new Ship(2, gridX, gridY, Color.DARKGREY);
     }
     public static final Ship oneHolesShip(int gridX, int gridY){
-        return new Ship(1, gridX, gridY, Color.CADETBLUE);
+        return new Ship(1, gridX, gridY, Color.DARKCYAN);
     }
     public void rotate(GridPane grid) {
         horizontal = !horizontal;

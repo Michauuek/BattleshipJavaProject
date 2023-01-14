@@ -65,7 +65,6 @@ public class GameSetupController implements Initializable {
         stage.show();
     }
 
-    //TODO add all 5 types of ships
     private void createShips(GridPane grid){
         /*ship = new BoardSquare();
         ship.setFill(Color.GREEN);
@@ -103,21 +102,36 @@ public class GameSetupController implements Initializable {
         grid.setHgap(4);
         grid.setVgap(4);
 
-        var ship = Ship.fiveHolesShip(2,2);
+        //TODO utworzyć losowe dodoawanie statków do grida
+
+        // jedna 5
+        var ship = Ship.fiveHolesShip(4,0);
         ship.addToGrid(grid);
 
-        var ship2 = Ship.fourHolesShip(8,1);
-        ship2.addToGrid(grid);
-        ship2.rotate(grid);
+        // dwie 4
+        for(int i = 0; i < 2; i++){
+            var ship2 = Ship.fourHolesShip(i * 2, i);
+            ship2.addToGrid(grid);
+            ship2.rotate(grid);
+        }
 
-        var ship3 = Ship.threeHolesShip(3,6);
-        ship3.addToGrid(grid);
-        ship3.rotate(grid);
+        // trzy 3
+        for(int i = 0; i < 3; i++) {
+            var ship3 = Ship.threeHolesShip(i * 2, 6);
+            ship3.addToGrid(grid);
+            ship3.rotate(grid);
+        }
 
-        var ship4 = Ship.twoHolesShip(7,7);
-        ship4.addToGrid(grid);
+        // cztery 2
+        for(int i = 0; i < 4; i++) {
+            var ship4 = Ship.twoHolesShip(8, i * 2);
+            ship4.addToGrid(grid);
+        }
 
-        var ship5 = Ship.oneHolesShip(9,9);
-        ship5.addToGrid(grid);
+        // pięć 1
+        for(int i = 0; i < 5; i++) {
+            var ship5 = Ship.oneHolesShip(i * 2 + 1, i * 2 + 1);
+            ship5.addToGrid(grid);
+        }
     }
 }
