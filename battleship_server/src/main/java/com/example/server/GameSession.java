@@ -66,20 +66,25 @@ public class GameSession implements Runnable {
     {
         if(command.equals("shoot")) {
             var COLUMN_LETTERS = "abcdefghij";
-            var col = COLUMN_LETTERS.indexOf(args[0].toLowerCase().charAt(0));
+            var col = COLUMN_LETTERS.indexOf(args[1].toLowerCase().charAt(0));
             if(col == -1)
                 throw new Exception("Invalid column");
             var cord = new Coordinate(Integer.parseInt(args[0]), col);
 
             // do sth with cord
             // send shoot message to both players
+
             this.handleShoot(cord, sender, receiver);
+            return;
         }
         if(command.equals("help")) {
             broadcast(Message.newMessage(helpMessage));
+            return;
         }
         if(command.equals("surrender")) {
             broadcast(Message.newMessage("[Server] Player " + sender.name + " surrendered!"));
+
+            return;
         }
 
         throw new Exception("Unknown command");
