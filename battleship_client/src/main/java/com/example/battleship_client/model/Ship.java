@@ -5,12 +5,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.Math.abs;
 
 public class Ship extends Rectangle {
     private List<Rectangle> shipCells;
@@ -23,7 +21,6 @@ public class Ship extends Rectangle {
     private double initialShipTranslateX;
     private double initialShipTranslateY;
     private boolean horizontal;
-
 
 
     private Ship(int length, int gridX, int gridY, Color color) {
@@ -70,20 +67,6 @@ public class Ship extends Rectangle {
         }
     }
 
-    private void updateBoardCoordinate(double snappedX, double snappedY) {
-        boardCoordinates = new ArrayList<>();
-        if(horizontal){
-            for (int j = 0; j < this.length; j++) {
-                boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39) + j), (int) (this.gridY + (snappedY /39))));
-            }
-        }
-        else {
-            for (int j = 0; j < this.length; j++) {
-                boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39)), (int) (this.gridY + (snappedY /39) + j)));
-            }
-        }
-    }
-
     public static final Ship fiveHolesShip(int gridX, int gridY){
         return new Ship(5, gridX, gridY, Color.DARKRED);
     }
@@ -121,6 +104,19 @@ public class Ship extends Rectangle {
 
                 //update coordinate
                 boardCoordinates.add(new Coordinate(gridX, gridY + i));
+            }
+        }
+    }
+    private void updateBoardCoordinate(double snappedX, double snappedY) {
+        boardCoordinates = new ArrayList<>();
+        if(horizontal){
+            for (int j = 0; j < this.length; j++) {
+                boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39) + j), (int) (this.gridY + (snappedY /39))));
+            }
+        }
+        else {
+            for (int j = 0; j < this.length; j++) {
+                boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39)), (int) (this.gridY + (snappedY /39) + j)));
             }
         }
     }

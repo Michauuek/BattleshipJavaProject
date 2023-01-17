@@ -1,14 +1,25 @@
 package com.example.battleship_client.controller;
 
 import com.example.battleship_client.model.BoardSquare;
+import com.example.battleship_client.model.Message;
+import com.example.battleship_client.networking.DataWriter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -20,19 +31,55 @@ public class GameSetupController implements Initializable {
     @FXML
     private GridPane UserGrid;
     @FXML
-    private VBox Ships;
-    @FXML
-    private Pane TitlePane;
-    @FXML
     private Button readyButton;
 
+    //Console elements
+    @FXML
+    private TextField tfMessage;
+    @FXML
+    private Button buttonMessage;
+    @FXML
+    private ScrollPane spMain;
+    @FXML
+    private VBox vboxMessages;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         createBoard(UserGrid);
         initializeGrid(UserGrid);
+
+        //auto scroll to bottom
+        vboxMessages.heightProperty().addListener(observable -> spMain.setVvalue(1D));
+
+        buttonMessage.setOnAction(event -> {
+            String message = tfMessage.getText();
+            if (!message.isEmpty()) {
+                addNewMessage(message);
+            }
+        });
+
+        tfMessage.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                String message = tfMessage.getText();
+                if (!message.isEmpty()) {
+                    addNewMessage(message);
+                }
+            }
+        });
     }
 
-    //TODO allow user add ship by dragging to the board
+    private void addNewMessage(String message) {
+        var hbox = new HBox();
+        hbox.setAlignment(Pos.CENTER_RIGHT);
+
+        hbox.setPadding(new Insets(5, 5, 5, 10));
+        Text text = new Text(message);
+        TextFlow textFlow = new TextFlow(text);
+        text.setFill(Color.WHITE);
+        text.setFont(new Font("Monospaced", 16));
+        hbox.getChildren().add(textFlow);
+        vboxMessages.getChildren().add(hbox);
+        tfMessage.clear();
+    }
     private void createBoard(GridPane grid) {
         for(int i=0;i<10;i++){
             for(int j=0;j<10;j++){

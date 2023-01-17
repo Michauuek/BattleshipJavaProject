@@ -38,18 +38,16 @@ public class GameController implements Initializable {
 
     @FXML
     private GridPane UserGrid;
-
     @FXML
     private GridPane EnemyGrid;
 
-    //console
+    //Console elements
     @FXML
     private TextField tfMessage;
     @FXML
     private Button buttonMessage;
     @FXML
     private ScrollPane spMain;
-
     @FXML
     private VBox vboxMessages;
 
@@ -138,7 +136,7 @@ public class GameController implements Initializable {
         }
     }
 
-    public void addNewMessage(String message) {
+    private void addNewMessage(String message) {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_RIGHT);
 
@@ -159,7 +157,7 @@ public class GameController implements Initializable {
                 grid.add(square, i, j);
             }
         }
-        
+
         for(var ship : GlobalGameState.initialShips){
             ship.addShipGrid(grid);
         }
