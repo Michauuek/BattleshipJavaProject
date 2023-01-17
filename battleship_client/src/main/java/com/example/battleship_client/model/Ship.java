@@ -23,8 +23,7 @@ public class Ship extends Rectangle {
     private double initialShipTranslateX;
     private double initialShipTranslateY;
     private boolean horizontal;
-    private int newX2;
-    private int newY2;
+
 
 
     private Ship(int length, int gridX, int gridY, Color color) {
@@ -32,8 +31,7 @@ public class Ship extends Rectangle {
         this.gridX = gridX;
         this.gridY = gridY;
         this.horizontal = true;
-        this.newX2 = gridX;
-        this.newY2 = gridY;
+
         // Create the list of ship cells
         shipCells = new ArrayList<>();
         for (int i = 0; i < length; i++) {
@@ -67,18 +65,22 @@ public class Ship extends Rectangle {
                 }
 
                 //update grid coordinates
-                boardCoordinates = new ArrayList<>();
-                if(horizontal){
-                    for (int j = 0; j < length; j++) {
-                        boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX/39) + j), (int) (this.gridY + (snappedY/39))));
-                    }
-                }
-                else {
-                    for (int j = 0; j < length; j++) {
-                        boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX/39)), (int) (this.gridY + (snappedY/39) + j)));
-                    }
-                }
+                updateBoardCoordinate(snappedX, snappedY);
             });
+        }
+    }
+
+    private void updateBoardCoordinate(double snappedX, double snappedY) {
+        boardCoordinates = new ArrayList<>();
+        if(horizontal){
+            for (int j = 0; j < this.length; j++) {
+                boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39) + j), (int) (this.gridY + (snappedY /39))));
+            }
+        }
+        else {
+            for (int j = 0; j < this.length; j++) {
+                boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39)), (int) (this.gridY + (snappedY /39) + j)));
+            }
         }
     }
 
@@ -99,12 +101,16 @@ public class Ship extends Rectangle {
     }
     public void rotate(GridPane grid) {
         horizontal = !horizontal;
+        boardCoordinates = new ArrayList<>();
         if (horizontal) {
             for (int i = 0; i < length; i++) {
                 shipCells.get(i).setWidth(35);
                 shipCells.get(i).setHeight(35);
                 grid.getChildren().remove(shipCells.get(i));
                 grid.add(shipCells.get(i), gridX + i, gridY);
+
+                //update coordinate
+                boardCoordinates.add(new Coordinate(gridX + i, gridY));
             }
         } else {
             for (int i = 0; i < length; i++) {
@@ -112,6 +118,9 @@ public class Ship extends Rectangle {
                 shipCells.get(i).setHeight(35);
                 grid.getChildren().remove(shipCells.get(i));
                 grid.add(shipCells.get(i), gridX, gridY + i);
+
+                //update coordinate
+                boardCoordinates.add(new Coordinate(gridX, gridY + i));
             }
         }
     }
@@ -120,6 +129,12 @@ public class Ship extends Rectangle {
         for (int i = 0; i < length; i++) {
             grid.add(shipCells.get(i), gridX + i, gridY);
             boardCoordinates.add(new Coordinate(gridX + i, gridY));
+        }
+    }
+
+    public void addShipGrid(GridPane grid) {
+        for (int i = 0; i < length; i++) {
+            grid.add(shipCells.get(i),  boardCoordinates.get(i).getRow(), boardCoordinates.get(i).getColumn());
         }
     }
 

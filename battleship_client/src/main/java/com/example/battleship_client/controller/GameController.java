@@ -159,6 +159,10 @@ public class GameController implements Initializable {
                 grid.add(square, i, j);
             }
         }
+        
+        for(var ship : GlobalGameState.initialShips){
+            ship.addShipGrid(grid);
+        }
     }
 
     private void createEnemyBoard(GridPane grid) {

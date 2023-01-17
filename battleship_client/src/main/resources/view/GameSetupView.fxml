@@ -4,13 +4,13 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.GameSetupController">
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.GameSetupController">
 
-    <children>
+    <Pane>
         <Pane layoutX="12.0" prefHeight="29.0" prefWidth="1006.0" styleClass="root" />
         <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
          <children>
-            <Button fx:id="readyButton" layoutX="741.0" layoutY="579.0" onAction="#readyClickHandle" mnemonicParsing="false" prefHeight="68.0" prefWidth="141.0" text="Redy">
+            <Button fx:id="readyButton" layoutX="833.0" layoutY="48.0" mnemonicParsing="false" onAction="#readyClickHandle" prefHeight="59.0" prefWidth="130.0" text="Redy">
                <font>
                   <Font name="Century Gothic" size="24.0" />
                </font>
@@ -26,6 +26,24 @@
         <GridPane fx:id="UserGrid" gridLinesVisible="true" layoutX="80.0" layoutY="282.0" opacity="0.8" prefHeight="350.0" prefWidth="350.0" styleClass="userBoard">
         </GridPane>
       <VBox fx:id="Ships" layoutX="700.0" layoutY="183.0" prefHeight="179.0" prefWidth="253.0" styleClass="ships" />
-    </children>
+    </Pane>
 
+    <Pane layoutX="525.0" layoutY="554.0" prefHeight="205.0" prefWidth="498.0">
+        <TextField fx:id="tfMessage" layoutX="-2.0" layoutY="139.0" prefHeight="35.0" prefWidth="426.0" styleClass="consoleText">
+            <font>
+                <Font name="Monospaced Regular" size="16.0" />
+            </font>
+        </TextField>
+        <Button fx:id="buttonMessage" layoutX="432.0" layoutY="143.0" prefHeight="29.0" prefWidth="56.0" text="Send">
+            <font>
+                <Font name="Century Gothic" size="14.0" />
+            </font></Button>
+
+        <ScrollPane fx:id="spMain" fitToWidth="true" prefHeight="138.0" prefWidth="426.0" styleClass="console">
+            <content>
+                <VBox fx:id="vboxMessages" layoutX="39.0" layoutY="1.0" prefHeight="136.0" prefWidth="336.0" styleClass="console" />
+            </content>
+        </ScrollPane>
+
+    </Pane>
 </AnchorPane>
