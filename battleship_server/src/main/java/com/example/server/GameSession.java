@@ -14,7 +14,6 @@ import java.util.List;
 public class GameSession implements Runnable {
     private final Player firstPlayer;
     private final Player secondPlayer;
-
     private boolean firstPlayerTurn = true;
 
     public GameSession(Player firstPlayer, Player secondPlayer) {
@@ -58,22 +57,44 @@ public class GameSession implements Runnable {
         }}));
     }
 
+    void broadcast(Message message) {
+        firstPlayer.write(message);
+        secondPlayer.write(message);
+    }
+
     void Execute(String command, String[] args, Player sender, Player receiver) throws Exception
     {
         if(command.equals("shoot")) {
-            var cord = new Coordinate(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+            var COLUMN_LETTERS = "abcdefghij";
+            var col = COLUMN_LETTERS.indexOf(args[0].toLowerCase().charAt(0));
+            if(col == -1)
+                throw new Exception("Invalid column");
+            var cord = new Coordinate(Integer.parseInt(args[0]), col);
 
             // do sth with cord
             // send shoot message to both players
             this.handleShoot(cord, sender, receiver);
         }
+        if(command.equals("help")) {
+            broadcast(Message.newMessage(helpMessage));
+        }
+        if(command.equals("surrender")) {
+            broadcast(Message.newMessage("[Server] Player " + sender.name + " surrendered!"));
+        }
+
+        throw new Exception("Unknown command");
     }
+
+    String helpMessage = "Available commands:\n" +
+                         "/shoot <row> <col> - shoot at the given coordinate\n" +
+                         "/help - show this message\n" +
+                         "/surrender - surrender the game";
 
     void handleCommands(Message message, Player sender, Player receiver) throws IOException {
         if(message.content.equals("greetings")) {
             sender.name = message.adds.get("name");
-            sender.write(Message.newMessage("[Server] Player " + sender.name + " connected"));
-            receiver.write(Message.newMessage("[Server] Player " + sender.name + " connected"));
+
+            broadcast(Message.newMessage("Player " + sender.name + " joined the game!"));
         }
         if(message.content.equals("message")) {
             var msg = message.adds.get("message");
@@ -92,8 +113,7 @@ public class GameSession implements Runnable {
                 if(p1 != null) {
                     if(p1.content.equals("message")) {
                         System.out.println("Player1: " + p1);
-                        secondPlayer.write(Message.newMessage("[" + firstPlayer.getName() + "] " + p1.adds.get("message")));
-                        firstPlayer.write(Message.newMessage("[" + firstPlayer.getName() + "] " + p1.adds.get("message")));
+                        broadcast(Message.newMessage("[" + firstPlayer.getName() + "] " + p1.adds.get("message")));
                     }
                     handleCommands(p1, firstPlayer, secondPlayer);
                 }
@@ -102,9 +122,7 @@ public class GameSession implements Runnable {
                 if(p2 != null) {
                     if(p2.content.equals("message")) {
                         System.out.println("Player2: " + p2);
-                        secondPlayer.write(Message.newMessage("[" + secondPlayer.getName() + "] " + p2.adds.get("message")));
-                        firstPlayer.write(Message.newMessage("[" + secondPlayer.getName() + "] " + p2.adds.get("message")));
-
+                        broadcast(Message.newMessage("[" + secondPlayer.getName() + "] " + p2.adds.get("message")));
                     }
                     handleCommands(p2, secondPlayer, firstPlayer);
                 }

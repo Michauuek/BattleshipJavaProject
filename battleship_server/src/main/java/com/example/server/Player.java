@@ -45,7 +45,6 @@ public class Player {
             throw new RuntimeException(e);
         }
     });
-
     public Player(Socket socket, boolean isFirstPlayer) throws IOException {
         this.socket = socket;
         this.writer = new PrintWriter(socket.getOutputStream(), true);

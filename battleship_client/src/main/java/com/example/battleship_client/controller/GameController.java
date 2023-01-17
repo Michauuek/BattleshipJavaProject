@@ -103,11 +103,12 @@ public class GameController implements Initializable {
         });
 
         var animator = new AnimationTimer() {
+            final long NANOSECONDS_IN_SECOND = 1000000000;
             long startTime = System.nanoTime();
             @Override
             public void handle(long arg0) {
                 long currentTime = System.nanoTime();
-                if (30 <= (currentTime - startTime)) {
+                if (NANOSECONDS_IN_SECOND/10 <= (currentTime - startTime)) {
                     update();
                     startTime = currentTime;
                 }
