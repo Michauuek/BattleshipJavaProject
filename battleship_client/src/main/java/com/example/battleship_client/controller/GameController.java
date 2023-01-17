@@ -4,10 +4,21 @@ import com.example.battleship_client.model.BoardSquare;
 import com.example.battleship_client.model.Coordinate;
 import com.example.battleship_client.networking.DataReader;
 import com.example.battleship_client.networking.DataWriter;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -24,6 +35,17 @@ public class GameController implements Initializable {
 
     @FXML
     private GridPane EnemyGrid;
+
+    //console
+    @FXML
+    private TextField tfMessage;
+    @FXML
+    private Button buttonMessage;
+    @FXML
+    private ScrollPane spMain;
+
+    @FXML
+    private VBox vboxMessages;
 
     private DataWriter dataWriter;
 
@@ -47,6 +69,25 @@ public class GameController implements Initializable {
         initializeGrid(EnemyGrid);
         createBoard(UserGrid);
         createEnemyBoard(EnemyGrid);
+
+        buttonMessage.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                String message = tfMessage.getText();
+                if (!message.isEmpty()) {
+                    HBox hbox = new HBox();
+                    hbox.setAlignment(Pos.CENTER_RIGHT);
+
+                    hbox.setPadding(new Insets(5, 5, 5, 10));
+                    Text text = new Text(message);
+                    TextFlow textFlow = new TextFlow(text);
+                    text.setFill(Color.WHITE);
+                    hbox.getChildren().add(textFlow);
+                    vboxMessages.getChildren().add(hbox);
+                    tfMessage.clear();
+                }
+            }
+        });
     }
 
     private void createBoard(GridPane grid) {

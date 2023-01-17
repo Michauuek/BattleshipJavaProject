@@ -23,6 +23,20 @@
     -fx-padding: 5;
 }
 
+.console {
+    -fx-background-color: #101B27;
+    -fx-text-fill: white;
+    -fx-border-radius: 2;
+}
+
+.consoleText {
+    -fx-background-color: #101B27;
+    -fx-text-fill: white;
+    -fx-border-color: white;
+    -fx-border-width: 1;
+    -fx-border-radius: 2;
+}
+
 .loginPane {
     -fx-alignment: center;
 }

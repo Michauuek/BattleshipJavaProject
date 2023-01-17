@@ -5,48 +5,39 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.GameController">
-   <children>
-
-
-      <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css" />
-      <Pane prefHeight="36.0" prefWidth="780.0" />
-
-      <Pane layoutX="130.0" layoutY="4.0" prefHeight="60.0" prefWidth="150.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
-         <children>
-
-            <Label layoutX="90.0" layoutY="64.0" prefHeight="63.0" prefWidth="133.0" styleClass="titleLabel" text="NAME" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Century Gothic" size="34.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-
-      <Pane layoutX="600.0" layoutY="4.0" prefHeight="60.0" prefWidth="150.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
-         <children>
-
-            <Label layoutX="90.0" layoutY="64.0" prefHeight="63.0" prefWidth="133.0" styleClass="titleLabel" text="ENEMY" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font name="Century Gothic" size="34.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      <Pane fx:id="TitlePane" layoutX="80.0" layoutY="157.0" prefHeight="85.0" prefWidth="395.0" styleClass="titlePane">
+   <Pane>
+      <Pane fx:id="TitlePane" layoutX="80.0" layoutY="45.0" prefHeight="85.0" prefWidth="395.0" styleClass="titlePane">
          <children>
             <Label layoutX="116.0" layoutY="24.0" prefHeight="44.0" prefWidth="166.0" styleClass="labelText" text="Your boats" textFill="WHITE">
                <font>
                   <Font name="Century Gothic" size="24.0" />
                </font></Label>
          </children></Pane>
-      <Pane fx:id="TitleEnemyPane" layoutX="550.0" layoutY="157.0" prefHeight="85.0" prefWidth="395.0" styleClass="titlePane">
+      <Pane fx:id="TitleEnemyPane" layoutX="550.0" layoutY="45.0" prefHeight="85.0" prefWidth="395.0" styleClass="titlePane">
          <children>
             <Label layoutX="116.0" layoutY="24.0" prefHeight="44.0" prefWidth="166.0" styleClass="labelText" text="Enemy boats" textFill="WHITE">
                <font>
                   <Font name="Century Gothic" size="24.0" />
                </font></Label>
          </children></Pane>
-      <GridPane fx:id="UserGrid" gridLinesVisible="true" layoutX="80.0" layoutY="242.0" opacity="0.8" prefHeight="350.0" prefWidth="350.0" styleClass="userBoard" />
-      <GridPane fx:id="EnemyGrid" gridLinesVisible="true" layoutX="550.0" layoutY="242.0" opacity="0.8" prefHeight="350.0" prefWidth="350.0" styleClass="userBoard" />
-   </children>
+      <GridPane fx:id="UserGrid" gridLinesVisible="true" layoutX="80.0" layoutY="130.0" opacity="0.8" prefHeight="350.0" prefWidth="350.0" styleClass="userBoard" />
+      <GridPane fx:id="EnemyGrid" gridLinesVisible="true" layoutX="550.0" layoutY="130.0" opacity="0.8" prefHeight="350.0" prefWidth="350.0" styleClass="userBoard" />
+   </Pane>
+
+   <Pane layoutX="75.0" layoutY="578.0" prefHeight="181.0" prefWidth="426.0">
+      <TextField fx:id="tfMessage" layoutX="-2.0" layoutY="139.0" prefHeight="35.0" prefWidth="350.0" styleClass="consoleText">
+         <font>
+            <Font name="Monospaced Regular" size="14.0" />
+         </font>
+      </TextField>
+      <Button fx:id="buttonMessage" layoutX="354.0" layoutY="143.0" prefHeight="29.0" prefWidth="44.0" text="send" />
+
+      <ScrollPane fx:id="spMain" fitToWidth="true" prefHeight="138.0" prefWidth="404.0" styleClass="console">
+         <content>
+            <VBox fx:id="vboxMessages" layoutX="39.0" layoutY="1.0" prefHeight="136.0" prefWidth="336.0" styleClass="console" />
+         </content>
+      </ScrollPane>
+
+   </Pane>
+
 </AnchorPane>
