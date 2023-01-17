@@ -6,8 +6,6 @@ import com.example.battleship_client.model.Message;
 import com.example.battleship_client.networking.DataReader;
 import com.example.battleship_client.networking.DataWriter;
 import javafx.animation.AnimationTimer;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -19,6 +17,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
@@ -76,7 +75,7 @@ public class GameController implements Initializable {
             dataReader = new DataReader(socket);
 
             // get user name
-            var name = GlobaGameState.name;
+            var name = GlobalGameState.name;
 
             // send user name to server
             DataWriter.sendData(new Message("greetings", Map.of("name", name)));
@@ -119,13 +118,11 @@ public class GameController implements Initializable {
     public void update(){
         var msg = messeges.poll();
         if (msg != null) {
-            addNewMessgage(msg);
+            addNewMessage(msg);
         }
     }
 
-
-
-    public void addNewMessgage(String message) {
+    public void addNewMessage(String message) {
         HBox hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_RIGHT);
 
@@ -133,6 +130,7 @@ public class GameController implements Initializable {
         Text text = new Text(message);
         TextFlow textFlow = new TextFlow(text);
         text.setFill(Color.WHITE);
+        text.setFont(new Font("Monospaced", 16));
         hbox.getChildren().add(textFlow);
         vboxMessages.getChildren().add(hbox);
         tfMessage.clear();

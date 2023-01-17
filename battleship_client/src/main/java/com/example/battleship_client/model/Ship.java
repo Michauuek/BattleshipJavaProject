@@ -10,23 +10,30 @@ import javafx.scene.shape.Shape;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Math.abs;
+
 public class Ship extends Rectangle {
     private List<Rectangle> shipCells;
-    private final int gridX;
-    private final int gridY;
+    private List<Coordinate> boardCoordinates;
+    private int gridX;
+    private int gridY;
     private final int length;
     private double initialMouseX;
     private double initialMouseY;
     private double initialShipTranslateX;
     private double initialShipTranslateY;
     private boolean horizontal;
+    private int newX2;
+    private int newY2;
+
 
     private Ship(int length, int gridX, int gridY, Color color) {
         this.length = length;
         this.gridX = gridX;
         this.gridY = gridY;
         this.horizontal = true;
-
+        this.newX2 = gridX;
+        this.newY2 = gridY;
         // Create the list of ship cells
         shipCells = new ArrayList<>();
         for (int i = 0; i < length; i++) {
@@ -57,6 +64,19 @@ public class Ship extends Rectangle {
                 for (Rectangle c : shipCells) {
                     c.setTranslateX(snappedX);
                     c.setTranslateY(snappedY);
+                }
+
+                //update grid coordinates
+                boardCoordinates = new ArrayList<>();
+                if(horizontal){
+                    for (int j = 0; j < length; j++) {
+                        boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX/39) + j), (int) (this.gridY + (snappedY/39))));
+                    }
+                }
+                else {
+                    for (int j = 0; j < length; j++) {
+                        boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX/39)), (int) (this.gridY + (snappedY/39) + j)));
+                    }
                 }
             });
         }
@@ -96,9 +116,15 @@ public class Ship extends Rectangle {
         }
     }
     public void addToGrid(GridPane grid) {
+        boardCoordinates = new ArrayList<>();
         for (int i = 0; i < length; i++) {
             grid.add(shipCells.get(i), gridX + i, gridY);
+            boardCoordinates.add(new Coordinate(gridX + i, gridY));
         }
+    }
+
+    public List<Coordinate> getBoardCoordinates() {
+        return boardCoordinates;
     }
 
 }

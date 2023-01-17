@@ -24,15 +24,18 @@
       <GridPane fx:id="EnemyGrid" gridLinesVisible="true" layoutX="550.0" layoutY="130.0" opacity="0.8" prefHeight="350.0" prefWidth="350.0" styleClass="userBoard" />
    </Pane>
 
-   <Pane layoutX="75.0" layoutY="578.0" prefHeight="181.0" prefWidth="426.0">
-      <TextField fx:id="tfMessage" layoutX="-2.0" layoutY="139.0" prefHeight="35.0" prefWidth="350.0" styleClass="consoleText">
+   <Pane layoutX="530.0" layoutY="578.0" prefHeight="181.0" prefWidth="493.0">
+      <TextField fx:id="tfMessage" layoutX="-2.0" layoutY="139.0" prefHeight="35.0" prefWidth="426.0" styleClass="consoleText">
          <font>
-            <Font name="Monospaced Regular" size="14.0" />
+            <Font name="Monospaced Regular" size="16.0" />
          </font>
       </TextField>
-      <Button fx:id="buttonMessage" layoutX="354.0" layoutY="143.0" prefHeight="29.0" prefWidth="44.0" text="send" />
+      <Button fx:id="buttonMessage" layoutX="432.0" layoutY="143.0" prefHeight="29.0" prefWidth="56.0" text="Send">
+         <font>
+            <Font name="Century Gothic" size="14.0" />
+         </font></Button>
 
-      <ScrollPane fx:id="spMain" fitToWidth="true" prefHeight="138.0" prefWidth="404.0" styleClass="console">
+      <ScrollPane fx:id="spMain" fitToWidth="true" prefHeight="138.0" prefWidth="426.0" styleClass="console">
          <content>
             <VBox fx:id="vboxMessages" layoutX="39.0" layoutY="1.0" prefHeight="136.0" prefWidth="336.0" styleClass="console" />
          </content>

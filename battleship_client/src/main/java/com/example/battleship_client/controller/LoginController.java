@@ -31,7 +31,7 @@ public class LoginController {
             stage.setScene(new Scene(root));
             stage.show();
             // set global state
-            GlobaGameState.name = this.getName();
+            GlobalGameState.name = this.getName();
         }
     }
     public String getName() {
