@@ -6,6 +6,8 @@ import com.example.battleship_client.model.Message;
 import com.example.battleship_client.networking.DataReader;
 import com.example.battleship_client.networking.DataWriter;
 import javafx.animation.AnimationTimer;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
@@ -13,6 +15,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -94,10 +97,22 @@ public class GameController implements Initializable {
         createBoard(UserGrid);
         createEnemyBoard(EnemyGrid);
 
+        //auto scroll to bottom
+        vboxMessages.heightProperty().addListener(observable -> spMain.setVvalue(1D));
+
         buttonMessage.setOnAction(event -> {
             String message = tfMessage.getText();
             if (!message.isEmpty()) {
                 DataWriter.sendData(Message.newMessage(message));
+            }
+        });
+
+        tfMessage.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER) {
+                String message = tfMessage.getText();
+                if (!message.isEmpty()) {
+                    DataWriter.sendData(Message.newMessage(message));
+                }
             }
         });
 
