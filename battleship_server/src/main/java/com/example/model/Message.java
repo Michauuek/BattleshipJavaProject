@@ -18,7 +18,6 @@ public class Message {
         this.content = content;
         this.adds = new HashMap<>();
     }
-
     public static Message newMessage(String message) {
         return new Message("message", Map.of("message", message));
     }
