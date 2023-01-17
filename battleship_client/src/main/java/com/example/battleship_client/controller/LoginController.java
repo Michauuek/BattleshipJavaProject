@@ -22,13 +22,19 @@ public class LoginController {
     public Label messageLabel;
     @FXML
     public void loginClickHandle(ActionEvent event) throws IOException {
-        if (this.login.getText().equals("")) {
+        if (this.login.getText().isBlank()) {
             this.messageLabel.setText("Please enter username");
         } else {
             Stage stage = (Stage) loginButton.getScene().getWindow();
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/GameSetupView.fxml")));
+
             stage.setScene(new Scene(root));
             stage.show();
+            // set global state
+            GlobaGameState.name = this.getName();
         }
+    }
+    public String getName() {
+        return login.getText();
     }
 }

@@ -10,7 +10,6 @@ public class Board {
     private boolean isBoardFull;
     private List<Ship> ships;
     private List<Coordinate> missedShots;
-
     public Board() {
         ships = new ArrayList<>();
         missedShots = new ArrayList<>();

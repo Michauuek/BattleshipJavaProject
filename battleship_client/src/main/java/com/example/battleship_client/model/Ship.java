@@ -15,7 +15,6 @@ public class Ship extends Rectangle {
     private final int gridX;
     private final int gridY;
     private final int length;
-
     private double initialMouseX;
     private double initialMouseY;
     private double initialShipTranslateX;

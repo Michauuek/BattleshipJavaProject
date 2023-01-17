@@ -11,9 +11,8 @@ import java.util.List;
 public class Ship {
     private List<Coordinate> positions;
     private final int length;
+
     private boolean isPlaced;
-
-
     private Ship(int length) {
         this.length = length;
         this.positions = new ArrayList<>();

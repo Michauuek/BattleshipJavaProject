@@ -1,6 +1,7 @@
 package com.example.battleship_client.networking;
 
 import com.example.battleship_client.model.Coordinate;
+import com.example.battleship_client.model.Message;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
@@ -9,39 +10,40 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 
 public class DataReader implements Runnable {
     private Socket socket;
     private BufferedReader socketReader;
+    private Thread readerThread;
 
+    private ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<>();
 
     public DataReader(Socket socket) throws IOException {
         this.socket = socket;
         socketReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
+        readerThread = new Thread(this);
+
+        readerThread.start();
     }
 
     @Override
     public void run() {
-        readMessage();
         while(true){
             try{
-                var ship = socketReader.readLine();
-                System.out.println("Ship: " + ship);
-                Coordinate response = new Gson().fromJson(ship, Coordinate.class);
-                System.out.println("Server Response : " + response);
+                var msg = Message.fromJson(socketReader.readLine());
+
+                messages.add(msg);
             } catch (IOException exception){
                 System.err.println("Error reading data");
             }
         }
     }
 
-    private void readMessage(){
-        try {
-            System.out.println(socketReader.readLine());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public Message readMessage(){
+        return messages.poll();
     }
 
     /*@Override

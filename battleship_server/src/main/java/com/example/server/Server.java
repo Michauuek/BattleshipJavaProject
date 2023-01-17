@@ -1,11 +1,13 @@
 package com.example.server;
 
 
+import com.example.model.Message;
 import lombok.Data;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
+import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,13 +32,15 @@ public class Server {
 
         while(true) {
             try {
-                firstPlayer = new Player(serverSocket.accept());
+                firstPlayer = new Player(serverSocket.accept(), true);
                 System.out.println("Player 1 connected" + firstPlayer.getSocket().getLocalSocketAddress());
-                firstPlayer.write("Connected as Player1. Waiting for opponent");
 
-                secondPlayer = new Player(serverSocket.accept());
+                firstPlayer.write(Message.newMessage("[Server] Waiting for second player to connect..."));
+
+                secondPlayer = new Player(serverSocket.accept(), false);
                 System.out.println("Player 2 connected" + secondPlayer.getSocket().getLocalSocketAddress());
-                secondPlayer.write("Connected as Player2. Game starting.");
+                secondPlayer.write(Message.newMessage("[Server] Connected as player 2 connected"));
+                firstPlayer.write(Message.newMessage("[Server] Second player connected"));
 
                 executor.execute(new GameSession(firstPlayer, secondPlayer));
                 System.out.println("Started new game");

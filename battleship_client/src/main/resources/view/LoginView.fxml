@@ -6,10 +6,8 @@
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.LoginController">
     <children>
-
         <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
          <children>
-      
               <Label layoutX="365.0" layoutY="64.0" prefHeight="163.0" prefWidth="333.0" styleClass="titleLabel" text="Battleships" textAlignment="CENTER" textFill="WHITE">
                   <font>
                       <Font name="Century Gothic" size="64.0" />

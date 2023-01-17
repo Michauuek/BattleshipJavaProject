@@ -1,6 +1,7 @@
 package com.example.server;
 
 import com.example.model.Coordinate;
+import com.example.model.Message;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
@@ -14,42 +15,56 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 @Getter
 public class Player {
     private Socket socket;
-    private BufferedReader reader;
     private PrintWriter writer;
 
-    public Player(Socket socket) throws IOException {
+    private ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<>();
+
+    private boolean isFirstPlayer;
+    public String name = null;
+
+    private Thread readerThread = new Thread(() -> {
+        try {
+            var reader = new BufferedReader(new InputStreamReader((socket.getInputStream())));
+
+            while (true) {
+                try {
+                    var msg = Message.fromJson(reader.readLine());
+                    messages.add(msg);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    });
+
+    public Player(Socket socket, boolean isFirstPlayer) throws IOException {
         this.socket = socket;
-        this.reader = new BufferedReader(new InputStreamReader((socket.getInputStream())));
         this.writer = new PrintWriter(socket.getOutputStream(), true);
+        this.isFirstPlayer = isFirstPlayer;
+        readerThread.start();
     }
 
-    public Coordinate read() throws IOException {
-        return new Gson().fromJson(reader.readLine(), Coordinate.class);
+    public Message readMessage() throws IOException {
+        return messages.poll();
     }
 
-    public Coordinate readShip() throws IOException {
-        //return new Gson().fromJson(reader.readLine(), new TypeToken<List<Coordinate>>(){}.getType());
-        return new Gson().fromJson(reader.readLine(), new TypeToken<Coordinate>(){}.getType());
-    }
-
-    public String readMessage() throws IOException {
-        return reader.readLine();
-    }
-    public void write(Object coordinate){
-        var converterJson = new Gson().toJson(coordinate);
+    public void write(Message message) {
+        var converterJson = message.toJson();
         System.out.println(converterJson);
-        this.writer.println(removeQuotesAndUnescape(converterJson));
-        System.out.println(converterJson);
+        this.writer.println(converterJson);
         this.writer.flush();
     }
 
-    private String removeQuotesAndUnescape(String uncleanJson) {
-        String noQuotes = uncleanJson.replaceAll("^\"|\"$", "");
-
-        return StringEscapeUtils.unescapeJava(noQuotes);
+    public boolean isFirstPlayer() {
+        return isFirstPlayer;
     }
 }
