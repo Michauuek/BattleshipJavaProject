@@ -75,7 +75,7 @@ public class GameSetupController implements Initializable {
         Text text = new Text(message);
         TextFlow textFlow = new TextFlow(text);
         text.setFill(Color.WHITE);
-        text.setFont(new Font("Monospaced", 16));
+        text.setFont(new Font("Monospaced Regular", 16));
         hbox.getChildren().add(textFlow);
         vboxMessages.getChildren().add(hbox);
         tfMessage.clear();
