@@ -16,4 +16,5 @@ public class BoardSquare extends Rectangle{
     public void setColor(Color color){
         this.setFill(color);
     }
+
 }

@@ -162,7 +162,6 @@ public class GameController implements Initializable {
             ship.addShipGrid(grid);
             ship.disableDragging();
         }
-        System.out.println(GlobalGameState.initialShips.get(0).getBoardCoordinates());
     }
 
     private void createEnemyBoard(GridPane grid) {
@@ -175,8 +174,6 @@ public class GameController implements Initializable {
                     square.setFill(Color.GREEN);
                     square.setDisable(true);
                     var ship = new Coordinate(GridPane.getRowIndex(square), GridPane.getColumnIndex(square));
-                    System.out.println(ship);
-                    //dataWriter.sendData();
                 });
             }
         }

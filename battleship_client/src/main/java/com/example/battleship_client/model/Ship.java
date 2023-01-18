@@ -127,6 +127,8 @@ public class Ship extends Rectangle {
                 boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39)), (int) (this.gridY + (snappedY /39) + j)));
             }
         }
+
+        System.out.println(boardCoordinates);
     }
     public void addToGrid(GridPane grid) {
         boardCoordinates = new ArrayList<>();
@@ -138,7 +140,10 @@ public class Ship extends Rectangle {
 
     public void addShipGrid(GridPane grid) {
         for (int i = 0; i < length; i++) {
-            grid.add(shipCells.get(i),  boardCoordinates.get(i).getRow(), boardCoordinates.get(i).getColumn());
+            System.out.println(boardCoordinates.get(i).getRow() + " " + boardCoordinates.get(i).getColumn());
+            var newCell = new BoardSquare();
+            newCell.setColor((Color) shipCells.get(i).getFill());
+            grid.add(newCell, boardCoordinates.get(i).getRow(), boardCoordinates.get(i).getColumn());
         }
     }
 
