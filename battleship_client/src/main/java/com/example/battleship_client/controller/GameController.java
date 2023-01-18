@@ -160,7 +160,9 @@ public class GameController implements Initializable {
 
         for(var ship : GlobalGameState.initialShips){
             ship.addShipGrid(grid);
+            ship.disableDragging();
         }
+        System.out.println(GlobalGameState.initialShips.get(0).getBoardCoordinates());
     }
 
     private void createEnemyBoard(GridPane grid) {

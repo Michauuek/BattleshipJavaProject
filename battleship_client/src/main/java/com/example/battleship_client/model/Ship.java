@@ -67,6 +67,14 @@ public class Ship extends Rectangle {
         }
     }
 
+    public void disableDragging() {
+        for (Rectangle c : shipCells) {
+            c.setOnMousePressed(null);
+            c.setOnMouseDragged(null);
+            c.setOnMouseReleased(null);
+        }
+    }
+
     public static final Ship fiveHolesShip(int gridX, int gridY){
         return new Ship(5, gridX, gridY, Color.DARKRED);
     }
@@ -110,12 +118,12 @@ public class Ship extends Rectangle {
     private void updateBoardCoordinate(double snappedX, double snappedY) {
         boardCoordinates = new ArrayList<>();
         if(horizontal){
-            for (int j = 0; j < this.length; j++) {
+            for (int j = 0; j < length; j++) {
                 boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39) + j), (int) (this.gridY + (snappedY /39))));
             }
         }
         else {
-            for (int j = 0; j < this.length; j++) {
+            for (int j = 0; j < length; j++) {
                 boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39)), (int) (this.gridY + (snappedY /39) + j)));
             }
         }

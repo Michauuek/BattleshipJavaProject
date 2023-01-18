@@ -92,9 +92,11 @@ public class GameSetupController implements Initializable {
     public void readyClickHandle(ActionEvent event) throws IOException {
 
         //display ship coordinates
-        for(var ship : GlobalGameState.initialShips){
+        /*for(var ship : GlobalGameState.initialShips){
             System.out.println(ship.getBoardCoordinates());
-        }
+        }*/
+
+        System.out.println(GlobalGameState.initialShips.get(0).getBoardCoordinates());
 
         Stage stage = (Stage) readyButton.getScene().getWindow();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/GameView.fxml")));
@@ -111,7 +113,7 @@ public class GameSetupController implements Initializable {
 
         for(var ship : GlobalGameState.initialShips){
             ship.addToGrid(grid);
-            ship.rotate(grid);
+            //ship.rotate(grid);
         }
     }
 }
