@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -53,7 +54,7 @@ public class GameSetupController implements Initializable {
         buttonMessage.setOnAction(event -> {
             String message = tfMessage.getText();
             if (!message.isEmpty()) {
-                addNewMessage(message);
+                addNewMessage(message, "[" + GlobalGameState.name + "]: ");
             }
         });
 
@@ -61,25 +62,77 @@ public class GameSetupController implements Initializable {
             if (event.getCode() == KeyCode.ENTER) {
                 String message = tfMessage.getText();
                 if (!message.isEmpty()) {
-                    addNewMessage(message);
+                    addNewMessage(message, "[" + GlobalGameState.name + "]: ");
                 }
             }
         });
     }
 
-    private void addNewMessage(String message) {
+    private void addNewMessage(String message, String owner) {
         var hbox = new HBox();
         hbox.setAlignment(Pos.CENTER_RIGHT);
 
         hbox.setPadding(new Insets(5, 5, 5, 10));
-        Text text = new Text(message);
+        Text text = new Text(owner+message);
         TextFlow textFlow = new TextFlow(text);
         text.setFill(Color.WHITE);
         text.setFont(new Font("Monospaced Regular", 16));
         hbox.getChildren().add(textFlow);
         vboxMessages.getChildren().add(hbox);
         tfMessage.clear();
+
+        handleCommands(message);
     }
+    void handleCommands(String msg)  {
+        if(msg.startsWith("/")) {
+            parseAndExecuteCommand(msg);
+        }
+    }
+    void parseAndExecuteCommand(String message) {
+        var tokens = message.toLowerCase().strip().replace("/", "").split(" ");
+
+        var command = tokens[0];
+        var args = tokens.length > 1 ? Arrays.stream(tokens).skip(1).toArray(String[]::new) : new String[0];
+
+        try {
+            Execute(command, args);
+        } catch (Exception e) {
+            addNewMessage("Error: " + e.getMessage(), "[System]: ");
+        }
+    }
+    void Execute(String command, String[] args) throws Exception
+    {
+        switch(command) {
+            case "select" -> Select(args);
+            case "rotate" -> Rotate(args);
+            case "place" -> Place(args);
+            case "ready" -> Ready(args);
+            case "help" -> Help(args);
+            default -> throw new Exception("Unknown command");
+        }
+    }
+
+    private void Help(String[] args)
+    {
+        addNewMessage("Help Command", "[System]: ");
+    }
+
+    private void Ready(String[] args) {
+        addNewMessage("Ready Command", "[System]: ");
+    }
+
+    private void Place(String[] args) {
+        addNewMessage("Place Command", "[System]: ");
+    }
+
+    private void Rotate(String[] args) {
+        addNewMessage("Rotate Command", "[System]: ");
+    }
+
+    private void Select(String[] args) {
+        addNewMessage("Select Command", "[System]: ");
+    }
+
     private void createBoard(GridPane grid) {
         for(int i=0;i<10;i++){
             for(int j=0;j<10;j++){
@@ -95,7 +148,6 @@ public class GameSetupController implements Initializable {
         /*for(var ship : GlobalGameState.initialShips){
             System.out.println(ship.getBoardCoordinates());
         }*/
-
         System.out.println(GlobalGameState.initialShips.get(0).getBoardCoordinates());
 
         Stage stage = (Stage) readyButton.getScene().getWindow();

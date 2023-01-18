@@ -75,19 +75,19 @@ public class Ship extends Rectangle {
         }
     }
 
-    public static final Ship fiveHolesShip(int gridX, int gridY){
+    public static Ship fiveHolesShip(int gridX, int gridY){
         return new Ship(5, gridX, gridY, Color.DARKRED);
     }
-    public static final Ship fourHolesShip(int gridX, int gridY){
+    public static Ship fourHolesShip(int gridX, int gridY){
         return new Ship(4, gridX, gridY, Color.DARKSALMON);
     }
-    public static final Ship threeHolesShip(int gridX, int gridY){
+    public static Ship threeHolesShip(int gridX, int gridY){
         return new Ship(3, gridX, gridY, Color.DARKGREEN);
     }
-    public static final Ship twoHolesShip(int gridX, int gridY){
+    public static Ship twoHolesShip(int gridX, int gridY){
         return new Ship(2, gridX, gridY, Color.DARKGREY);
     }
-    public static final Ship oneHolesShip(int gridX, int gridY){
+    public static Ship oneHolesShip(int gridX, int gridY){
         return new Ship(1, gridX, gridY, Color.DARKCYAN);
     }
     public void rotate(GridPane grid) {
@@ -127,8 +127,6 @@ public class Ship extends Rectangle {
                 boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39)), (int) (this.gridY + (snappedY /39) + j)));
             }
         }
-
-        System.out.println(boardCoordinates);
     }
     public void addToGrid(GridPane grid) {
         boardCoordinates = new ArrayList<>();
@@ -140,10 +138,7 @@ public class Ship extends Rectangle {
 
     public void addShipGrid(GridPane grid) {
         for (int i = 0; i < length; i++) {
-            System.out.println(boardCoordinates.get(i).getRow() + " " + boardCoordinates.get(i).getColumn());
-            var newCell = new BoardSquare();
-            newCell.setColor((Color) shipCells.get(i).getFill());
-            grid.add(newCell, boardCoordinates.get(i).getRow(), boardCoordinates.get(i).getColumn());
+            grid.add(shipCells.get(i), boardCoordinates.get(i).getRow(), boardCoordinates.get(i).getColumn());
         }
     }
 
