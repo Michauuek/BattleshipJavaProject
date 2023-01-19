@@ -72,7 +72,7 @@ public class GameSetupController implements Initializable {
 
     private void addNewMessage(String message, String owner) {
         var hbox = new HBox();
-        hbox.setAlignment(Pos.CENTER_RIGHT);
+        hbox.setAlignment(Pos.CENTER_LEFT);
 
         hbox.setPadding(new Insets(5, 5, 5, 10));
         Text text = new Text(owner+message);

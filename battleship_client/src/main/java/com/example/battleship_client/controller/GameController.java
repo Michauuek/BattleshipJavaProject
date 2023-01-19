@@ -138,10 +138,12 @@ public class GameController implements Initializable {
 
     private void addNewMessage(String message) {
         HBox hbox = new HBox();
-        hbox.setAlignment(Pos.CENTER_RIGHT);
+        hbox.setAlignment(Pos.CENTER_LEFT);
+
         hbox.setPadding(new Insets(5, 5, 5, 10));
 
         Text text = new Text(message);
+        TextFlow textFlow = new TextFlow(text);
         text.setFill(Color.WHITE);
         text.setFont(new Font("Monospaced Regular", 16));
 
