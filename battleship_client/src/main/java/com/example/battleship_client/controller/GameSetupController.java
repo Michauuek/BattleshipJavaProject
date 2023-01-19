@@ -45,10 +45,25 @@ public class GameSetupController implements Initializable {
     private ScrollPane spMain;
     @FXML
     private VBox vboxMessages;
+
+    private ConsoleController consoleController;
+
+    public GameSetupController() {
+
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         createBoard(UserGrid);
         initializeGrid(UserGrid);
+
+        consoleController = new ConsoleController(
+                tfMessage,
+                buttonMessage,
+                spMain,
+                vboxMessages
+        );
 
         //auto scroll to bottom
         vboxMessages.heightProperty().addListener(observable -> spMain.setVvalue(1D));
@@ -56,7 +71,7 @@ public class GameSetupController implements Initializable {
         buttonMessage.setOnAction(event -> {
             String message = tfMessage.getText();
             if (!message.isEmpty()) {
-                addNewMessage(message, "[" + GlobalGameState.name + "]: ");
+                consoleController.addNewMessage(message, "[" + GlobalGameState.name + "]: ");
             }
         });
 
@@ -64,95 +79,13 @@ public class GameSetupController implements Initializable {
             if (event.getCode() == KeyCode.ENTER) {
                 String message = tfMessage.getText();
                 if (!message.isEmpty()) {
-                    addNewMessage(message, "[" + GlobalGameState.name + "]: ");
+                    consoleController.addNewMessage(message, "[" + GlobalGameState.name + "]: ");
                 }
             }
         });
     }
 
-    private void addNewMessage(String message, String owner) {
-        var hbox = new HBox();
-        hbox.setAlignment(Pos.CENTER_LEFT);
 
-        hbox.setPadding(new Insets(5, 5, 5, 10));
-        Text text = new Text(owner+message);
-        TextFlow textFlow = new TextFlow(text);
-        text.setFill(Color.WHITE);
-        text.setFont(new Font("Monospaced Regular", 16));
-        hbox.getChildren().add(textFlow);
-        vboxMessages.getChildren().add(hbox);
-        tfMessage.clear();
-
-        handleCommands(message);
-    }
-    void handleCommands(String msg)  {
-        if(msg.startsWith("/")) {
-            parseAndExecuteCommand(msg);
-        }
-    }
-    void parseAndExecuteCommand(String message) {
-        var tokens = message.toLowerCase().strip().replace("/", "").split(" ");
-
-        var command = tokens[0];
-        var args = tokens.length > 1 ? Arrays.stream(tokens).skip(1).toArray(String[]::new) : new String[0];
-
-        try {
-            Execute(command, args);
-        } catch (Exception e) {
-            addNewMessage("Error: " + e.getMessage(), "[System]: ");
-        }
-    }
-    void Execute(String command, String[] args) throws Exception
-    {
-        switch(command) {
-            case "select" -> Select(args);
-            case "rotate" -> Rotate(args);
-            case "place" -> Place(args);
-            case "ready" -> Ready(args);
-            case "help" -> Help(args);
-            default -> throw new Exception("Unknown command");
-        }
-    }
-
-
-
-    String helpMessage = """
-            Available commands:
-            /select <x> <y> - select a square
-            /rotate - rotate the selected ship
-            /place - place the selected ship
-            /ready - ready up
-            /help - show this message""";
-    private void Help(String[] args)
-    {
-        addNewMessage(helpMessage, "[System]: ");
-    }
-
-    private void Ready(String[] args) throws Exception {
-        readyClickHandle(null);
-        addNewMessage("Ready Command", "[System]: ");
-    }
-
-    private void Place(String[] args) throws Exception {
-        addNewMessage("Place Command", "[System]: ");
-    }
-
-    private void Rotate(String[] args) throws Exception {
-        addNewMessage("Rotate Command", "[System]: ");
-    }
-
-    private void Select(String[] args) throws Exception {
-        addNewMessage("Select Command", "[System]: ");
-    }
-
-    private void createBoard(GridPane grid) {
-        for(int i=0;i<10;i++){
-            for(int j=0;j<10;j++){
-                var square = new BoardSquare();
-                grid.add(square, i, j);
-            }
-        }
-    }
     @FXML
     public void readyClickHandle(ActionEvent event) throws IOException {
         System.out.println(GlobalGameState.initialShips.get(0).getBoardCoordinates());
@@ -180,11 +113,11 @@ public class GameSetupController implements Initializable {
     private void randomizeShips() {
         while(true){
             for(var ship : GlobalGameState.initialShips){
-                var lenght = ship.getLength();
+                var length = ship.getLength();
 
                 var random = (int)(Math.random() * 10);
 
-                var randomX = (random-lenght);
+                var randomX = (random-length);
                 var randomY = (int)(Math.random() * 10);
 
 
@@ -196,7 +129,14 @@ public class GameSetupController implements Initializable {
         }
     }
 
-
+    private void createBoard(GridPane grid) {
+        for(int i=0;i<10;i++){
+            for(int j=0;j<10;j++){
+                var square = new BoardSquare();
+                grid.add(square, i, j);
+            }
+        }
+    }
     private void initializeGrid(GridPane grid) {
         grid.setHgap(4);
         grid.setVgap(4);
