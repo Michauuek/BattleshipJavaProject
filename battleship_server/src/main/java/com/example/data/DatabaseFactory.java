@@ -17,21 +17,32 @@ public class DatabaseFactory {
             statement = connect.createStatement();
 
             createUserTable();
+            createGames();
         } catch (Exception e) {
             e.printStackTrace();
         } //close connection
     }
     public static void addUser(String nickname) throws SQLException {
         var date = LocalDateTime.now();
-        var insertSql = "INSERT INTO users(name, game_date)"
-                + " VALUES('" + nickname +"', '" + date + "')";
+        var insertSql = "INSERT INTO users(name)"
+                + " VALUES('" + nickname +"')";
         statement.executeUpdate(insertSql);
     }
 
     private static void createUserTable() throws SQLException {
         String tableSql = "CREATE TABLE IF NOT EXISTS users"
-                + "(id int PRIMARY KEY AUTO_INCREMENT, name varchar(30),"
-                + "game_date datetime)";
+                + "(id int PRIMARY KEY AUTO_INCREMENT, "
+                + "name varchar(30) NOT NULL)";
+        statement.execute(tableSql);
+    }
+    private static void createGames() throws SQLException {
+        String tableSql = "CREATE TABLE IF NOT EXISTS games"
+                + "(id int PRIMARY KEY AUTO_INCREMENT, "
+                + "winner INT NOT NULL, "
+                + "loser INT NOT NULL, "
+                + "game_date datetime, "
+                + "FOREIGN KEY (winner) REFERENCES users(id), "
+                + "FOREIGN KEY (loser) REFERENCES users(id))";
         statement.execute(tableSql);
     }
 
