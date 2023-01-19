@@ -28,7 +28,7 @@ public class Message {
 
     @Override
     public String toString() {
-        return super.toString();
+        return "{" + content + "}" + adds;
     }
 
     public String toJson() {

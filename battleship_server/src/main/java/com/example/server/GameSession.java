@@ -1,6 +1,7 @@
 package com.example.server;
 
 
+import com.example.data.DatabaseFactory;
 import com.example.model.Coordinate;
 import com.example.model.Message;
 import com.google.gson.Gson;
@@ -98,6 +99,7 @@ public class GameSession implements Runnable {
     void handleCommands(Message message, Player sender, Player receiver) throws IOException {
         if(message.content.equals("greeting")) {
             sender.setName(message.adds.get("name"));
+            DatabaseFactory.addUser(sender.getName());
 
             broadcast(Message.newMessage("Player " + sender.name + " joined the game!"));
         }
@@ -116,8 +118,8 @@ public class GameSession implements Runnable {
             while (true) {
                 var p1 = firstPlayer.readMessage();
                 if(p1 != null) {
+                    System.out.println("[DEBUG] MESSAGE FROM " + firstPlayer.getName() + ": " + p1);
                     if(p1.content.equals("message")) {
-                        System.out.println("Player1: " + p1);
                         broadcast(Message.newMessage("[" + firstPlayer.getName() + "] " + p1.adds.get("message")));
                     }
                     handleCommands(p1, firstPlayer, secondPlayer);
@@ -125,8 +127,8 @@ public class GameSession implements Runnable {
 
                 var p2 = secondPlayer.readMessage();
                 if(p2 != null) {
+                    System.out.println("[DEBUG] MESSAGE FROM " + secondPlayer.getName() + ": " + p2);
                     if(p2.content.equals("message")) {
-                        System.out.println("Player2: " + p2);
                         broadcast(Message.newMessage("[" + secondPlayer.getName() + "] " + p2.adds.get("message")));
                     }
                     handleCommands(p2, secondPlayer, firstPlayer);

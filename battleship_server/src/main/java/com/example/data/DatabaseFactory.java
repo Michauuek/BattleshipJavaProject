@@ -22,11 +22,16 @@ public class DatabaseFactory {
             e.printStackTrace();
         } //close connection
     }
-    public static void addUser(String nickname) throws SQLException {
+    public static void addUser(String nickname){
         var date = LocalDateTime.now();
         var insertSql = "INSERT INTO users(name)"
                 + " VALUES('" + nickname +"')";
-        statement.executeUpdate(insertSql);
+        try {
+            statement.executeUpdate(insertSql);
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
     }
 
     private static void createUserTable() throws SQLException {
