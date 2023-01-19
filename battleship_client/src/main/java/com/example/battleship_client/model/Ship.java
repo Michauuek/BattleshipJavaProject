@@ -67,6 +67,10 @@ public class Ship extends Rectangle {
         }
     }
 
+    public int getLength() {
+        return length;
+    }
+
     public void disableDragging() {
         for (Rectangle c : shipCells) {
             c.setOnMousePressed(null);
@@ -125,6 +129,19 @@ public class Ship extends Rectangle {
         else {
             for (int j = 0; j < length; j++) {
                 boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39)), (int) (this.gridY + (snappedY /39) + j)));
+            }
+        }
+    }
+    public void setBoardCoordinates(Coordinate root) {
+        boardCoordinates = new ArrayList<>();
+        if(horizontal){
+            for (int j = 0; j < length; j++) {
+                boardCoordinates.add(new Coordinate(root.getRow() + j, root.getColumn()));
+            }
+        }
+        else {
+            for (int j = 0; j < length; j++) {
+                boardCoordinates.add(new Coordinate(root.getColumn(), root.getRow() + j));
             }
         }
     }

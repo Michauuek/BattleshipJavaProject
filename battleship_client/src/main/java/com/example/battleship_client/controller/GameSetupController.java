@@ -1,6 +1,7 @@
 package com.example.battleship_client.controller;
 
 import com.example.battleship_client.model.BoardSquare;
+import com.example.battleship_client.model.Coordinate;
 import com.example.battleship_client.model.Message;
 import com.example.battleship_client.networking.DataWriter;
 import javafx.event.ActionEvent;
@@ -25,6 +26,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
@@ -112,24 +114,34 @@ public class GameSetupController implements Initializable {
         }
     }
 
+
+
+    String helpMessage = """
+            Available commands:
+            /select <x> <y> - select a square
+            /rotate - rotate the selected ship
+            /place - place the selected ship
+            /ready - ready up
+            /help - show this message""";
     private void Help(String[] args)
     {
-        addNewMessage("Help Command", "[System]: ");
+        addNewMessage(helpMessage, "[System]: ");
     }
 
-    private void Ready(String[] args) {
+    private void Ready(String[] args) throws Exception {
+        readyClickHandle(null);
         addNewMessage("Ready Command", "[System]: ");
     }
 
-    private void Place(String[] args) {
+    private void Place(String[] args) throws Exception {
         addNewMessage("Place Command", "[System]: ");
     }
 
-    private void Rotate(String[] args) {
+    private void Rotate(String[] args) throws Exception {
         addNewMessage("Rotate Command", "[System]: ");
     }
 
-    private void Select(String[] args) {
+    private void Select(String[] args) throws Exception {
         addNewMessage("Select Command", "[System]: ");
     }
 
@@ -143,11 +155,6 @@ public class GameSetupController implements Initializable {
     }
     @FXML
     public void readyClickHandle(ActionEvent event) throws IOException {
-
-        //display ship coordinates
-        /*for(var ship : GlobalGameState.initialShips){
-            System.out.println(ship.getBoardCoordinates());
-        }*/
         System.out.println(GlobalGameState.initialShips.get(0).getBoardCoordinates());
 
         Stage stage = (Stage) readyButton.getScene().getWindow();
@@ -156,16 +163,48 @@ public class GameSetupController implements Initializable {
         stage.show();
     }
 
+    private boolean areShipsInValidPosition() {
+        HashSet<Coordinate> coordinates = new HashSet<>();
+
+        for (var ship : GlobalGameState.initialShips) {
+            for (Coordinate coordinate : ship.getBoardCoordinates()) {
+                if (coordinates.contains(coordinate)) {
+                    return false;
+                }
+                coordinates.add(coordinate);
+            }
+        }
+        return true;
+    }
+
+    private void randomizeShips() {
+        while(true){
+            for(var ship : GlobalGameState.initialShips){
+                var lenght = ship.getLength();
+
+                var random = (int)(Math.random() * 10);
+
+                var randomX = (random-lenght);
+                var randomY = (int)(Math.random() * 10);
+
+
+                ship.setBoardCoordinates(new Coordinate(randomX, randomY));
+            }
+            if(areShipsInValidPosition()){
+                break;
+            }
+        }
+    }
+
 
     private void initializeGrid(GridPane grid) {
         grid.setHgap(4);
         grid.setVgap(4);
 
-        //TODO utworzyć losowe dodoawanie statków do grida
+        randomizeShips();
 
         for(var ship : GlobalGameState.initialShips){
             ship.addToGrid(grid);
-            //ship.rotate(grid);
         }
     }
 }
