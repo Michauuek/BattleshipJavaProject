@@ -21,6 +21,7 @@ public class Ship extends Rectangle {
     private double initialShipTranslateX;
     private double initialShipTranslateY;
     private boolean horizontal;
+    private boolean selected = false;
 
 
     private Ship(int length, int gridX, int gridY, Color color) {
@@ -43,6 +44,8 @@ public class Ship extends Rectangle {
                 initialMouseY = event.getSceneY();
                 initialShipTranslateX = cell.getTranslateX();
                 initialShipTranslateY = cell.getTranslateY();
+
+                addBorder();
             });
             cell.setOnMouseDragged((MouseEvent event) -> {
                 double newX = event.getSceneX() - initialMouseX + initialShipTranslateX;
@@ -160,13 +163,15 @@ public class Ship extends Rectangle {
     }
 
     public void addBorder(){
-        shipCells.forEach(rect ->
-                rect.setStyle("-fx-stroke: gold; -fx-stroke-width: 2; -fx-stroke-type: inside"));
-    }
-
-    public void deleteBorder(){
-        shipCells.forEach(rect ->
-                rect.setStyle("-fx-stroke-width: 0;"));
+        if(!selected){
+            shipCells.forEach(rect ->
+                    rect.setStyle("-fx-stroke: gold; -fx-stroke-width: 2; -fx-stroke-type: inside"));
+            selected = true;
+        } else {
+            shipCells.forEach(rect ->
+                    rect.setStyle("-fx-stroke-width: 0;"));
+            selected = false;
+        }
     }
 
     public List<Coordinate> getBoardCoordinates() {
