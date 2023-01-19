@@ -129,8 +129,9 @@ public class ConsoleController {
         }
     }
 
-    private Ship Select(String[] args) throws Exception {
+    private void Select(String[] args) throws Exception {
         addNewMessage("Select Command", "[System]: ");
+
 
         var position = Arrays.asList(args);
         var coordinate = new Coordinate(Integer.parseInt(position.get(0).toLowerCase()), Integer.parseInt(position.get(1)));
@@ -140,18 +141,16 @@ public class ConsoleController {
                 if(cr.getColumn() == (coordinate.getColumn()) && cr.getRow() == (coordinate.getRow())) {
                     ship.toggleBorder();
                     ship.deselectOtherShips();
-                    return ship;
                 }
             }
         }
-        return null;
     }
 
     private String helpMessage = """
             Available commands:
             /select <x> <y> - select a square
             /rotate <x> <y> - rotate the selected ship
-            /place - place the selected ship
+            /place <x> <y> - place the selected ship
             /ready - ready up
             /help - show this message""";
 

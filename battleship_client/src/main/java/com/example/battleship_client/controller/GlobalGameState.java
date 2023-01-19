@@ -25,4 +25,6 @@ public class GlobalGameState {
         add(Ship.oneHolesShip(3, 3));
         add(Ship.oneHolesShip(0, 0));
     }};
+
+    public static Ship selecedShip;
 }

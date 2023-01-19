@@ -14,9 +14,10 @@ import java.util.List;
 public class Ship extends Rectangle {
     private List<Rectangle> shipCells;
     private List<Coordinate> boardCoordinates;
-    private int gridX;
-    private int gridY;
+    private final int gridX;
+    private final int gridY;
     private final int length;
+    private final Color color;
     private double initialMouseX;
     private double initialMouseY;
     private double initialShipTranslateX;
@@ -44,8 +45,13 @@ public class Ship extends Rectangle {
         this.length = length;
         this.gridX = gridX;
         this.gridY = gridY;
+        this.color = color;
         this.horizontal = true;
 
+        addMovement();
+    }
+
+    private void addMovement() {
         // Create the list of ship cells
         shipCells = new ArrayList<>();
         for (int i = 0; i < length; i++) {
@@ -62,7 +68,9 @@ public class Ship extends Rectangle {
                 initialShipTranslateY = cell.getTranslateY();
 
                 //select ship on mouse click
-                toggleBorder();
+                if(!selected){
+                    toggleBorder();
+                }
                 deselectOtherShips();
             });
             cell.setOnMouseDragged((MouseEvent event) -> {
@@ -81,15 +89,12 @@ public class Ship extends Rectangle {
                     c.setTranslateX(snappedX);
                     c.setTranslateY(snappedY);
                 }
-
                 //update grid coordinates
                 updateBoardCoordinate(snappedX, snappedY);
             });
         }
     }
-    public int getLength() {
-        return length;
-    }
+
     public void disableDragging() {
         for (Rectangle c : shipCells) {
             c.setOnMousePressed(null);
@@ -97,7 +102,6 @@ public class Ship extends Rectangle {
             c.setOnMouseReleased(null);
         }
     }
-
     public void rotate(GridPane grid) {
         horizontal = !horizontal;
         boardCoordinates = new ArrayList<>();
@@ -175,20 +179,28 @@ public class Ship extends Rectangle {
         }
     }
 
+    /**
+     * Works but ugly
+     * Unselect all other ships
+     */
     public void deselectOtherShips(){
-        for(var ship : GlobalGameState.initialShips){
-            if(ship != this && ship.selected){
-                ship.toggleBorder();
-            }
+        if(GlobalGameState.selecedShip == null){
+            GlobalGameState.selecedShip = this;
+        }
+
+        if(GlobalGameState.selecedShip != this){
+            GlobalGameState.selecedShip.toggleBorder();
+            GlobalGameState.selecedShip = this;
         }
     }
-
     public Boolean isSelected(){
         return selected;
     }
-
     public List<Coordinate> getBoardCoordinates() {
         return boardCoordinates;
+    }
+    public int getLength() {
+        return length;
     }
 
 }
