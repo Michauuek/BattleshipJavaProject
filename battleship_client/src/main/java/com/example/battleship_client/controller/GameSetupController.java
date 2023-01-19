@@ -36,12 +36,7 @@ public class GameSetupController implements Initializable {
     private ScrollPane spMain;
     @FXML
     private VBox vboxMessages;
-
     private ConsoleController consoleController;
-
-    public GameSetupController() {
-
-    }
 
 
     @Override
@@ -55,9 +50,6 @@ public class GameSetupController implements Initializable {
                 spMain,
                 vboxMessages
         );
-
-        //auto scroll to bottom
-        vboxMessages.heightProperty().addListener(observable -> spMain.setVvalue(1D));
 
         buttonMessage.setOnAction(event -> {
             String message = tfMessage.getText();

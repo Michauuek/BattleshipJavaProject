@@ -25,6 +25,9 @@ public class ConsoleController {
         this.buttonMessage = buttonMessage;
         this.spMain = spMain;
         this.vboxMessages = vboxMessages;
+
+        //auto scroll to bottom
+        this.vboxMessages.heightProperty().addListener(observable -> spMain.setVvalue(1D));
     }
 
     public void addNewMessage(String message) {

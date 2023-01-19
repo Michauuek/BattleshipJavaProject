@@ -96,9 +96,6 @@ public class GameController implements Initializable {
                 vboxMessages
         );
 
-        //auto scroll to bottom
-        vboxMessages.heightProperty().addListener(observable -> spMain.setVvalue(1D));
-
         buttonMessage.setOnAction(event -> {
             String message = tfMessage.getText();
             if (!message.isEmpty()) {
