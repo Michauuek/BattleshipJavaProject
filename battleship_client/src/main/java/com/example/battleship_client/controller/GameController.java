@@ -6,23 +6,16 @@ import com.example.battleship_client.model.Message;
 import com.example.battleship_client.networking.DataReader;
 import com.example.battleship_client.networking.DataWriter;
 import javafx.animation.AnimationTimer;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
+
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -35,7 +28,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class GameController implements Initializable {
-
     @FXML
     private GridPane UserGrid;
     @FXML
@@ -53,6 +45,7 @@ public class GameController implements Initializable {
 
     private DataWriter dataWriter;
     private DataReader dataReader;
+    private ConsoleController consoleController;
 
     private ConcurrentLinkedQueue<String> messeges = new ConcurrentLinkedQueue<>();
 
@@ -69,7 +62,7 @@ public class GameController implements Initializable {
 
     public GameController() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        try{
+        try {
             Socket socket = new Socket(InetAddress.getLocalHost(), 8082);
 
             dataWriter = new DataWriter(socket);
@@ -95,8 +88,13 @@ public class GameController implements Initializable {
         createBoard(UserGrid);
         createEnemyBoard(EnemyGrid);
 
-        //auto scroll to bottom
-        vboxMessages.heightProperty().addListener(observable -> spMain.setVvalue(1D));
+        consoleController = new ConsoleController(
+                tfMessage,
+                buttonMessage,
+                spMain,
+                vboxMessages,
+                UserGrid
+        );
 
         buttonMessage.setOnAction(event -> {
             String message = tfMessage.getText();
@@ -132,27 +130,16 @@ public class GameController implements Initializable {
     public void update(){
         var msg = messeges.poll();
         if (msg != null) {
-            addNewMessage(msg);
+            consoleController.addNewMessage(msg);
         }
     }
 
-    private void addNewMessage(String message) {
-        HBox hbox = new HBox();
-        hbox.setAlignment(Pos.CENTER_LEFT);
 
-        hbox.setPadding(new Insets(5, 5, 5, 10));
-
-        Text text = new Text(message);
-        TextFlow textFlow = new TextFlow(text);
-        text.setFill(Color.WHITE);
-        text.setFont(new Font("Monospaced Regular", 16));
-
-        TextFlow textFlow = new TextFlow(text);
-        hbox.getChildren().add(textFlow);
-        vboxMessages.getChildren().add(hbox);
-        tfMessage.clear();
-    }
-
+    /***
+     * Function to create board
+     * And add ships from previous screen
+     * @param grid
+     */
     private void createBoard(GridPane grid) {
         for(int i=0;i<10;i++){
             for(int j=0;j<10;j++){
@@ -160,7 +147,6 @@ public class GameController implements Initializable {
                 grid.add(square, i, j);
             }
         }
-
         for(var ship : GlobalGameState.initialShips){
             ship.addShipGrid(grid);
             ship.disableDragging();

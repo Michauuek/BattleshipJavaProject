@@ -28,7 +28,7 @@
       <VBox fx:id="Ships" layoutX="700.0" layoutY="183.0" prefHeight="179.0" prefWidth="253.0" styleClass="ships" />
     </Pane>
 
-    <Pane layoutX="525.0" layoutY="554.0" prefHeight="205.0" prefWidth="498.0">
+    <Pane layoutX="525.0" layoutY="554.0" prefHeight="205.0" prefWidth="498.0" >
         <TextField fx:id="tfMessage" layoutX="-2.0" layoutY="139.0" prefHeight="35.0" prefWidth="426.0" styleClass="consoleText">
             <font>
                 <Font name="Monospaced Regular" size="16.0" />
