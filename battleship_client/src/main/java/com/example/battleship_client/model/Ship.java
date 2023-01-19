@@ -175,7 +175,7 @@ public class Ship extends Rectangle {
         }
     }
 
-    private void deselectOtherShips(){
+    public void deselectOtherShips(){
         for(var ship : GlobalGameState.initialShips){
             if(ship != this && ship.selected){
                 ship.toggleBorder();

@@ -139,6 +139,7 @@ public class ConsoleController {
             for(var cr : ship.getBoardCoordinates()) {
                 if(cr.getColumn() == (coordinate.getColumn()) && cr.getRow() == (coordinate.getRow())) {
                     ship.toggleBorder();
+                    ship.deselectOtherShips();
                     return ship;
                 }
             }
