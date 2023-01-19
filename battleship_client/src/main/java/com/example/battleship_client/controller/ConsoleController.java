@@ -1,9 +1,12 @@
 package com.example.battleship_client.controller;
 
 import com.example.battleship_client.model.Coordinate;
-import javafx.animation.AnimationTimer;
+import com.example.battleship_client.model.Ship;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
@@ -14,7 +17,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
+
 import java.util.Arrays;
+import java.util.Objects;
 
 public class ConsoleController {
 
@@ -22,7 +28,6 @@ public class ConsoleController {
     private Button buttonMessage;
     private ScrollPane spMain;
     private VBox vboxMessages;
-
     private GridPane board;
 
     public ConsoleController(TextField tfMessage, Button buttonMessage, ScrollPane spMain, VBox vboxMessages, GridPane board) {
@@ -90,10 +95,21 @@ public class ConsoleController {
 
     private void Ready(String[] args) throws Exception {
         addNewMessage("Ready Command", "[System]: ");
+
+        Stage stage = (Stage) tfMessage.getScene().getWindow();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/GameView.fxml")));
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     private void Place(String[] args) throws Exception {
         addNewMessage("Place Command", "[System]: ");
+
+        for(var ship : GlobalGameState.initialShips){
+            if(ship.isSelected()){
+                //TODO: delete previous ship position and place in new one
+            }
+        }
     }
 
     private void Rotate(String[] args) throws Exception {
@@ -105,7 +121,6 @@ public class ConsoleController {
         var coordinate = new Coordinate(Integer.parseInt(position.get(0).toLowerCase()), Integer.parseInt(position.get(1)));
 
         for(var ship : GlobalGameState.initialShips){
-
             for(var cr : ship.getBoardCoordinates()) {
                 if(cr.getColumn() == (coordinate.getColumn()) && cr.getRow() == (coordinate.getRow())) {
                     ship.rotate(board);
@@ -114,14 +129,27 @@ public class ConsoleController {
         }
     }
 
-    private void Select(String[] args) throws Exception {
+    private Ship Select(String[] args) throws Exception {
         addNewMessage("Select Command", "[System]: ");
+
+        var position = Arrays.asList(args);
+        var coordinate = new Coordinate(Integer.parseInt(position.get(0).toLowerCase()), Integer.parseInt(position.get(1)));
+
+        for(var ship : GlobalGameState.initialShips){
+            for(var cr : ship.getBoardCoordinates()) {
+                if(cr.getColumn() == (coordinate.getColumn()) && cr.getRow() == (coordinate.getRow())) {
+                    ship.addBorder();
+                    return ship;
+                }
+            }
+        }
+        return null;
     }
 
     private String helpMessage = """
             Available commands:
             /select <x> <y> - select a square
-            /rotate - rotate the selected ship
+            /rotate <x> <y> - rotate the selected ship
             /place - place the selected ship
             /ready - ready up
             /help - show this message""";

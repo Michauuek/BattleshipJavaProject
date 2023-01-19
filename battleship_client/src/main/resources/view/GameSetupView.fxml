@@ -9,13 +9,7 @@
     <Pane>
         <Pane layoutX="12.0" prefHeight="29.0" prefWidth="1006.0" styleClass="root" />
         <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
-         <children>
-            <Button fx:id="readyButton" layoutX="833.0" layoutY="48.0" mnemonicParsing="false" onAction="#readyClickHandle" prefHeight="59.0" prefWidth="130.0" text="Redy">
-               <font>
-                  <Font name="Century Gothic" size="24.0" />
-               </font>
-            </Button>
-         </children></Pane>
+    </Pane>
         <Pane fx:id="TitlePane" layoutX="80.0" layoutY="197.0" prefHeight="85.0" prefWidth="395.0" styleClass="titlePane">
          <children>
             <Label layoutX="94.0" layoutY="27.0" prefHeight="44.0" prefWidth="208.0" styleClass="labelText" text="Set up your boats" textFill="WHITE">

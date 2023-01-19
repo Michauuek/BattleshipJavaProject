@@ -21,7 +21,23 @@ public class Ship extends Rectangle {
     private double initialShipTranslateX;
     private double initialShipTranslateY;
     private boolean horizontal;
+    private boolean selected = false;
 
+    public static Ship fiveHolesShip(int gridX, int gridY){
+        return new Ship(5, gridX, gridY, Color.DARKRED);
+    }
+    public static Ship fourHolesShip(int gridX, int gridY){
+        return new Ship(4, gridX, gridY, Color.DARKSALMON);
+    }
+    public static Ship threeHolesShip(int gridX, int gridY){
+        return new Ship(3, gridX, gridY, Color.DARKGREEN);
+    }
+    public static Ship twoHolesShip(int gridX, int gridY){
+        return new Ship(2, gridX, gridY, Color.DARKGREY);
+    }
+    public static Ship oneHolesShip(int gridX, int gridY){
+        return new Ship(1, gridX, gridY, Color.DARKCYAN);
+    }
 
     private Ship(int length, int gridX, int gridY, Color color) {
         this.length = length;
@@ -43,6 +59,9 @@ public class Ship extends Rectangle {
                 initialMouseY = event.getSceneY();
                 initialShipTranslateX = cell.getTranslateX();
                 initialShipTranslateY = cell.getTranslateY();
+
+                //select ship on mouse click
+                addBorder();
             });
             cell.setOnMouseDragged((MouseEvent event) -> {
                 double newX = event.getSceneX() - initialMouseX + initialShipTranslateX;
@@ -66,11 +85,9 @@ public class Ship extends Rectangle {
             });
         }
     }
-
     public int getLength() {
         return length;
     }
-
     public void disableDragging() {
         for (Rectangle c : shipCells) {
             c.setOnMousePressed(null);
@@ -79,21 +96,6 @@ public class Ship extends Rectangle {
         }
     }
 
-    public static Ship fiveHolesShip(int gridX, int gridY){
-        return new Ship(5, gridX, gridY, Color.DARKRED);
-    }
-    public static Ship fourHolesShip(int gridX, int gridY){
-        return new Ship(4, gridX, gridY, Color.DARKSALMON);
-    }
-    public static Ship threeHolesShip(int gridX, int gridY){
-        return new Ship(3, gridX, gridY, Color.DARKGREEN);
-    }
-    public static Ship twoHolesShip(int gridX, int gridY){
-        return new Ship(2, gridX, gridY, Color.DARKGREY);
-    }
-    public static Ship oneHolesShip(int gridX, int gridY){
-        return new Ship(1, gridX, gridY, Color.DARKCYAN);
-    }
     public void rotate(GridPane grid) {
         horizontal = !horizontal;
         boardCoordinates = new ArrayList<>();
@@ -152,11 +154,27 @@ public class Ship extends Rectangle {
             boardCoordinates.add(new Coordinate(gridX + i, gridY));
         }
     }
-
     public void addShipGrid(GridPane grid) {
         for (int i = 0; i < length; i++) {
-            grid.add(shipCells.get(i), boardCoordinates.get(i).getRow(), boardCoordinates.get(i).getColumn());
+            var newCell = new BoardSquare();
+            newCell.setColor((Color) shipCells.get(i).getFill());
+            grid.add(newCell, boardCoordinates.get(i).getRow(), boardCoordinates.get(i).getColumn());
         }
+    }
+    public void addBorder(){
+        if(!selected){
+            shipCells.forEach(rect ->
+                    rect.setStyle("-fx-stroke: gold; -fx-stroke-width: 2; -fx-stroke-type: inside"));
+            selected = true;
+        } else {
+            shipCells.forEach(rect ->
+                    rect.setStyle("-fx-stroke-width: 0;"));
+            selected = false;
+        }
+    }
+
+    public Boolean isSelected(){
+        return selected;
     }
 
     public List<Coordinate> getBoardCoordinates() {
