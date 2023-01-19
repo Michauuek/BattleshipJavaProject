@@ -1,27 +1,17 @@
 package com.example.battleship_client.controller;
 
-import com.example.battleship_client.model.BoardSquare;
-import com.example.battleship_client.model.Message;
-import com.example.battleship_client.networking.DataWriter;
-import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-
-import java.net.URL;
 import java.util.Arrays;
-import java.util.ResourceBundle;
 
 public class ConsoleController {
 

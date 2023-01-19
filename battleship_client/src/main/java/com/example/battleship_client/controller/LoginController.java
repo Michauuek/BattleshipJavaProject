@@ -1,7 +1,5 @@
 package com.example.battleship_client.controller;
 
-import com.example.battleship_client.model.Message;
-import com.example.battleship_client.networking.DataWriter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
