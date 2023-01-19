@@ -159,6 +159,16 @@ public class Ship extends Rectangle {
         }
     }
 
+    public void addBorder(){
+        shipCells.forEach(rect ->
+                rect.setStyle("-fx-stroke: gold; -fx-stroke-width: 2; -fx-stroke-type: inside"));
+    }
+
+    public void deleteBorder(){
+        shipCells.forEach(rect ->
+                rect.setStyle("-fx-stroke-width: 0;"));
+    }
+
     public List<Coordinate> getBoardCoordinates() {
         return boardCoordinates;
     }
