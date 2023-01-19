@@ -6,6 +6,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.io.BufferedReader;
@@ -27,6 +28,8 @@ public class Player {
     private ConcurrentLinkedQueue<Message> messages = new ConcurrentLinkedQueue<>();
 
     private boolean isFirstPlayer;
+    @Setter
+    @Getter
     public String name = null;
 
     private Thread readerThread = new Thread(() -> {

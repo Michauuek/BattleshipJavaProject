@@ -96,8 +96,8 @@ public class GameSession implements Runnable {
                          "/surrender - surrender the game";
 
     void handleCommands(Message message, Player sender, Player receiver) throws IOException {
-        if(message.content.equals("greetings")) {
-            sender.name = message.adds.get("name");
+        if(message.content.equals("greeting")) {
+            sender.setName(message.adds.get("name"));
 
             broadcast(Message.newMessage("Player " + sender.name + " joined the game!"));
         }

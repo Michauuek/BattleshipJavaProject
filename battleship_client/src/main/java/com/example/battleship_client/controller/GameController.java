@@ -72,7 +72,7 @@ public class GameController implements Initializable {
             var name = GlobalGameState.name;
 
             // send user name to server
-            DataWriter.sendData(new Message("greetings", Map.of("name", name)));
+            DataWriter.sendData(new Message("greeting", Map.of("name", name)));
 
             // start thread to read messages
             addMessageThread.start();
