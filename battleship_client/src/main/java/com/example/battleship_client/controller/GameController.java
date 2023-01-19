@@ -68,10 +68,10 @@ public class GameController implements Initializable {
             dataWriter = new DataWriter(socket);
             dataReader = new DataReader(socket);
 
-            // get user name
+            // get username
             var name = GlobalGameState.name;
 
-            // send user name to server
+            // send username to server
             DataWriter.sendData(new Message("greetings", Map.of("name", name)));
 
             // start thread to read messages

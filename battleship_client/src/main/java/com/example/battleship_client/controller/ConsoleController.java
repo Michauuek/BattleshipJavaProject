@@ -1,6 +1,7 @@
 package com.example.battleship_client.controller;
 
 import com.example.battleship_client.model.Coordinate;
+import com.example.battleship_client.model.Ship;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -104,6 +105,11 @@ public class ConsoleController {
     private void Place(String[] args) throws Exception {
         addNewMessage("Place Command", "[System]: ");
 
+        for(var ship : GlobalGameState.initialShips){
+            if(ship.isSelected()){
+                //TODO: delete previous ship position and place in new one
+            }
+        }
     }
 
     private void Rotate(String[] args) throws Exception {
@@ -123,7 +129,7 @@ public class ConsoleController {
         }
     }
 
-    private void Select(String[] args) throws Exception {
+    private Ship Select(String[] args) throws Exception {
         addNewMessage("Select Command", "[System]: ");
 
         var position = Arrays.asList(args);
@@ -133,9 +139,11 @@ public class ConsoleController {
             for(var cr : ship.getBoardCoordinates()) {
                 if(cr.getColumn() == (coordinate.getColumn()) && cr.getRow() == (coordinate.getRow())) {
                     ship.addBorder();
+                    return ship;
                 }
             }
         }
+        return null;
     }
 
     private String helpMessage = """
