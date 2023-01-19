@@ -131,12 +131,12 @@ public class Ship extends Rectangle {
         boardCoordinates = new ArrayList<>();
         if(horizontal){
             for (int j = 0; j < length; j++) {
-                boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39) + j), (int) (this.gridY + (snappedY /39))));
+                boardCoordinates.add(new Coordinate((int) (gridX + (snappedX /39) + j), (int) (gridY + (snappedY /39))));
             }
         }
         else {
             for (int j = 0; j < length; j++) {
-                boardCoordinates.add(new Coordinate((int) (this.gridX + (snappedX /39)), (int) (this.gridY + (snappedY /39) + j)));
+                boardCoordinates.add(new Coordinate((int) (gridX + (snappedX /39)), (int) (gridY + (snappedY /39) + j)));
             }
         }
     }
@@ -201,6 +201,12 @@ public class Ship extends Rectangle {
     }
     public int getLength() {
         return length;
+    }
+
+    public void deleteFromBoard(GridPane grid){
+        for (int i = 0; i < length; i++){
+            grid.getChildren().remove(shipCells.get(i));
+        }
     }
 
 }

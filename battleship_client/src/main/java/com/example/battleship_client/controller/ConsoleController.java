@@ -74,26 +74,26 @@ public class ConsoleController {
         var args = tokens.length > 1 ? Arrays.stream(tokens).skip(1).toArray(String[]::new) : new String[0];
 
         try {
-            Execute(command, args);
+            execute(command, args);
         } catch (Exception e) {
             addNewMessage("Error: " + e.getMessage(), "[System]: ");
         }
     }
-    void Execute(String command, String[] args) throws Exception {
+    void execute(String command, String[] args) throws Exception {
         switch(command) {
-            case "select" -> Select(args);
-            case "rotate" -> Rotate(args);
-            case "place" -> Place(args);
-            case "ready" -> Ready(args);
-            case "help" -> Help(args);
+            case "select" -> select(args);
+            case "rotate" -> rotate(args);
+            case "place" -> place(args);
+            case "ready" -> ready(args);
+            case "help" -> help(args);
             default -> throw new Exception("Unknown command");
         }
     }
-    private void Help(String[] args) {
+    private void help(String[] args) {
         addNewMessage(helpMessage, "[System]: ");
     }
 
-    private void Ready(String[] args) throws Exception {
+    private void ready(String[] args) throws Exception {
         addNewMessage("Ready Command", "[System]: ");
 
         Stage stage = (Stage) tfMessage.getScene().getWindow();
@@ -102,36 +102,25 @@ public class ConsoleController {
         stage.show();
     }
 
-    private void Place(String[] args) throws Exception {
+    private void place(String[] args) throws Exception {
         addNewMessage("Place Command", "[System]: ");
 
-        for(var ship : GlobalGameState.initialShips){
-            if(ship.isSelected()){
-                //TODO: delete previous ship position and place in new one
-            }
-        }
-    }
-
-    private void Rotate(String[] args) throws Exception {
-        addNewMessage("Rotate Command", "[System]: ");
-
-        //TODO: add support for for letters - currently working for numbers only eg. /rotate 0 0
-
+        //TODO: naprawić błąd - po przeniesieniu z użyciem komendy nie dziła border do zaznaczania
         var position = Arrays.asList(args);
         var coordinate = new Coordinate(Integer.parseInt(position.get(0).toLowerCase()), Integer.parseInt(position.get(1)));
-
-        for(var ship : GlobalGameState.initialShips){
-            for(var cr : ship.getBoardCoordinates()) {
-                if(cr.getColumn() == (coordinate.getColumn()) && cr.getRow() == (coordinate.getRow())) {
-                    ship.rotate(board);
-                }
-            }
-        }
+        var newShip = createShip(GlobalGameState.selecedShip.getLength(), coordinate.getColumn(), coordinate.getRow());
+        GlobalGameState.selecedShip.deleteFromBoard(board);
+        newShip.setBoardCoordinates(coordinate);
+        newShip.addToGrid(board);
     }
 
-    private void Select(String[] args) throws Exception {
-        addNewMessage("Select Command", "[System]: ");
+    private void rotate(String[] args) throws Exception {
+        addNewMessage("Rotate Command", "[System]: ");
+        GlobalGameState.selecedShip.rotate(board);
+    }
 
+    private void select(String[] args) throws Exception {
+        addNewMessage("Select Command", "[System]: ");
 
         var position = Arrays.asList(args);
         var coordinate = new Coordinate(Integer.parseInt(position.get(0).toLowerCase()), Integer.parseInt(position.get(1)));
@@ -166,5 +155,16 @@ public class ConsoleController {
         text.setFill(Color.WHITE);
         text.setFont(new Font("Monospaced Regular", 16));
         return text;
+    }
+
+    private Ship createShip(int length, int y, int x) {
+        return switch (length) {
+            case 1 -> Ship.oneHolesShip(y, x);
+            case 2 -> Ship.twoHolesShip(y, x);
+            case 3 -> Ship.threeHolesShip(y, x);
+            case 4 -> Ship.fourHolesShip(y, x);
+            case 5 -> Ship.fiveHolesShip(y, x);
+            default -> throw new IllegalArgumentException("Invalid length");
+        };
     }
 }
