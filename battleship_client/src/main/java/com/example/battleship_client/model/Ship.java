@@ -1,6 +1,7 @@
 package com.example.battleship_client.model;
 
 
+import com.example.battleship_client.controller.GlobalGameState;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -61,7 +62,8 @@ public class Ship extends Rectangle {
                 initialShipTranslateY = cell.getTranslateY();
 
                 //select ship on mouse click
-                addBorder();
+                toggleBorder();
+                deselectOtherShips();
             });
             cell.setOnMouseDragged((MouseEvent event) -> {
                 double newX = event.getSceneX() - initialMouseX + initialShipTranslateX;
@@ -161,7 +163,7 @@ public class Ship extends Rectangle {
             grid.add(newCell, boardCoordinates.get(i).getRow(), boardCoordinates.get(i).getColumn());
         }
     }
-    public void addBorder(){
+    public void toggleBorder(){
         if(!selected){
             shipCells.forEach(rect ->
                     rect.setStyle("-fx-stroke: gold; -fx-stroke-width: 2; -fx-stroke-type: inside"));
@@ -170,6 +172,14 @@ public class Ship extends Rectangle {
             shipCells.forEach(rect ->
                     rect.setStyle("-fx-stroke-width: 0;"));
             selected = false;
+        }
+    }
+
+    private void deselectOtherShips(){
+        for(var ship : GlobalGameState.initialShips){
+            if(ship != this && ship.selected){
+                ship.toggleBorder();
+            }
         }
     }
 

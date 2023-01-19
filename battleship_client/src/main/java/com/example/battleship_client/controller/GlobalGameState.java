@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GlobalGameState {
-    static String name;
-    static List<Ship> initialShips = new ArrayList<>() {{
+    public static String name;
+    public static List<Ship> initialShips = new ArrayList<>() {{
         add(Ship.fiveHolesShip(4,0));
         add(Ship.fourHolesShip(0, 0));
         add(Ship.fourHolesShip(2, 1));

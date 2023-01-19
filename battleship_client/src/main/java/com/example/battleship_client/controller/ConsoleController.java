@@ -138,7 +138,7 @@ public class ConsoleController {
         for(var ship : GlobalGameState.initialShips){
             for(var cr : ship.getBoardCoordinates()) {
                 if(cr.getColumn() == (coordinate.getColumn()) && cr.getRow() == (coordinate.getRow())) {
-                    ship.addBorder();
+                    ship.toggleBorder();
                     return ship;
                 }
             }
