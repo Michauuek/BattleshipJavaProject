@@ -1,10 +1,13 @@
 package com.example.battleship_client.controller;
 
+import com.example.battleship_client.model.Coordinate;
+import javafx.animation.AnimationTimer;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -20,11 +23,14 @@ public class ConsoleController {
     private ScrollPane spMain;
     private VBox vboxMessages;
 
-    public ConsoleController(TextField tfMessage, Button buttonMessage, ScrollPane spMain, VBox vboxMessages) {
+    private GridPane board;
+
+    public ConsoleController(TextField tfMessage, Button buttonMessage, ScrollPane spMain, VBox vboxMessages, GridPane board) {
         this.tfMessage = tfMessage;
         this.buttonMessage = buttonMessage;
         this.spMain = spMain;
         this.vboxMessages = vboxMessages;
+        this.board = board;
 
         //auto scroll to bottom
         this.vboxMessages.heightProperty().addListener(observable -> spMain.setVvalue(1D));
@@ -92,6 +98,20 @@ public class ConsoleController {
 
     private void Rotate(String[] args) throws Exception {
         addNewMessage("Rotate Command", "[System]: ");
+
+        //TODO: add support for for letters - currently working for numbers only eg. /rotate 0 0
+
+        var position = Arrays.asList(args);
+        var coordinate = new Coordinate(Integer.parseInt(position.get(0).toLowerCase()), Integer.parseInt(position.get(1)));
+
+        for(var ship : GlobalGameState.initialShips){
+
+            for(var cr : ship.getBoardCoordinates()) {
+                if(cr.getColumn() == (coordinate.getColumn()) && cr.getRow() == (coordinate.getRow())) {
+                    ship.rotate(board);
+                }
+            }
+        }
     }
 
     private void Select(String[] args) throws Exception {

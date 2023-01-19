@@ -28,7 +28,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class GameController implements Initializable {
-
     @FXML
     private GridPane UserGrid;
     @FXML
@@ -63,7 +62,7 @@ public class GameController implements Initializable {
 
     public GameController() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
-        try{
+        try {
             Socket socket = new Socket(InetAddress.getLocalHost(), 8082);
 
             dataWriter = new DataWriter(socket);
@@ -93,7 +92,8 @@ public class GameController implements Initializable {
                 tfMessage,
                 buttonMessage,
                 spMain,
-                vboxMessages
+                vboxMessages,
+                UserGrid
         );
 
         buttonMessage.setOnAction(event -> {

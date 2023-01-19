@@ -48,7 +48,8 @@ public class GameSetupController implements Initializable {
                 tfMessage,
                 buttonMessage,
                 spMain,
-                vboxMessages
+                vboxMessages,
+                UserGrid
         );
 
         buttonMessage.setOnAction(event -> {
