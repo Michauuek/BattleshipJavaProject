@@ -1,6 +1,8 @@
 package com.example.battleship_client.model;
 
 
+import java.util.Objects;
+
 public class Coordinate {
     private int row;
     private int column;
@@ -23,6 +25,21 @@ public class Coordinate {
 
     public void setColumn(int column) {
         this.column = column;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Coordinate that = (Coordinate) o;
+        return row == that.row && column == that.column;
+    }
+    public boolean isNearby(Coordinate coordinate){
+        if (row == coordinate.row && column == coordinate.column)
+            return false;
+
+        //TODO: check if not nearby
+        return false;
     }
 
     @Override

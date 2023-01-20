@@ -1,10 +1,9 @@
 package com.example.battleship_client.controller;
 
-import com.example.battleship_client.model.BoardSquare;
-import com.example.battleship_client.model.Coordinate;
-import com.example.battleship_client.model.Message;
+import com.example.battleship_client.model.*;
 import com.example.battleship_client.networking.DataReader;
 import com.example.battleship_client.networking.DataWriter;
+import com.google.gson.Gson;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -21,6 +20,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -68,17 +68,43 @@ public class GameController implements Initializable {
             dataWriter = new DataWriter(socket);
             dataReader = new DataReader(socket);
 
+            System.out.println(analyzeBoard());
+
             // get user name
             var name = GlobalGameState.name;
 
+            Gson gson = new Gson();
+            BoardModel boardModel = new BoardModel(GlobalGameState.initialShips);
+            String ships = gson.toJson(boardModel, BoardModel.class);
+            System.out.println(ships);
             // send user name to server
-            DataWriter.sendData(new Message("greeting", Map.of("name", name)));
+            var message = new Message("greeting", Map.of("name", name, "board", ships));
+            System.out.println(message.toJson());
+            DataWriter.sendData(message);
 
             // start thread to read messages
             addMessageThread.start();
         } catch (IOException e){
             System.err.print("Server not found");
         }
+    }
+
+    boolean analyzeBoard(){
+        var ships = GlobalGameState.initialShips;
+        for (int i = 0; i < ships.size(); i++){
+            for (int j = 0; j < ships.get(i).getBoardCoordinates().size(); j++){
+                for(int k = i+1; k < ships.size(); k++){
+                    for(int m = 0; m < ships.get(k).getBoardCoordinates().size(); m++){
+                        if(ships.get(i).getBoardCoordinates().get(j)
+                                .equals(ships.get(k).getBoardCoordinates().get(m))){
+                            return false;
+                        }
+
+                    }
+                }
+            }
+        }
+        return true;
     }
 
     @Override

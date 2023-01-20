@@ -2,6 +2,7 @@ package com.example.server;
 
 
 import com.example.data.DatabaseFactory;
+import com.example.model.BoardModel;
 import com.example.model.Coordinate;
 import com.example.model.Message;
 import com.google.gson.Gson;
@@ -57,7 +58,6 @@ public class GameSession implements Runnable {
             put("cords", new Gson().toJson(cord));
         }}));
     }
-
     void broadcast(Message message) {
         firstPlayer.write(message);
         secondPlayer.write(message);
@@ -100,6 +100,11 @@ public class GameSession implements Runnable {
         if(message.content.equals("greeting")) {
             sender.setName(message.adds.get("name"));
             DatabaseFactory.addUser(sender.getName());
+
+            Gson gson = new Gson();
+            BoardModel board = gson.fromJson(message.adds.get("board"), BoardModel.class);
+            System.out.println(board);
+
 
             broadcast(Message.newMessage("Player " + sender.name + " joined the game!"));
         }
