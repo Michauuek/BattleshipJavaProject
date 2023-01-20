@@ -104,14 +104,17 @@ public class ConsoleController {
 
     private void place(String[] args) throws Exception {
         addNewMessage("Place Command", "[System]: ");
-
-        //TODO: naprawić błąd - po przeniesieniu z użyciem komendy nie dziła border do zaznaczania
         var position = Arrays.asList(args);
         var coordinate = new Coordinate(Integer.parseInt(position.get(0).toLowerCase()), Integer.parseInt(position.get(1)));
         var newShip = createShip(GlobalGameState.selecedShip.getLength(), coordinate.getColumn(), coordinate.getRow());
         GlobalGameState.selecedShip.deleteFromBoard(board);
         newShip.setBoardCoordinates(coordinate);
         newShip.addToGrid(board);
+
+        GlobalGameState.initialShips.remove(GlobalGameState.selecedShip);
+        GlobalGameState.initialShips.add(newShip);
+        GlobalGameState.selecedShip = newShip;
+        GlobalGameState.selecedShip.toggleBorder();
     }
 
     private void rotate(String[] args) throws Exception {

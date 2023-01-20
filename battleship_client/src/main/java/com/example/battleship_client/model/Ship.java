@@ -2,6 +2,7 @@ package com.example.battleship_client.model;
 
 
 import com.example.battleship_client.controller.GlobalGameState;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -207,6 +208,8 @@ public class Ship extends Rectangle {
         for (int i = 0; i < length; i++){
             grid.getChildren().remove(shipCells.get(i));
         }
+        shipCells = new ArrayList<>();
+        boardCoordinates = new ArrayList<>();
     }
 
 }
