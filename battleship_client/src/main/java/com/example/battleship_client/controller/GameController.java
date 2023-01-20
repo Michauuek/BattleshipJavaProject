@@ -88,7 +88,9 @@ public class GameController implements Initializable {
             System.err.print("Server not found");
         }
     }
-
+/*
+* Ugly as hell :///
+ */
     boolean analyzeBoard(){
         var ships = GlobalGameState.initialShips;
         for (int i = 0; i < ships.size(); i++){
@@ -96,7 +98,7 @@ public class GameController implements Initializable {
                 for(int k = i+1; k < ships.size(); k++){
                     for(int m = 0; m < ships.get(k).getBoardCoordinates().size(); m++){
                         if(ships.get(i).getBoardCoordinates().get(j)
-                                .equals(ships.get(k).getBoardCoordinates().get(m))){
+                                .isNearby(ships.get(k).getBoardCoordinates().get(m))){
                             return false;
                         }
 
