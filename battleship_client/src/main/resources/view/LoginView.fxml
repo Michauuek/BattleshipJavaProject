@@ -8,13 +8,13 @@
     <children>
         <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
          <children>
-              <Label layoutX="365.0" layoutY="64.0" prefHeight="163.0" prefWidth="333.0" styleClass="titleLabel" text="Battleships" textAlignment="CENTER" textFill="WHITE">
+              <Label layoutX="358.0" layoutY="64.0" prefHeight="163.0" prefWidth="365.0" styleClass="titleLabel" text="Battleships" textAlignment="CENTER" textFill="WHITE">
                   <font>
                       <Font name="Century Gothic" size="64.0" />
                   </font>
               </Label>
          </children></Pane>
-      <Pane layoutX="351.0" layoutY="282.0" prefHeight="244.0" prefWidth="374.0" styleClass="fieldBackground" />
+      <Pane layoutX="351.0" layoutY="282.0" prefHeight="244.0" prefWidth="381.0" styleClass="fieldBackground" />
 
         <Pane layoutX="294.0" layoutY="251.0" prefHeight="250.0" prefWidth="398.0" styleClass="loginPane">
 
