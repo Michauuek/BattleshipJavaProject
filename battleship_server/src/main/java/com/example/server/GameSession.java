@@ -59,13 +59,13 @@ public class GameSession implements Runnable {
         boolean finalDidHit = didHit;
         sender.write(new Message("hit", new HashMap<String, String>() {{
             put("your", "true");
-            put("cords", new Gson().toJson(coord));
+            put("coords", new Gson().toJson(coord));
             put("didHit", String.valueOf(finalDidHit));
         }}));
 
         receiver.write(new Message("hit", new HashMap<String, String>() {{
             put("your", "false");
-            put("cords", new Gson().toJson(coord));
+            put("coords", new Gson().toJson(coord));
             put("didHit", String.valueOf(finalDidHit));
         }}));
         firstPlayerTurn = !firstPlayerTurn;

@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -50,15 +51,54 @@ public class GameController implements Initializable {
     private ConcurrentLinkedQueue<String> messeges = new ConcurrentLinkedQueue<>();
 
     private Thread addMessageThread = new Thread(() -> {
+        Gson gson = new Gson();
         while (true) {
             var msg = dataReader.readMessage();
             if (msg != null) {
                 if(msg.content.equals("message")){
                     messeges.add(msg.adds.get("message"));
                 }
+                if(msg.content.equals("hit")){
+                    boolean your = Boolean.parseBoolean(msg.adds.get("your"));
+                    boolean didHit = Boolean.parseBoolean(msg.adds.get("didHit"));
+                    Coordinate coord = gson.fromJson(msg.adds.get("coords"), Coordinate.class);
+                    System.out.println("row: "+coord.getRow() + " column: "+ coord.getColumn());
+                    if(your){
+                        var nodes = getNodesByCoordinate(coord.getColumn(), coord.getRow(), EnemyGrid);
+                        if(didHit){
+                            System.out.println(nodes.size());
+                            nodes.forEach(item -> {item.setFill(Color.GREEN);item.setDisable(true);});
+                        }
+                        else{
+
+                            System.out.println(nodes.size());
+                            nodes.forEach(item -> {item.setFill(Color.RED);item.setDisable(true);});
+                        }
+                    }
+                    else{
+                        var nodes = getNodesByCoordinate(coord.getColumn(), coord.getRow(), UserGrid);
+                        if(didHit){
+                            System.out.println(nodes.size());
+                            nodes.forEach(item -> {item.setFill(Color.GREEN);item.setDisable(true);});
+                        }
+                        else{
+                            System.out.println(nodes.size());
+                            nodes.forEach(item -> {item.setFill(Color.RED);item.setDisable(true);});
+                        }
+                    }
+                }
             }
         }
     });
+    List<BoardSquare> getNodesByCoordinate(Integer row, Integer column, GridPane grid) {
+        List<BoardSquare> matchingNodes = new ArrayList<>();
+        for (var node : grid.getChildren()) {
+            if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column){
+                matchingNodes.add((BoardSquare)node);
+            }
+        }
+        return matchingNodes;
+    }
 
     public GameController() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -194,10 +234,15 @@ public class GameController implements Initializable {
                 var square = new BoardSquare();
                 grid.add(square, i, j);
 
+                int finalI = i;
+                int finalJ = j;
                 square.setOnMouseClicked(mouseEvent -> {
-                    square.setFill(Color.GREEN);
-                    square.setDisable(true);
-                    var ship = new Coordinate(GridPane.getRowIndex(square), GridPane.getColumnIndex(square));
+                    var command = "/shoot " + finalI + " " + finalJ;
+                    DataWriter.sendData(Message.newMessage(command));
+                    consoleController.addNewMessage(command);
+//                    square.setFill(Color.GREEN);
+//                    square.setDisable(true);
+//                    var ship = new Coordinate(GridPane.getRowIndex(square), GridPane.getColumnIndex(square));
                 });
             }
         }
