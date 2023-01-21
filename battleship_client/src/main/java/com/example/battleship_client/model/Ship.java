@@ -86,14 +86,35 @@ public class Ship extends Rectangle {
                 // Snap the ship to the nearest grid cell
                 double snappedX = Math.round(cell.getTranslateX() / 39.0) * 39;
                 double snappedY = Math.round(cell.getTranslateY() / 39.0) * 39;
-                for (Rectangle c : shipCells) {
-                    c.setTranslateX(snappedX);
-                    c.setTranslateY(snappedY);
-                }
+
                 //update grid coordinates
-                updateBoardCoordinate(snappedX, snappedY);
+                var newCoords = updateBoardCoordinate(snappedX, snappedY);
+                if(checkCoordValidity(newCoords)){
+                    for (Rectangle c : shipCells) {
+                        c.setTranslateX(snappedX);
+                        c.setTranslateY(snappedY);
+                    }
+                    boardCoordinates = newCoords;
+                }
+                else{
+                    for (Rectangle c : shipCells) {
+                        c.setTranslateX(initialShipTranslateX);
+                        c.setTranslateY(initialShipTranslateY);
+                    }
+                }
+
             });
         }
+    }
+    private boolean checkCoordValidity(List<Coordinate> coords){
+        for(var ship : GlobalGameState.initialShips){
+            if(ship != this){
+                if(ship.isNearbyCoord(coords)){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public void disableDragging() {
@@ -128,18 +149,19 @@ public class Ship extends Rectangle {
             }
         }
     }
-    private void updateBoardCoordinate(double snappedX, double snappedY) {
-        boardCoordinates = new ArrayList<>();
+    private List<Coordinate> updateBoardCoordinate(double snappedX, double snappedY) {
+        var coordinates = new ArrayList<Coordinate>();
         if(horizontal){
             for (int j = 0; j < length; j++) {
-                boardCoordinates.add(new Coordinate((int) (gridX + (snappedX /39) + j), (int) (gridY + (snappedY /39))));
+                coordinates.add(new Coordinate((int) (gridX + (snappedX /39) + j), (int) (gridY + (snappedY /39))));
             }
         }
         else {
             for (int j = 0; j < length; j++) {
-                boardCoordinates.add(new Coordinate((int) (gridX + (snappedX /39)), (int) (gridY + (snappedY /39) + j)));
+                coordinates.add(new Coordinate((int) (gridX + (snappedX /39)), (int) (gridY + (snappedY /39) + j)));
             }
         }
+        return coordinates;
     }
     public void setBoardCoordinates(Coordinate root) {
         boardCoordinates = new ArrayList<>();
@@ -180,8 +202,11 @@ public class Ship extends Rectangle {
         }
     }
     public boolean isNearby(Ship ship){
+        return isNearbyCoord(ship.boardCoordinates);
+    }
+    public boolean isNearbyCoord(List<Coordinate> ship){
         for(var myField : boardCoordinates){
-            for(var theirField : ship.boardCoordinates){
+            for(var theirField : ship){
                 if(myField.isNearby(theirField))
                     return true;
             }
