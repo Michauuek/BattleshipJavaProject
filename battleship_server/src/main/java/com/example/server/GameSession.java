@@ -2,6 +2,7 @@ package com.example.server;
 
 
 import com.example.data.DatabaseFactory;
+import com.example.data.UserRepository;
 import com.example.model.BoardModel;
 import com.example.model.Coordinate;
 import com.example.model.Message;
@@ -37,26 +38,37 @@ public class GameSession implements Runnable {
         }
     }
 
-    void handleShoot(Coordinate cord, Player sender, Player receiver) {
-        System.out.println("Player " + sender.name + " shot at " + cord);
+    void handleShoot(Coordinate coord, Player sender, Player receiver) {
+        System.out.println("Player " + sender.getName() + " shot at " + coord);
 
         // check if it is sender turn
-        if (firstPlayerTurn == sender.isFirstPlayer()) {
+        if (firstPlayerTurn != sender.isFirstPlayer()) {
             throw new RuntimeException("It is not your turn!");
         }
 
         // check if the coordinate is valid
+        boolean didHit = false;
+        for(var ship : sender.getBoard().board){
+            for(var field : ship){
+                if(field.equals(coord))
+                    didHit = true;
+            }
+        }
 
         // send the shoot to the receiver
+        boolean finalDidHit = didHit;
         sender.write(new Message("hit", new HashMap<String, String>() {{
             put("your", "true");
-            put("cords", new Gson().toJson(cord));
+            put("cords", new Gson().toJson(coord));
+            put("didHit", String.valueOf(finalDidHit));
         }}));
 
         receiver.write(new Message("hit", new HashMap<String, String>() {{
             put("your", "false");
-            put("cords", new Gson().toJson(cord));
+            put("cords", new Gson().toJson(coord));
+            put("didHit", String.valueOf(finalDidHit));
         }}));
+        firstPlayerTurn = !firstPlayerTurn;
     }
     void broadcast(Message message) {
         firstPlayer.write(message);
@@ -66,11 +78,13 @@ public class GameSession implements Runnable {
     void Execute(String command, String[] args, Player sender, Player receiver) throws Exception
     {
         if(command.equals("shoot")) {
-            var COLUMN_LETTERS = "abcdefghij";
-            var col = COLUMN_LETTERS.indexOf(args[1].toLowerCase().charAt(0));
-            if(col == -1)
-                throw new Exception("Invalid column");
-            var cord = new Coordinate(Integer.parseInt(args[0]), col);
+//            var COLUMN_LETTERS = "abcdefghij";
+//            var col = COLUMN_LETTERS.indexOf(args[1].toLowerCase().charAt(0));
+//            if(col == -1)
+//                throw new Exception("Invalid column");
+//            var cord = new Coordinate(Integer.parseInt(args[0]), col);
+
+            var cord = new Coordinate(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
 
             // do sth with cord
             // send shoot message to both players
@@ -83,7 +97,7 @@ public class GameSession implements Runnable {
             return;
         }
         if(command.equals("surrender")) {
-            broadcast(Message.newMessage("[Server] Player " + sender.name + " surrendered!"));
+            broadcast(Message.newMessage("[Server] Player " + sender.getName() + " surrendered!"));
 
             return;
         }
@@ -99,14 +113,15 @@ public class GameSession implements Runnable {
     void handleCommands(Message message, Player sender, Player receiver) throws IOException {
         if(message.content.equals("greeting")) {
             sender.setName(message.adds.get("name"));
-            DatabaseFactory.addUser(sender.getName());
+            UserRepository.addUser(sender.getName());
 
             Gson gson = new Gson();
             BoardModel board = gson.fromJson(message.adds.get("board"), BoardModel.class);
             System.out.println(board);
+            sender.setBoard(board);
 
 
-            broadcast(Message.newMessage("Player " + sender.name + " joined the game!"));
+            broadcast(Message.newMessage("Player " + sender.getName() + " joined the game!"));
         }
         if(message.content.equals("message")) {
             var msg = message.adds.get("message");

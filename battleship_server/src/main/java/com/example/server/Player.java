@@ -1,5 +1,6 @@
 package com.example.server;
 
+import com.example.model.BoardModel;
 import com.example.model.Coordinate;
 import com.example.model.Message;
 import com.google.gson.Gson;
@@ -30,7 +31,11 @@ public class Player {
     private boolean isFirstPlayer;
     @Setter
     @Getter
-    public String name = null;
+    private String name = null;
+
+    @Getter
+    @Setter
+    private BoardModel board;
 
     private Thread readerThread = new Thread(() -> {
         try {

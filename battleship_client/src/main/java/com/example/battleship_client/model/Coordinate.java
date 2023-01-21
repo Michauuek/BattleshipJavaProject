@@ -36,7 +36,7 @@ public class Coordinate {
     }
     public boolean isNearby(Coordinate coordinate){
         if (row == coordinate.row && column == coordinate.column)
-            return false;
+            return true;
 
         //TODO: check if not nearby
         return false;
