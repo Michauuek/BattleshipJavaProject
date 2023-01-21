@@ -179,6 +179,15 @@ public class Ship extends Rectangle {
             selected = false;
         }
     }
+    public boolean isNearby(Ship ship){
+        for(var myField : boardCoordinates){
+            for(var theirField : ship.boardCoordinates){
+                if(myField.isNearby(theirField))
+                    return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * Works but ugly

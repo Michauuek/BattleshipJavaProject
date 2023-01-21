@@ -93,18 +93,25 @@ public class GameController implements Initializable {
  */
     boolean analyzeBoard(){
         var ships = GlobalGameState.initialShips;
-        for (int i = 0; i < ships.size(); i++){
-            for (int j = 0; j < ships.get(i).getBoardCoordinates().size(); j++){
-                for(int k = i+1; k < ships.size(); k++){
-                    for(int m = 0; m < ships.get(k).getBoardCoordinates().size(); m++){
-                        if(ships.get(i).getBoardCoordinates().get(j)
-                                .isNearby(ships.get(k).getBoardCoordinates().get(m))){
-                            return false;
-                        }
+//        for (int i = 0; i < ships.size(); i++){
+//            for (int j = 0; j < ships.get(i).getBoardCoordinates().size(); j++){
+//                for(int k = i+1; k < ships.size(); k++){
+//                    for(int m = 0; m < ships.get(k).getBoardCoordinates().size(); m++){
+//                        if(ships.get(i).getBoardCoordinates().get(j)
+//                                .isNearby(ships.get(k).getBoardCoordinates().get(m))){
+//                            return false;
+//                        }
+//
+//                    }
+//                }
+//            }
+//        }
 
+        for (int i = 0; i < ships.size(); i++){
+            for(int k = i+1; k < ships.size(); k++){
+                    if(ships.get(i).isNearby(ships.get(k)))
+                        return false;
                     }
-                }
-            }
         }
         return true;
     }

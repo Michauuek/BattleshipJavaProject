@@ -38,7 +38,8 @@ public class Coordinate {
         if (row == coordinate.row && column == coordinate.column)
             return true;
 
-        //TODO: check if not nearby
+        if (Math.abs(row - coordinate.row) <= 1 && Math.abs(column - coordinate.column) <= 1)
+            return true;
         return false;
     }
 
