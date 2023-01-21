@@ -102,7 +102,6 @@ public class Ship extends Rectangle {
                         c.setTranslateY(initialShipTranslateY);
                     }
                 }
-
             });
         }
     }
