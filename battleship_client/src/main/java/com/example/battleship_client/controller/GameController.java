@@ -5,6 +5,7 @@ import com.example.battleship_client.networking.DataReader;
 import com.example.battleship_client.networking.DataWriter;
 import com.google.gson.Gson;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -62,34 +63,53 @@ public class GameController implements Initializable {
                     boolean your = Boolean.parseBoolean(msg.adds.get("your"));
                     boolean didHit = Boolean.parseBoolean(msg.adds.get("didHit"));
                     Coordinate coord = gson.fromJson(msg.adds.get("coords"), Coordinate.class);
-                    System.out.println("row: "+coord.getRow() + " column: "+ coord.getColumn());
+
                     if(your){
                         var nodes = getNodesByCoordinate(coord.getColumn(), coord.getRow(), EnemyGrid);
+                        var currentNode = nodes
+                                .stream()
+                                .findFirst()
+                                .orElseThrow();
                         if(didHit){
-                            System.out.println(nodes.size());
-                            nodes.forEach(item -> {item.setFill(Color.GREEN);item.setDisable(true);});
+                            drawXOnShip(currentNode, coord, EnemyGrid);;
                         }
-                        else{
-
-                            System.out.println(nodes.size());
-                            nodes.forEach(item -> {item.setFill(Color.RED);item.setDisable(true);});
+                        else {
+                            drawDotOnShip(currentNode, coord, EnemyGrid);
                         }
                     }
-                    else{
+                    else {
                         var nodes = getNodesByCoordinate(coord.getColumn(), coord.getRow(), UserGrid);
+                        var currentNode = nodes
+                                .stream()
+                                .findFirst()
+                                .orElseThrow();
                         if(didHit){
-                            System.out.println(nodes.size());
-                            nodes.forEach(item -> {item.setFill(Color.GREEN);item.setDisable(true);});
+                            drawXOnShip(currentNode, coord, UserGrid);
                         }
                         else{
-                            System.out.println(nodes.size());
-                            nodes.forEach(item -> {item.setFill(Color.RED);item.setDisable(true);});
+                            drawDotOnShip(currentNode, coord, UserGrid);
                         }
                     }
                 }
             }
         }
     });
+    private void drawXOnShip(BoardSquare shipCell, Coordinate coord, GridPane grid){
+        var square = new BoardSquare();
+        Platform.runLater(() -> {
+            grid.getChildren().remove(shipCell);
+            grid.add(square.drawX(shipCell.getFill()), coord.getRow(), coord.getColumn());
+        });
+    }
+
+    private void drawDotOnShip(BoardSquare shipCell, Coordinate coord, GridPane grid){
+        var square = new BoardSquare();
+        Platform.runLater(() -> {
+            grid.getChildren().remove(shipCell);
+            grid.add(square.drawDot(shipCell.getFill()), coord.getRow(), coord.getColumn());
+        });
+    }
+
     List<BoardSquare> getNodesByCoordinate(Integer row, Integer column, GridPane grid) {
         List<BoardSquare> matchingNodes = new ArrayList<>();
         for (var node : grid.getChildren()) {
@@ -110,14 +130,14 @@ public class GameController implements Initializable {
 
             System.out.println(analyzeBoard());
 
-            // get user name
+            // get username
             var name = GlobalGameState.name;
 
             Gson gson = new Gson();
             BoardModel boardModel = new BoardModel(GlobalGameState.initialShips);
             String ships = gson.toJson(boardModel, BoardModel.class);
             System.out.println(ships);
-            // send user name to server
+            // send username to server
             var message = new Message("greeting", Map.of("name", name, "board", ships));
             System.out.println(message.toJson());
             DataWriter.sendData(message);
@@ -133,20 +153,6 @@ public class GameController implements Initializable {
  */
     boolean analyzeBoard(){
         var ships = GlobalGameState.initialShips;
-//        for (int i = 0; i < ships.size(); i++){
-//            for (int j = 0; j < ships.get(i).getBoardCoordinates().size(); j++){
-//                for(int k = i+1; k < ships.size(); k++){
-//                    for(int m = 0; m < ships.get(k).getBoardCoordinates().size(); m++){
-//                        if(ships.get(i).getBoardCoordinates().get(j)
-//                                .isNearby(ships.get(k).getBoardCoordinates().get(m))){
-//                            return false;
-//                        }
-//
-//                    }
-//                }
-//            }
-//        }
-
         for (int i = 0; i < ships.size(); i++){
             for(int k = i+1; k < ships.size(); k++){
                     if(ships.get(i).isNearby(ships.get(k)))
@@ -240,9 +246,6 @@ public class GameController implements Initializable {
                     var command = "/shoot " + finalI + " " + finalJ;
                     DataWriter.sendData(Message.newMessage(command));
                     consoleController.addNewMessage(command);
-//                    square.setFill(Color.GREEN);
-//                    square.setDisable(true);
-//                    var ship = new Coordinate(GridPane.getRowIndex(square), GridPane.getColumnIndex(square));
                 });
             }
         }

@@ -2,6 +2,7 @@ package com.example.battleship_client.model;
 
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
@@ -19,17 +20,19 @@ public class BoardSquare extends Rectangle{
         this.setFill(color);
     }
 
-    public Group drawDot(){
+    public Group drawDot(Paint color){
         Circle dot = new Circle();
         dot.setCenterX(this.getX() + this.getWidth()/2);
         dot.setCenterY(this.getY() + this.getHeight()/2);
         dot.setRadius(3);
         dot.setFill(Color.GOLD);
 
+        this.setFill(color);
+
         return new Group(this, dot);
     }
 
-    public Group drawX() {
+    public Group drawX(Paint color) {
         Line diagonal1 = new Line();
         diagonal1.setStartX(this.getX() + 2);
         diagonal1.setStartY(this.getY() + 2);
@@ -44,6 +47,8 @@ public class BoardSquare extends Rectangle{
 
         diagonal1.setStroke(Color.WHITESMOKE);
         diagonal2.setStroke(Color.WHITESMOKE);
+
+        this.setFill(color);
 
         return new Group(this, diagonal1, diagonal2);
     }
