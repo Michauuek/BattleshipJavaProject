@@ -69,7 +69,6 @@ public class GameSetupController implements Initializable {
         });
     }
 
-
     @FXML
     public void readyClickHandle(ActionEvent event) throws IOException {
         System.out.println(GlobalGameState.initialShips.get(0).getBoardCoordinates());

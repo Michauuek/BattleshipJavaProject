@@ -21,10 +21,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -113,7 +110,7 @@ public class GameController implements Initializable {
     List<BoardSquare> getNodesByCoordinate(Integer row, Integer column, GridPane grid) {
         List<BoardSquare> matchingNodes = new ArrayList<>();
         for (var node : grid.getChildren()) {
-            if(GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column){
+            if(Objects.equals(GridPane.getRowIndex(node), row) && Objects.equals(GridPane.getColumnIndex(node), column)){
                 matchingNodes.add((BoardSquare)node);
             }
         }
@@ -137,6 +134,7 @@ public class GameController implements Initializable {
             BoardModel boardModel = new BoardModel(GlobalGameState.initialShips);
             String ships = gson.toJson(boardModel, BoardModel.class);
             System.out.println(ships);
+
             // send username to server
             var message = new Message("greeting", Map.of("name", name, "board", ships));
             System.out.println(message.toJson());

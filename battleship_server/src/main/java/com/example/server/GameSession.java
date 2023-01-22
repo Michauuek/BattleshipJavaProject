@@ -68,7 +68,12 @@ public class GameSession implements Runnable {
             put("coords", new Gson().toJson(coord));
             put("didHit", String.valueOf(finalDidHit));
         }}));
-        firstPlayerTurn = !firstPlayerTurn;
+
+        broadcast(Message.newMessage("[Server] Player " + sender.getName() + " shot at " + coord + " and " + (didHit ? "hit!" : "missed!")));
+
+        if(!finalDidHit) {
+            firstPlayerTurn = !firstPlayerTurn;
+        }
     }
     void broadcast(Message message) {
         firstPlayer.write(message);
@@ -84,7 +89,16 @@ public class GameSession implements Runnable {
 //                throw new Exception("Invalid column");
 //            var cord = new Coordinate(Integer.parseInt(args[0]), col);
 
-            var cord = new Coordinate(Integer.parseInt(args[0]), Integer.parseInt(args[1]));
+            Coordinate cord;
+
+            if(args.length == 1){
+                cord = Coordinate.fromString(args[0]);
+            }
+            else if(args.length == 2){
+                cord = Coordinate.fromArgs(args[0].charAt(0), args[1].charAt(0));
+            } else{
+                throw new Exception("Invalid coordinate");
+            }
 
             // do sth with cord
             // send shoot message to both players
@@ -113,13 +127,12 @@ public class GameSession implements Runnable {
     void handleCommands(Message message, Player sender, Player receiver) throws IOException {
         if(message.content.equals("greeting")) {
             sender.setName(message.adds.get("name"));
-            UserRepository.addUser(sender.getName());
+            //UserRepository.addUser(sender.getName());
 
             Gson gson = new Gson();
             BoardModel board = gson.fromJson(message.adds.get("board"), BoardModel.class);
             System.out.println(board);
             sender.setBoard(board);
-
 
             broadcast(Message.newMessage("Player " + sender.getName() + " joined the game!"));
         }
