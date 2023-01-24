@@ -24,8 +24,8 @@
 }
 
 .rotate {
-    -fx-background-color: rgba(250, 250, 250, 0.87);
-    -fx-background-radius: 10;
+    -fx-background-color: rgba(112, 135, 157, 0.6);
+    -fx-background-radius: 8;
 }
 
 .console {

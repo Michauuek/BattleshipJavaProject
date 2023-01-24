@@ -10,9 +10,9 @@
         <Pane prefHeight="29.0" prefWidth="1018.0" styleClass="root" />
         <Pane layoutX="-4.0" prefHeight="760.0" prefWidth="1018.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
          <children>
-            <Pane layoutX="103.0" layoutY="132.0" prefHeight="44.0" prefWidth="48.0" styleClass="rotate">
+            <Pane layoutX="89.0" layoutY="692.0" prefHeight="39.0" prefWidth="39.0" styleClass="rotate">
                <children>
-                  <ImageView fx:id="rotateButton" accessibleRole="BUTTON" fitHeight="29.0" fitWidth="28.0" layoutX="10.0" layoutY="7.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" styleClass="rotate">
+                  <ImageView fx:id="rotateButton" accessibleRole="BUTTON" fitHeight="29.0" fitWidth="28.0" layoutX="6.0" layoutY="6.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" styleClass="rotate">
                      <image>
                         <Image url="@../assets/rotate.png" />
                      </image>
@@ -32,10 +32,25 @@
       <VBox fx:id="Ships" layoutX="700.0" layoutY="183.0" prefHeight="179.0" prefWidth="253.0" styleClass="ships" />
     </Pane>
 
-    <Button fx:id="readyButton" layoutX="881.0" layoutY="48.0" mnemonicParsing="false" onAction="#readyClickHandle" prefHeight="59.0" prefWidth="82.0" text="Redy">
-      <font>
-         <Font name="Century Gothic" size="18.0" />
-      </font></Button>
+    <Pane layoutX="587.0" layoutY="-39.0" prefHeight="280.0" prefWidth="412.0">
+
+        <TextField fx:id="address" layoutX="135.0" layoutY="109.0" prefHeight="42.0" prefWidth="225.0">
+            <font>
+                <Font name="Century Gothic" size="16.0" />
+            </font>
+        </TextField>
+        <Button fx:id="readyButton" layoutX="133.0" layoutY="167.0" mnemonicParsing="false" onAction="#readyClickHandle" prefHeight="67.0" prefWidth="225.0" text="Connect">
+            <font>
+                <Font name="Century Gothic" size="18.0" />
+            </font>
+        </Button>
+        <Label layoutX="190.0" layoutY="67.0" prefHeight="42.0" prefWidth="131.0" text="Server Address" textFill="WHITE">
+            <font>
+                <Font name="Century Gothic" size="16.0" />
+            </font>
+        </Label>
+    </Pane>
+
 
     <Pane layoutX="525.0" layoutY="554.0" prefHeight="205.0" prefWidth="498.0">
         <TextField fx:id="tfMessage" layoutX="-2.0" layoutY="139.0" prefHeight="35.0" prefWidth="426.0" styleClass="consoleText">
