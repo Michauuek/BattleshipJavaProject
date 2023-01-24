@@ -115,10 +115,8 @@ public class GameSession implements Runnable {
         }
         if(command.equals("surrender")) {
             broadcast(Message.newMessage("[Server] Player " + sender.getName() + " surrendered!"));
-
             return;
         }
-
         throw new Exception("Unknown command");
     }
 
@@ -151,7 +149,7 @@ public class GameSession implements Runnable {
     @Override
     public void run() {
         try {
-            while (true) {
+            while (!firstPlayer.getSocket().isClosed() || !secondPlayer.getSocket().isClosed()) {
                 var p1 = firstPlayer.readMessage();
                 if(p1 != null) {
                     System.out.println("[DEBUG] MESSAGE FROM " + firstPlayer.getName() + ": " + p1);
@@ -169,6 +167,11 @@ public class GameSession implements Runnable {
                     }
                     handleCommands(p2, secondPlayer, firstPlayer);
                 }
+            }
+            if(firstPlayer.getSocket().isClosed()){
+                secondPlayer.closeConnection();
+            } else {
+                firstPlayer.closeConnection();
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

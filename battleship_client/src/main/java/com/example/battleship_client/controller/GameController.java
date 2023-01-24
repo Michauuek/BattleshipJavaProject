@@ -45,12 +45,13 @@ public class GameController implements Initializable {
     private DataWriter dataWriter;
     private DataReader dataReader;
     private ConsoleController consoleController;
+    private Socket socket;
 
     private ConcurrentLinkedQueue<String> messeges = new ConcurrentLinkedQueue<>();
 
     private Thread addMessageThread = new Thread(() -> {
         Gson gson = new Gson();
-        while (true) {
+        while (!socket.isClosed()) {
             var msg = dataReader.readMessage();
             if (msg != null) {
                 if(msg.content.equals("message")){
@@ -120,7 +121,7 @@ public class GameController implements Initializable {
     public GameController() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         try {
-            Socket socket = new Socket(InetAddress.getLocalHost(), 8082);
+            socket = new Socket(InetAddress.getLocalHost(), 8082);
 
             dataWriter = new DataWriter(socket);
             dataReader = new DataReader(socket);

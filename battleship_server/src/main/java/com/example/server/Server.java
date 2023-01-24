@@ -5,9 +5,7 @@ import com.example.model.Message;
 import lombok.Data;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
-import java.util.HashMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -30,9 +28,12 @@ public class Server {
             System.out.println("Error creating server");
         }
 
-        while(true) {
+        while(!serverSocket.isClosed()) {
             try {
-                firstPlayer = new Player(serverSocket.accept(), true);
+                synchronized(serverSocket) {
+                    firstPlayer = new Player(serverSocket.accept(), true);
+                }
+
                 System.out.println("Player 1 connected" + firstPlayer.getSocket().getLocalSocketAddress());
 
                 firstPlayer.write(Message.newMessage("[Server] Waiting for second player to connect..."));

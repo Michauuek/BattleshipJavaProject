@@ -39,20 +39,15 @@ public class Player {
     private BoardModel board;
     private boolean[][] history = new boolean[10][10];
 
-    private Thread readerThread = new Thread(() -> {
+    private Thread readerThread = Thread.ofVirtual().unstarted(() -> {
         try {
             var reader = new BufferedReader(new InputStreamReader((socket.getInputStream())));
-
-            while (true) {
-                try {
-                    var msg = Message.fromJson(reader.readLine());
-                    messages.add(msg);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+            while (!socket.isClosed()) {
+                var msg = Message.fromJson(reader.readLine());
+                messages.add(msg);
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            closeConnection();
         }
     });
     public Player(Socket socket, boolean isFirstPlayer) throws IOException {
@@ -75,5 +70,14 @@ public class Player {
 
     public boolean isFirstPlayer() {
         return isFirstPlayer;
+    }
+
+    public void closeConnection(){
+        try {
+            socket.close();
+            System.out.println("Connection closed - player: " + this.name);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
