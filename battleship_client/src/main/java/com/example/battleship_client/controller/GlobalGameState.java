@@ -18,7 +18,7 @@ public class GlobalGameState {
         add(Ship.threeHolesShip(7, 7));
         add(Ship.twoHolesShip(8, 0));
         add(Ship.twoHolesShip(8, 2));
-        add(Ship.twoHolesShip(8, 0));
+        add(Ship.twoHolesShip(4, 2));
         add(Ship.twoHolesShip(0, 2));
     }};
 

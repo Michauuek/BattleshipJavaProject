@@ -114,7 +114,7 @@ public class GameSetupController implements Initializable {
 
     public static boolean validateBoard() {
         for(int i=0; i < GlobalGameState.initialShips.size(); i++){
-            for(int j=i+1; j < GlobalGameState.initialShips.size(); i++){
+            for(int j=i+1; j < GlobalGameState.initialShips.size(); j++){
                 if(GlobalGameState.initialShips.get(i).isNearby(GlobalGameState.initialShips.get(j)))
                     return false;
             }

@@ -95,10 +95,9 @@ public class GameController implements Initializable {
                     System.out.println(mess);
                     Platform.runLater(() -> {
                         consoleController.addNewMessage(mess);
+                        //go to end screen
+                        changeScene();
                     });
-
-                    //go to end screen
-                    changeScene();
                 }
             }
         }
