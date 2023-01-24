@@ -12,10 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -30,6 +32,8 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class GameController implements Initializable {
+    @FXML
+    private Pane TitleEnemyPane;
     @FXML
     private GridPane UserGrid;
     @FXML
@@ -100,6 +104,22 @@ public class GameController implements Initializable {
                         winner = mess;
                         changeScene();
                     });
+                }
+                else if(msg.content.equals("turn")){
+                    if(msg.adds.get("your").equals("true")){
+                        // light green
+                        Platform.runLater(() -> {
+                            TitleEnemyPane.setStyle("-fx-background-color: #006400");
+                            consoleController.addNewMessage("Your Turn!");
+                        });
+                    }
+                    else{
+                        //light red
+                        Platform.runLater(() -> {
+                            TitleEnemyPane.setStyle("-fx-background-color: #8B0000");
+                            consoleController.addNewMessage("Not your Turn!");
+                        });
+                    }
                 }
             }
         }

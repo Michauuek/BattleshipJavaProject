@@ -153,7 +153,7 @@ public class GameSetupController implements Initializable {
         grid.setHgap(4);
         grid.setVgap(4);
 
-        randomizeShips();
+//        randomizeShips();
 
         for(var ship : GlobalGameState.getInstance().initialShips){
             ship.addToGrid(grid);

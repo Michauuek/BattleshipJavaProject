@@ -44,7 +44,8 @@ public class Player {
             var reader = new BufferedReader(new InputStreamReader((socket.getInputStream())));
             while (!socket.isClosed()) {
                 var msg = Message.fromJson(reader.readLine());
-                messages.add(msg);
+                if(msg != null)
+                    messages.add(msg);
             }
         } catch (IOException e) {
             closeConnection();

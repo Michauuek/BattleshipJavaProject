@@ -59,6 +59,7 @@ public class GameSession implements Runnable {
 
         // send the shoot to the receiver
         boolean finalDidHit = didHit;
+
         sender.write(new Message("hit", new HashMap<>() {{
             put("your", "true");
             put("coords", new Gson().toJson(coord));
@@ -77,21 +78,31 @@ public class GameSession implements Runnable {
             firstPlayerTurn = !firstPlayerTurn;
         }
         else{
-            for(var ship : receiver.getBoard().board){
-                for(var field : ship){
-                    if(!field.isHit())
-                        return;
-                }
-            }
-            sender.write(new Message("end", new HashMap<>() {{
-                put("winner", "true");
-            }}));
-
-            receiver.write(new Message("end", new HashMap<>() {{
-                put("winner", "false");
-            }}));
-
+            isEnd(coord, sender,receiver);
         }
+
+        firstPlayer.write(new Message("turn", new HashMap<>() {{
+            put("your", String.valueOf(firstPlayerTurn));
+        }}));
+        secondPlayer.write(new Message("turn", new HashMap<>() {{
+            put("your", String.valueOf(!firstPlayerTurn));
+        }}));
+    }
+
+    private void isEnd(Coordinate coord, Player sender, Player receiver){
+        for(var ship : receiver.getBoard().board){
+            for(var field : ship){
+                if(!field.isHit())
+                    return;
+            }
+        }
+        sender.write(new Message("end", new HashMap<>() {{
+            put("winner", "true");
+        }}));
+
+        receiver.write(new Message("end", new HashMap<>() {{
+            put("winner", "false");
+        }}));
     }
     void broadcast(Message message) {
         firstPlayer.write(message);
@@ -151,6 +162,18 @@ public class GameSession implements Runnable {
             sender.setBoard(board);
 
             broadcast(Message.newMessage("Player " + sender.getName() + " joined the game!"));
+
+
+            if(receiver.getName() == null) {
+                sender.write(new Message("turn", new HashMap<>() {{
+                    put("your", "true");
+                }}));
+            }
+            else{
+                sender.write(new Message("turn", new HashMap<>() {{
+                    put("your", "false");
+                }}));
+            }
         }
         if(message.content.equals("message")) {
             var msg = message.adds.get("message");
@@ -183,13 +206,15 @@ public class GameSession implements Runnable {
                     handleCommands(p2, secondPlayer, firstPlayer);
                 }
             }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }finally{
             if(firstPlayer.getSocket().isClosed()){
                 secondPlayer.closeConnection();
             } else {
                 firstPlayer.closeConnection();
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
 }
