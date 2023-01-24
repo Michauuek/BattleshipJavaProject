@@ -48,6 +48,7 @@ public class GameController implements Initializable {
     private DataReader dataReader;
     private ConsoleController consoleController;
     private Socket socket;
+    private static String winner;
     private ConcurrentLinkedQueue<String> messeges = new ConcurrentLinkedQueue<>();
 
     private Thread addMessageThread = new Thread(() -> {
@@ -96,6 +97,7 @@ public class GameController implements Initializable {
                     Platform.runLater(() -> {
                         consoleController.addNewMessage(mess);
                         //go to end screen
+                        winner = mess;
                         changeScene();
                     });
                 }
@@ -278,5 +280,9 @@ public class GameController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public static String getWinner(){
+        return winner;
     }
 }

@@ -8,9 +8,9 @@
     <children>
         <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
             <children>
-                <Label layoutX="374.0" layoutY="64.0" prefHeight="163.0" prefWidth="324.0" styleClass="titleLabel" text="Game Over" textAlignment="CENTER" textFill="WHITE">
+                <Label fx:id="messageLabel" layoutX="358.0" layoutY="64.0" prefHeight="163.0" prefWidth="388.0" styleClass="titleLabel" text="Game over" textAlignment="CENTER" textFill="WHITE">
                     <font>
-                        <Font name="Century Gothic" size="44.0" />
+                        <Font name="Century Gothic" size="28.0" />
                     </font>
                 </Label>
             </children></Pane>
