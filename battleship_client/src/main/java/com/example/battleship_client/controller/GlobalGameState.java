@@ -1,6 +1,5 @@
 package com.example.battleship_client.controller;
 
-import com.example.battleship_client.model.Coordinate;
 import com.example.battleship_client.model.Ship;
 
 import java.util.ArrayList;
@@ -22,10 +21,8 @@ public class GlobalGameState {
         add(Ship.twoHolesShip(0, 2));
     }};
     public Ship selecedShip;
-
     private static GlobalGameState INSTANCE;
-    private GlobalGameState() {
-    }
+    private GlobalGameState() {}
     public synchronized static GlobalGameState getInstance() {
         if(INSTANCE == null) {
             INSTANCE = new GlobalGameState();

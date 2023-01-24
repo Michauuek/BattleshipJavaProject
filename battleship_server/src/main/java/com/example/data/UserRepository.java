@@ -32,4 +32,21 @@ public class UserRepository {
         }
         return -1;
     }
+
+    public static String getUsernameById(int id){
+        var selectSql = "SELECT name FROM users WHERE id=" + id;
+        try {
+            var resultSet = statement.executeQuery(selectSql);
+            if (resultSet.next()) {
+                return resultSet.getString("name");
+            }
+            else {
+                return null;
+            }
+        }
+        catch(SQLException e){
+            System.out.println(e);
+        }
+        return null;
+    }
 }
