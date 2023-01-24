@@ -26,11 +26,10 @@ public class GlobalGameState {
     private static GlobalGameState INSTANCE;
     private GlobalGameState() {
     }
-    public static GlobalGameState getInstance() {
+    public synchronized static GlobalGameState getInstance() {
         if(INSTANCE == null) {
             INSTANCE = new GlobalGameState();
         }
-
         return INSTANCE;
     }
 }
