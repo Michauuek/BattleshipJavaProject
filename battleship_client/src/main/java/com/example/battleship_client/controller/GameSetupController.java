@@ -3,6 +3,7 @@ package com.example.battleship_client.controller;
 import com.example.battleship_client.model.BoardSquare;
 import com.example.battleship_client.model.Coordinate;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -11,7 +12,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 
@@ -26,6 +29,9 @@ public class GameSetupController implements Initializable {
     private GridPane UserGrid;
     @FXML
     private Button readyButton;
+
+    @FXML
+    private ImageView rotateButton;
 
     //Console elements
     @FXML
@@ -51,6 +57,12 @@ public class GameSetupController implements Initializable {
                 vboxMessages,
                 UserGrid
         );
+
+        rotateButton.setOnMousePressed(event -> {
+            if(GlobalGameState.selecedShip != null){
+                GlobalGameState.selecedShip.rotate(UserGrid);
+            }
+        });
 
         buttonMessage.setOnAction(event -> {
             String message = tfMessage.getText();

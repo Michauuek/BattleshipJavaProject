@@ -23,6 +23,11 @@
     -fx-padding: 5;
 }
 
+.rotate {
+    -fx-background-color: rgba(250, 250, 250, 0.87);
+    -fx-background-radius: 10;
+}
+
 .console {
     -fx-background-color: #101B27;
     -fx-text-fill: white;

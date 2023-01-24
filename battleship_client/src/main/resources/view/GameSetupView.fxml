@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.GameSetupController">
     <Pane>
-        <Pane layoutX="12.0" prefHeight="29.0" prefWidth="1006.0" styleClass="root" />
-        <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
-    </Pane>
+        <Pane prefHeight="29.0" prefWidth="1018.0" styleClass="root" />
+        <Pane layoutX="-4.0" prefHeight="760.0" prefWidth="1018.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
+         <children>
+            <Pane layoutX="103.0" layoutY="132.0" prefHeight="44.0" prefWidth="48.0" styleClass="rotate">
+               <children>
+                  <ImageView fx:id="rotateButton" accessibleRole="BUTTON" fitHeight="29.0" fitWidth="28.0" layoutX="10.0" layoutY="7.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true" styleClass="rotate">
+                     <image>
+                        <Image url="@../assets/rotate.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children></Pane>
         <Pane fx:id="TitlePane" layoutX="80.0" layoutY="197.0" prefHeight="85.0" prefWidth="395.0" styleClass="titlePane">
          <children>
             <Label layoutX="94.0" layoutY="27.0" prefHeight="44.0" prefWidth="208.0" styleClass="labelText" text="Set up your boats" textFill="WHITE">
