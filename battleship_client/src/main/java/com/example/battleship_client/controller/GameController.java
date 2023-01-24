@@ -133,8 +133,8 @@ public class GameController implements Initializable {
     public GameController() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         try {
-            if(!GlobalGameState.serverAddress.isEmpty()){
-                socket = new Socket(GlobalGameState.serverAddress, 8082);
+            if(!GlobalGameState.getInstance().serverAddress.isEmpty()){
+                socket = new Socket(GlobalGameState.getInstance().serverAddress, 8082);
             } else {
                 socket = new Socket(InetAddress.getLocalHost(), 8082);
             }
@@ -145,10 +145,10 @@ public class GameController implements Initializable {
             System.out.println(analyzeBoard());
 
             // get username
-            var name = GlobalGameState.name;
+            var name = GlobalGameState.getInstance().name;
 
             Gson gson = new Gson();
-            BoardModel boardModel = new BoardModel(GlobalGameState.initialShips);
+            BoardModel boardModel = new BoardModel(GlobalGameState.getInstance().initialShips);
             String ships = gson.toJson(boardModel, BoardModel.class);
             System.out.println(ships);
 
@@ -167,7 +167,7 @@ public class GameController implements Initializable {
 * Ugly as hell :///
  */
     boolean analyzeBoard(){
-        var ships = GlobalGameState.initialShips;
+        var ships = GlobalGameState.getInstance().initialShips;
         for (int i = 0; i < ships.size(); i++){
             for(int k = i+1; k < ships.size(); k++){
                     if(ships.get(i).isNearby(ships.get(k)))
@@ -243,7 +243,7 @@ public class GameController implements Initializable {
                 grid.add(square, i, j);
             }
         }
-        for(var ship : GlobalGameState.initialShips){
+        for(var ship : GlobalGameState.getInstance().initialShips){
             ship.addShipGrid(grid);
             ship.disableDragging();
         }

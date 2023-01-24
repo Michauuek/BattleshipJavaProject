@@ -60,15 +60,15 @@ public class GameSetupController implements Initializable {
         );
 
         rotateButton.setOnMousePressed(event -> {
-            if(GlobalGameState.selecedShip != null){
-                GlobalGameState.selecedShip.rotate(UserGrid);
+            if(GlobalGameState.getInstance().selecedShip != null){
+                GlobalGameState.getInstance().selecedShip.rotate(UserGrid);
             }
         });
 
         buttonMessage.setOnAction(event -> {
             String message = tfMessage.getText();
             if (!message.isEmpty()) {
-                consoleController.addNewMessage(message, "[" + GlobalGameState.name + "]: ");
+                consoleController.addNewMessage(message, "[" + GlobalGameState.getInstance().name + "]: ");
             }
         });
 
@@ -76,7 +76,7 @@ public class GameSetupController implements Initializable {
             if (event.getCode() == KeyCode.ENTER) {
                 String message = tfMessage.getText();
                 if (!message.isEmpty()) {
-                    consoleController.addNewMessage(message, "[" + GlobalGameState.name + "]: ");
+                    consoleController.addNewMessage(message, "[" + GlobalGameState.getInstance().name + "]: ");
                 }
             }
         });
@@ -85,7 +85,7 @@ public class GameSetupController implements Initializable {
     @FXML
     public void readyClickHandle() throws IOException {
         if(!addressField.getText().isEmpty()){
-            GlobalGameState.serverAddress = addressField.getText();
+            GlobalGameState.getInstance().serverAddress = addressField.getText();
         }
         if(validateBoard()) {
             Stage stage = (Stage) readyButton.getScene().getWindow();
@@ -101,7 +101,7 @@ public class GameSetupController implements Initializable {
     private boolean areShipsInValidPosition() {
         HashSet<Coordinate> coordinates = new HashSet<>();
 
-        for (var ship : GlobalGameState.initialShips) {
+        for (var ship : GlobalGameState.getInstance().initialShips) {
             for (Coordinate coordinate : ship.getBoardCoordinates()) {
                 if (coordinates.contains(coordinate)) {
                     return false;
@@ -113,9 +113,9 @@ public class GameSetupController implements Initializable {
     }
 
     public static boolean validateBoard() {
-        for(int i=0; i < GlobalGameState.initialShips.size(); i++){
-            for(int j=i+1; j < GlobalGameState.initialShips.size(); j++){
-                if(GlobalGameState.initialShips.get(i).isNearby(GlobalGameState.initialShips.get(j)))
+        for(int i=0; i < GlobalGameState.getInstance().initialShips.size(); i++){
+            for(int j=i+1; j < GlobalGameState.getInstance().initialShips.size(); j++){
+                if(GlobalGameState.getInstance().initialShips.get(i).isNearby(GlobalGameState.getInstance().initialShips.get(j)))
                     return false;
             }
         }
@@ -124,7 +124,7 @@ public class GameSetupController implements Initializable {
 
     private void randomizeShips() {
         while(true){
-            for(var ship : GlobalGameState.initialShips){
+            for(var ship : GlobalGameState.getInstance().initialShips){
                 var length = ship.getLength();
 
                 var random = (int)(Math.random() * 10);
@@ -155,7 +155,7 @@ public class GameSetupController implements Initializable {
 
         randomizeShips();
 
-        for(var ship : GlobalGameState.initialShips){
+        for(var ship : GlobalGameState.getInstance().initialShips){
             ship.addToGrid(grid);
         }
     }

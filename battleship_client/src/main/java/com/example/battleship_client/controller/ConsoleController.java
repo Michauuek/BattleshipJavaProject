@@ -98,7 +98,7 @@ public class ConsoleController {
         if(GameSetupController.validateBoard()) {
             var arg = Arrays.asList(args);
             if (arg.size() == 1) {
-                GlobalGameState.serverAddress = arg.get(0);
+                GlobalGameState.getInstance().serverAddress = arg.get(0);
             }
             Stage stage = (Stage) tfMessage.getScene().getWindow();
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/GameView.fxml")));
@@ -114,20 +114,20 @@ public class ConsoleController {
         addNewMessage("Place Command", "[System]: ");
         var position = Arrays.asList(args);
         var coordinate = new Coordinate(Integer.parseInt(position.get(0).toLowerCase()), Integer.parseInt(position.get(1)));
-        var newShip = createShip(GlobalGameState.selecedShip.getLength(), coordinate.getColumn(), coordinate.getRow());
-        GlobalGameState.selecedShip.deleteFromBoard(board);
+        var newShip = createShip(GlobalGameState.getInstance().selecedShip.getLength(), coordinate.getColumn(), coordinate.getRow());
+        GlobalGameState.getInstance().selecedShip.deleteFromBoard(board);
         newShip.setBoardCoordinates(coordinate);
         newShip.addToGrid(board);
 
-        GlobalGameState.initialShips.remove(GlobalGameState.selecedShip);
-        GlobalGameState.initialShips.add(newShip);
-        GlobalGameState.selecedShip = newShip;
-        GlobalGameState.selecedShip.toggleBorder();
+        GlobalGameState.getInstance().initialShips.remove(GlobalGameState.getInstance().selecedShip);
+        GlobalGameState.getInstance().initialShips.add(newShip);
+        GlobalGameState.getInstance().selecedShip = newShip;
+        GlobalGameState.getInstance().selecedShip.toggleBorder();
     }
 
     private void rotate(String[] args) throws Exception {
         addNewMessage("Rotate Command", "[System]: ");
-        GlobalGameState.selecedShip.rotate(board);
+        GlobalGameState.getInstance().selecedShip.rotate(board);
     }
 
     private void select(String[] args) throws Exception {
@@ -136,7 +136,7 @@ public class ConsoleController {
         var position = Arrays.asList(args);
         var coordinate = new Coordinate(Integer.parseInt(position.get(0).toLowerCase()), Integer.parseInt(position.get(1)));
 
-        for(var ship : GlobalGameState.initialShips){
+        for(var ship : GlobalGameState.getInstance().initialShips){
             for(var cr : ship.getBoardCoordinates()) {
                 if(cr.getColumn() == (coordinate.getColumn()) && cr.getRow() == (coordinate.getRow())) {
                     ship.toggleBorder();

@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GlobalGameState {
-    public static String serverAddress = "";
-    public static String name;
-    public static List<Ship> initialShips = new ArrayList<>() {{
+    public String serverAddress = "";
+    public String name;
+    public List<Ship> initialShips = new ArrayList<>() {{
         add(Ship.fiveHolesShip(0,0));
         add(Ship.fourHolesShip(6, 9));
         add(Ship.fourHolesShip(4, 4));
@@ -21,6 +21,16 @@ public class GlobalGameState {
         add(Ship.twoHolesShip(4, 2));
         add(Ship.twoHolesShip(0, 2));
     }};
+    public Ship selecedShip;
 
-    public static Ship selecedShip;
+    private static GlobalGameState INSTANCE;
+    private GlobalGameState() {
+    }
+    public static GlobalGameState getInstance() {
+        if(INSTANCE == null) {
+            INSTANCE = new GlobalGameState();
+        }
+
+        return INSTANCE;
+    }
 }

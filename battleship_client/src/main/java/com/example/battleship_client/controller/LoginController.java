@@ -55,7 +55,7 @@ public class LoginController implements Initializable {
             stage.setScene(new Scene(root));
             stage.show();
             // set global state
-            GlobalGameState.name = this.getName();
+            GlobalGameState.getInstance().name = this.getName();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

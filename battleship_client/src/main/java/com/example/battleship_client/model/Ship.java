@@ -110,7 +110,7 @@ public class Ship extends Rectangle {
             if(field.getRow() > 9 || field.getColumn() > 9 || field.getRow() < 0 || field.getColumn() < 0)
                 return false;
         }
-        for(var ship : GlobalGameState.initialShips){
+        for(var ship : GlobalGameState.getInstance().initialShips){
             if(ship != this){
                 if(ship.isNearbyCoord(coords)){
                     return false;
@@ -222,13 +222,13 @@ public class Ship extends Rectangle {
      * Unselect all other ships
      */
     public void deselectOtherShips(){
-        if(GlobalGameState.selecedShip == null){
-            GlobalGameState.selecedShip = this;
+        if(GlobalGameState.getInstance().selecedShip == null){
+            GlobalGameState.getInstance().selecedShip = this;
         }
 
-        if(GlobalGameState.selecedShip != this){
-            GlobalGameState.selecedShip.toggleBorder();
-            GlobalGameState.selecedShip = this;
+        if(GlobalGameState.getInstance().selecedShip != this){
+            GlobalGameState.getInstance().selecedShip.toggleBorder();
+            GlobalGameState.getInstance().selecedShip = this;
         }
     }
     public Boolean isSelected(){
