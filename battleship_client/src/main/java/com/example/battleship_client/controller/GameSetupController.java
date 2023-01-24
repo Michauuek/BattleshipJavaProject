@@ -87,10 +87,15 @@ public class GameSetupController implements Initializable {
         if(!addressField.getText().isEmpty()){
             GlobalGameState.serverAddress = addressField.getText();
         }
-        Stage stage = (Stage) readyButton.getScene().getWindow();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/GameView.fxml")));
-        stage.setScene(new Scene(root));
-        stage.show();
+        if(validateBoard()) {
+            Stage stage = (Stage) readyButton.getScene().getWindow();
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/GameView.fxml")));
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        else{
+            consoleController.addNewMessage("You cannot start the game, board is not in a valid state!");
+        }
     }
 
     private boolean areShipsInValidPosition() {
@@ -102,6 +107,16 @@ public class GameSetupController implements Initializable {
                     return false;
                 }
                 coordinates.add(coordinate);
+            }
+        }
+        return true;
+    }
+
+    public static boolean validateBoard() {
+        for(int i=0; i < GlobalGameState.initialShips.size(); i++){
+            for(int j=i+1; j < GlobalGameState.initialShips.size(); i++){
+                if(GlobalGameState.initialShips.get(i).isNearby(GlobalGameState.initialShips.get(j)))
+                    return false;
             }
         }
         return true;

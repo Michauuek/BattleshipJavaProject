@@ -95,11 +95,19 @@ public class ConsoleController {
 
     private void ready(String[] args) throws Exception {
         addNewMessage("Ready Command", "[System]: ");
-
-        Stage stage = (Stage) tfMessage.getScene().getWindow();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/GameView.fxml")));
-        stage.setScene(new Scene(root));
-        stage.show();
+        if(GameSetupController.validateBoard()) {
+            var arg = Arrays.asList(args);
+            if (arg.size() == 1) {
+                GlobalGameState.serverAddress = arg.get(0);
+            }
+            Stage stage = (Stage) tfMessage.getScene().getWindow();
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/GameView.fxml")));
+            stage.setScene(new Scene(root));
+            stage.show();
+        }
+        else{
+            addNewMessage("You cannot start the game, board is not in a valid state!");
+        }
     }
 
     private void place(String[] args) throws Exception {

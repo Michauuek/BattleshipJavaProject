@@ -106,6 +106,10 @@ public class Ship extends Rectangle {
         }
     }
     private boolean checkCoordValidity(List<Coordinate> coords){
+        for(var field : coords){
+            if(field.getRow() > 9 || field.getColumn() > 9 || field.getRow() < 0 || field.getColumn() < 0)
+                return false;
+        }
         for(var ship : GlobalGameState.initialShips){
             if(ship != this){
                 if(ship.isNearbyCoord(coords)){
