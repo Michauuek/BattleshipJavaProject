@@ -1,9 +1,6 @@
 package com.example.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import java.util.Objects;
 
@@ -13,6 +10,7 @@ import java.util.Objects;
 public class Coordinate {
     private int row;
     private int column;
+    private boolean hit = false;
 
     @Override
     public boolean equals(Object o) {
@@ -20,6 +18,11 @@ public class Coordinate {
         if (o == null || getClass() != o.getClass()) return false;
         Coordinate that = (Coordinate) o;
         return row == that.row && column == that.column;
+    }
+
+    public Coordinate(int row, int column) {
+        this.row = row;
+        this.column = column;
     }
 
     @Override

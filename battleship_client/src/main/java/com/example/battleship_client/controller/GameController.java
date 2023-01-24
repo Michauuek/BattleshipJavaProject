@@ -57,7 +57,7 @@ public class GameController implements Initializable {
                 if(msg.content.equals("message")){
                     messeges.add(msg.adds.get("message"));
                 }
-                if(msg.content.equals("hit")){
+                else if(msg.content.equals("hit")){
                     boolean your = Boolean.parseBoolean(msg.adds.get("your"));
                     boolean didHit = Boolean.parseBoolean(msg.adds.get("didHit"));
                     Coordinate coord = gson.fromJson(msg.adds.get("coords"), Coordinate.class);
@@ -88,6 +88,11 @@ public class GameController implements Initializable {
                             drawDotOnShip(currentNode, coord, UserGrid);
                         }
                     }
+                }
+                else if(msg.content.equals("end")){
+                    String mess = "END OF GAME you " + (msg.adds.get("winner").equals("true") ? "won!" : "lost!");
+                    System.out.println(mess);
+//                    consoleController.addNewMessage(mess);
                 }
             }
         }
@@ -121,7 +126,8 @@ public class GameController implements Initializable {
     public GameController() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         try {
-            socket = new Socket(InetAddress.getLocalHost(), 8082);
+            Socket socket = new Socket(InetAddress.getLocalHost(), 8082);
+//            Socket socket = new Socket("192.168.0.219", 8082);
 
             dataWriter = new DataWriter(socket);
             dataReader = new DataReader(socket);

@@ -53,8 +53,11 @@ public class GameSession implements Runnable {
         boolean didHit = false;
         for(var ship : receiver.getBoard().board){
             for(var field : ship){
-                if(field.equals(coord))
+                if(field.equals(coord)){
                     didHit = true;
+                    field.setHit(true);
+                }
+
             }
         }
 
@@ -76,6 +79,26 @@ public class GameSession implements Runnable {
 
         if(!finalDidHit) {
             firstPlayerTurn = !firstPlayerTurn;
+        }
+        else{
+            for(var ship : receiver.getBoard().board){
+                for(var field : ship){
+                    if(!field.isHit())
+                        return;
+
+                }
+            }
+
+            sender.write(new Message("end", new HashMap<String, String>() {{
+                put("winner", "true");
+            }}));
+
+            receiver.write(new Message("end", new HashMap<String, String>() {{
+                put("winner", "false");
+            }}));
+
+
+
         }
     }
     void broadcast(Message message) {
