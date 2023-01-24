@@ -92,7 +92,10 @@ public class GameController implements Initializable {
                 else if(msg.content.equals("end")){
                     String mess = "END OF GAME you " + (msg.adds.get("winner").equals("true") ? "won!" : "lost!");
                     System.out.println(mess);
-//                    consoleController.addNewMessage(mess);
+                    Platform.runLater(() -> {
+                        consoleController.addNewMessage(mess);
+                    });
+
                 }
             }
         }
