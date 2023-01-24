@@ -7,14 +7,17 @@ import com.google.gson.Gson;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 
 import java.io.IOException;
@@ -41,12 +44,10 @@ public class GameController implements Initializable {
     private ScrollPane spMain;
     @FXML
     private VBox vboxMessages;
-
     private DataWriter dataWriter;
     private DataReader dataReader;
     private ConsoleController consoleController;
     private Socket socket;
-
     private ConcurrentLinkedQueue<String> messeges = new ConcurrentLinkedQueue<>();
 
     private Thread addMessageThread = new Thread(() -> {
@@ -96,6 +97,8 @@ public class GameController implements Initializable {
                         consoleController.addNewMessage(mess);
                     });
 
+                    //go to end screen
+                    changeScene();
                 }
             }
         }
@@ -265,5 +268,16 @@ public class GameController implements Initializable {
     private void initializeGrid(GridPane grid){
         grid.setHgap(4);
         grid.setVgap(4);
+    }
+
+    private void changeScene(){
+        try {
+            Stage stage = (Stage) buttonMessage.getScene().getWindow();
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/EndView.fxml")));
+            stage.setScene(new Scene(root));
+            stage.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -1,8 +1,6 @@
 package com.example.server;
 
 
-import com.example.data.DatabaseFactory;
-import com.example.data.UserRepository;
 import com.example.model.BoardModel;
 import com.example.model.Coordinate;
 import com.example.model.Message;
@@ -11,7 +9,6 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 
 public class GameSession implements Runnable {
@@ -57,19 +54,18 @@ public class GameSession implements Runnable {
                     didHit = true;
                     field.setHit(true);
                 }
-
             }
         }
 
         // send the shoot to the receiver
         boolean finalDidHit = didHit;
-        sender.write(new Message("hit", new HashMap<String, String>() {{
+        sender.write(new Message("hit", new HashMap<>() {{
             put("your", "true");
             put("coords", new Gson().toJson(coord));
             put("didHit", String.valueOf(finalDidHit));
         }}));
 
-        receiver.write(new Message("hit", new HashMap<String, String>() {{
+        receiver.write(new Message("hit", new HashMap<>() {{
             put("your", "false");
             put("coords", new Gson().toJson(coord));
             put("didHit", String.valueOf(finalDidHit));
@@ -85,19 +81,15 @@ public class GameSession implements Runnable {
                 for(var field : ship){
                     if(!field.isHit())
                         return;
-
                 }
             }
-
-            sender.write(new Message("end", new HashMap<String, String>() {{
+            sender.write(new Message("end", new HashMap<>() {{
                 put("winner", "true");
             }}));
 
-            receiver.write(new Message("end", new HashMap<String, String>() {{
+            receiver.write(new Message("end", new HashMap<>() {{
                 put("winner", "false");
             }}));
-
-
 
         }
     }
