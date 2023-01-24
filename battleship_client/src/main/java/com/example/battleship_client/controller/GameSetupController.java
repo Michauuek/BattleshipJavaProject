@@ -29,9 +29,10 @@ public class GameSetupController implements Initializable {
     private GridPane UserGrid;
     @FXML
     private Button readyButton;
-
     @FXML
     private ImageView rotateButton;
+    @FXML
+    private TextField addressField;
 
     //Console elements
     @FXML
@@ -82,9 +83,10 @@ public class GameSetupController implements Initializable {
     }
 
     @FXML
-    public void readyClickHandle(ActionEvent event) throws IOException {
-        System.out.println(GlobalGameState.initialShips.get(0).getBoardCoordinates());
-
+    public void readyClickHandle() throws IOException {
+        if(!addressField.getText().isEmpty()){
+            GlobalGameState.serverAddress = addressField.getText();
+        }
         Stage stage = (Stage) readyButton.getScene().getWindow();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/GameView.fxml")));
         stage.setScene(new Scene(root));

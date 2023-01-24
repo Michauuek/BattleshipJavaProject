@@ -126,8 +126,11 @@ public class GameController implements Initializable {
     public GameController() {
         ExecutorService executorService = Executors.newSingleThreadExecutor();
         try {
-            Socket socket = new Socket(InetAddress.getLocalHost(), 8082);
-//            Socket socket = new Socket("192.168.0.219", 8082);
+            if(!GlobalGameState.serverAddress.isEmpty()){
+                socket = new Socket(GlobalGameState.serverAddress, 8082);
+            } else {
+                socket = new Socket(InetAddress.getLocalHost(), 8082);
+            }
 
             dataWriter = new DataWriter(socket);
             dataReader = new DataReader(socket);
