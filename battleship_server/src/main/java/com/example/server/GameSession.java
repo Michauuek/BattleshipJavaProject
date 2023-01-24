@@ -45,10 +45,13 @@ public class GameSession implements Runnable {
         if (firstPlayerTurn != sender.isFirstPlayer()) {
             throw new RuntimeException("It is not your turn!");
         }
-
+        if(sender.getHistory()[coord.getRow()][coord.getColumn()]){
+            throw new RuntimeException("This field has already been shot!");
+        }
+        sender.getHistory()[coord.getRow()][coord.getColumn()] = true;
         // check if the coordinate is valid
         boolean didHit = false;
-        for(var ship : sender.getBoard().board){
+        for(var ship : receiver.getBoard().board){
             for(var field : ship){
                 if(field.equals(coord))
                     didHit = true;
