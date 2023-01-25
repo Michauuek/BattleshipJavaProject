@@ -11,5 +11,5 @@ public class Game {
     private int id;
     private String winner;
     private String loser;
-    private Date date;
+    private String date;
 }

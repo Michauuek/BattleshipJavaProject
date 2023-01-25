@@ -6,9 +6,9 @@ public class Game {
     private int id;
     private String winner;
     private String loser;
-    private Date date;
+    private String date;
 
-    public Game(int id, String winner, String loser, Date date) {
+    public Game(int id, String winner, String loser, String date) {
         this.id = id;
         this.winner = winner;
         this.loser = loser;
@@ -23,7 +23,7 @@ public class Game {
         return loser;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 }

@@ -4,6 +4,7 @@ import com.example.battleship_client.model.*;
 import com.example.battleship_client.networking.DataReader;
 import com.example.battleship_client.networking.DataWriter;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -105,8 +106,10 @@ public class GameController implements Initializable {
                         changeScene();
                     });
 //                    Gson
+                    var listOfGames = new TypeToken<ArrayList<Game>>() {}.getType();
 
-                    System.out.println();
+                    GlobalGameState.getInstance().games = gson.fromJson(msg.adds.get("list"), listOfGames);
+
                 }
                 else if(msg.content.equals("turn")){
                     if(msg.adds.get("your").equals("true")){

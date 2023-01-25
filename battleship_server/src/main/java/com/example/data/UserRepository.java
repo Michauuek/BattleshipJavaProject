@@ -35,10 +35,9 @@ public class UserRepository {
     }
 
     public static String getUsernameById(int id){
-        var selectSql = "SELECT name FROM users WHERE id=" + id;
         try {
             getUsrByIdStat.setInt(1,id);
-            var resultSet = getUsrByIdStat.executeQuery(selectSql);
+            var resultSet = getUsrByIdStat.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getString("name");
             }

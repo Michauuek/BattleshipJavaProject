@@ -28,7 +28,7 @@ public class EndController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         messageLabel.setText(GameController.getWinner().toUpperCase());
-        addLastGames(List.of());
+        addLastGames(GlobalGameState.getInstance().games);
     }
 
 
