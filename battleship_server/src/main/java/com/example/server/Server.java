@@ -1,6 +1,7 @@
 package com.example.server;
 
 
+import com.example.data.DatabaseFactory;
 import com.example.model.Message;
 import lombok.Data;
 
@@ -49,6 +50,7 @@ public class Server {
                 throw new RuntimeException(e);
             }
         }
+        DatabaseFactory.close();
     }
 
 }

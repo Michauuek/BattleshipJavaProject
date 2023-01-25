@@ -172,10 +172,14 @@ public class Ship extends Rectangle {
         }
     }
     public void addToGrid(GridPane grid) {
-        boardCoordinates = new ArrayList<>();
-        for (int i = 0; i < length; i++) {
-            grid.add(shipCells.get(i), gridX + i, gridY);
-            boardCoordinates.add(new Coordinate(gridX + i, gridY));
+        if(boardCoordinates == null){
+            boardCoordinates = new ArrayList<>();
+            for (int i = 0; i < length; i++) {
+                grid.add(shipCells.get(i), gridX + i, gridY);
+                boardCoordinates.add(new Coordinate(gridX + i, gridY));
+            }
+        } else {
+            addShipGrid(grid);
         }
     }
     public void addShipGrid(GridPane grid) {
@@ -241,4 +245,7 @@ public class Ship extends Rectangle {
         boardCoordinates = new ArrayList<>();
     }
 
+    public boolean isHorizontal() {
+        return horizontal;
+    }
 }

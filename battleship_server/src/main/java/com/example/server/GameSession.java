@@ -228,7 +228,6 @@ public class GameSession implements Runnable {
             } else {
                 firstPlayer.closeConnection();
             }
-            DatabaseFactory.close();
         }
     }
 }

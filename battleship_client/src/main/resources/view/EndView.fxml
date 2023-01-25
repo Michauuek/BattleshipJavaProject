@@ -19,7 +19,7 @@
                 <Font name="Century Gothic" size="24.0" />
             </font>
         </Label>
-       <VBox fx:id="rankingVbox" layoutX="15.0" layoutY="94.0" prefHeight="349.0" prefWidth="530.0" />
+       <VBox fx:id="rankingVbox" layoutX="69.0" layoutY="94.0" prefHeight="349.0" prefWidth="476.0" />
     </Pane>
 
 

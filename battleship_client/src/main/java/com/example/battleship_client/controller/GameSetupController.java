@@ -51,6 +51,9 @@ public class GameSetupController implements Initializable {
         createBoard(UserGrid);
         initializeGrid(UserGrid);
 
+        System.out.println(GlobalGameState.getInstance().initialShips.get(0).isHorizontal());
+        System.out.println(GlobalGameState.getInstance().initialShips.get(0).getBoardCoordinates());
+
         consoleController = new ConsoleController(
                 tfMessage,
                 buttonMessage,
@@ -88,6 +91,10 @@ public class GameSetupController implements Initializable {
             GlobalGameState.getInstance().serverAddress = addressField.getText();
         }
         if(validateBoard()) {
+
+            System.out.println(GlobalGameState.getInstance().initialShips.get(0).isHorizontal());
+            System.out.println(GlobalGameState.getInstance().initialShips.get(0).getBoardCoordinates());
+
             Stage stage = (Stage) readyButton.getScene().getWindow();
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/GameView.fxml")));
             stage.setScene(new Scene(root));
@@ -152,8 +159,6 @@ public class GameSetupController implements Initializable {
     private void initializeGrid(GridPane grid) {
         grid.setHgap(4);
         grid.setVgap(4);
-
-//        randomizeShips();
 
         for(var ship : GlobalGameState.getInstance().initialShips){
             ship.addToGrid(grid);
