@@ -1,6 +1,7 @@
 package com.example.server;
 
 
+import com.example.data.DatabaseFactory;
 import com.example.data.GameRepository;
 import com.example.data.UserRepository;
 import com.example.model.BoardModel;
@@ -30,7 +31,7 @@ public class GameSession implements Runnable {
         var args = tokens.length > 1 ? Arrays.stream(tokens).skip(1).toArray(String[]::new) : new String[0];
 
         try {
-            Execute(command, args, sender, receiver);
+            execute(command, args, sender, receiver);
         } catch (Exception e) {
             sender.write(Message.newMessage("[Server] error: " + e.getMessage()));
             receiver.write(Message.newMessage("[Server] error: " + e.getMessage()));
@@ -121,12 +122,6 @@ public class GameSession implements Runnable {
             put("winner", "false");
             put("list", finalList);
         }}));
-
-
-
-
-
-
         //kill the game...
     }
     void broadcast(Message message) {
@@ -134,15 +129,8 @@ public class GameSession implements Runnable {
         secondPlayer.write(message);
     }
 
-    void Execute(String command, String[] args, Player sender, Player receiver) throws Exception
-    {
+    private void execute(String command, String[] args, Player sender, Player receiver) throws Exception {
         if(command.equals("shoot")) {
-//            var COLUMN_LETTERS = "abcdefghij";
-//            var col = COLUMN_LETTERS.indexOf(args[1].toLowerCase().charAt(0));
-//            if(col == -1)
-//                throw new Exception("Invalid column");
-//            var cord = new Coordinate(Integer.parseInt(args[0]), col);
-
             Coordinate cord;
 
             if(args.length == 1){
@@ -176,7 +164,7 @@ public class GameSession implements Runnable {
                          "/help - show this message\n" +
                          "/surrender - surrender the game";
 
-    void handleCommands(Message message, Player sender, Player receiver) throws IOException {
+    private void handleCommands(Message message, Player sender, Player receiver) throws IOException {
         if(message.content.equals("greeting")) {
             sender.setName(message.adds.get("name"));
             sender.id = UserRepository.addUser(sender.getName());
@@ -240,6 +228,7 @@ public class GameSession implements Runnable {
             } else {
                 firstPlayer.closeConnection();
             }
+            DatabaseFactory.close();
         }
     }
 }

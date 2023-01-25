@@ -45,7 +45,7 @@ public class DatabaseFactory {
                 "root", "root");
     }
 
-    private static void close() {
+    public static void close() {
         try {
             if (statement != null) {
                 statement.close();
