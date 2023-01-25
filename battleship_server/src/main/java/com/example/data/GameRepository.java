@@ -11,7 +11,7 @@ import static com.example.data.DatabaseFactory.statement;
 
 public class GameRepository {
 
-    public static void addGame(int winner, int loser){
+    public static synchronized void addGame(int winner, int loser){
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         var insertSql = "INSERT INTO games(winner, loser, game_date) VALUES("+winner+","+loser+",'"+timestamp+"')";
         try {
@@ -22,7 +22,7 @@ public class GameRepository {
         }
     }
 
-    public static List<Game> getLastGames(int amount){
+    public static synchronized List<Game> getLastGames(int amount){
         var games = new ArrayList<Game>();
         var selectSql = "SELECT * FROM games ORDER BY game_date DESC LIMIT "+amount;
         try {

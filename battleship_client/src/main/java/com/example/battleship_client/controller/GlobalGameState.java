@@ -11,7 +11,7 @@ public class GlobalGameState {
     public String name;
     public List<Ship> initialShips = new ArrayList<>() {{
         add(Ship.fiveHolesShip(0,0));
-        /*add(Ship.fourHolesShip(6, 9));
+        add(Ship.fourHolesShip(6, 9));
         add(Ship.fourHolesShip(4, 4));
         add(Ship.threeHolesShip(0, 9));
         add(Ship.threeHolesShip(2, 6));
@@ -19,7 +19,7 @@ public class GlobalGameState {
         add(Ship.twoHolesShip(8, 0));
         add(Ship.twoHolesShip(8, 2));
         add(Ship.twoHolesShip(4, 2));
-        add(Ship.twoHolesShip(0, 2));*/
+        add(Ship.twoHolesShip(0, 2));
     }};
     public Ship selecedShip;
     public List<Game> games = new ArrayList<Game>();

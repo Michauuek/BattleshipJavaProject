@@ -9,7 +9,7 @@ import static com.example.data.DatabaseFactory.statement;
 
 public class UserRepository {
 
-    public static int addUser(String nickname){
+    public static synchronized int addUser(String nickname){
         var insertSql = "INSERT INTO users(name)"
                 + " VALUES('" + nickname +"')";
         try {
@@ -34,7 +34,8 @@ public class UserRepository {
         return -1;
     }
 
-    public static String getUsernameById(int id){
+
+    public static synchronized String getUsernameById(int id){
         try {
             getUsrByIdStat.setInt(1,id);
             var resultSet = getUsrByIdStat.executeQuery();
