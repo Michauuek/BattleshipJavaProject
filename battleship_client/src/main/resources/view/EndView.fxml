@@ -4,16 +4,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.EndController">
-    <children>
-        <Pane layoutX="8.0" layoutY="34.0" prefHeight="726.0" prefWidth="1006.0" styleClass="mainPane" stylesheets="@GameViewStyles.css">
-            <children>
-                <Label fx:id="messageLabel" layoutX="358.0" layoutY="64.0" prefHeight="163.0" prefWidth="388.0" styleClass="titleLabel" text="Game over" textAlignment="CENTER" textFill="WHITE">
-                    <font>
-                        <Font name="Century Gothic" size="28.0" />
-                    </font>
-                </Label>
-            </children></Pane>
-        <Pane layoutX="351.0" layoutY="282.0" prefHeight="244.0" prefWidth="374.0" styleClass="fieldBackground" />
-    </children>
-</BorderPane>
+<AnchorPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.EndController">
+  <Label layoutX="410.0" layoutY="279.0" prefHeight="91.0" prefWidth="184.0" text="Recent games" textFill="WHITE" BorderPane.alignment="CENTER">
+     <font>
+        <Font name="Century Gothic" size="24.0" />
+     </font>
+  </Label>
+   <Label fx:id="messageLabel" layoutX="250.0" layoutY="80.0" prefHeight="168.0" prefWidth="503.0" styleClass="titleLabel" text="Game over" textAlignment="CENTER" textFill="WHITE">
+       <font>
+           <Font name="Century Gothic" size="34.0" />
+       </font>
+   </Label>
+   <VBox fx:id="rankingVbox" layoutX="283.0" layoutY="350.0" prefHeight="374.0" prefWidth="503.0" />
+</AnchorPane>
