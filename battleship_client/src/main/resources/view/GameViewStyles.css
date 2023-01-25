@@ -16,7 +16,7 @@
 
 .fieldBackground {
     -fx-background-color: rgba(112, 135, 157, 0.21);
-    -fx-background-radius: 6 6 6 6;
+    -fx-background-radius: 4;
 }
 .userBoard {
     -fx-background-color: #222;

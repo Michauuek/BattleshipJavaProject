@@ -37,7 +37,7 @@ public class GameRepository {
 //                var loserName = "fgfghjgfd";
                 var loserName = UserRepository.getUsernameById(Integer.parseInt(loser));
 
-                var date = result.getDate("game_date").toString();
+                var date = result.getTimestamp("game_date").toString();
 
                 var game = new Game(i, winnerName, loserName, date);
 

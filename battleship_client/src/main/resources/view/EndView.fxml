@@ -5,19 +5,27 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="768.0" prefWidth="1024.0" stylesheets="@GameViewStyles.css" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.battleship_client.controller.EndController">
-  <Label layoutX="410.0" layoutY="279.0" prefHeight="91.0" prefWidth="184.0" text="Recent games" textFill="WHITE" BorderPane.alignment="CENTER">
-     <font>
-        <Font name="Century Gothic" size="24.0" />
-     </font>
-  </Label>
+
+
    <Label fx:id="messageLabel" layoutX="298.0" layoutY="80.0" prefHeight="168.0" prefWidth="455.0" styleClass="titleLabel" text="Game over" textAlignment="CENTER" textFill="WHITE">
        <font>
            <Font name="Century Gothic" size="34.0" />
        </font>
    </Label>
-   <VBox fx:id="rankingVbox" layoutX="283.0" layoutY="350.0" prefHeight="374.0" prefWidth="503.0" />
+
+    <Pane layoutX="236.0" layoutY="251.0" prefHeight="399.0" prefWidth="559.0" styleClass="fieldBackground">
+        <Label layoutX="178.0" layoutY="8.0" prefHeight="83.0" prefWidth="208.0" text="Recent games" textFill="WHITE" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="Century Gothic" size="24.0" />
+            </font>
+        </Label>
+       <VBox fx:id="rankingVbox" layoutX="15.0" layoutY="94.0" prefHeight="349.0" prefWidth="530.0" />
+    </Pane>
+
+
     <Button fx:id="newGameButton" layoutX="847.0" layoutY="661.0" mnemonicParsing="false" onAction="#searchNewGame" prefHeight="65.0" prefWidth="138.0" text="New game">
       <font>
          <Font name="Century Gothic" size="16.0" />
-      </font></Button>
+      </font>
+    </Button>
 </AnchorPane>

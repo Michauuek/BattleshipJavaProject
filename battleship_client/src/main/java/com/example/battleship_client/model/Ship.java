@@ -119,14 +119,6 @@ public class Ship extends Rectangle {
         }
         return true;
     }
-
-    public void disableDragging() {
-        for (Rectangle c : shipCells) {
-            c.setOnMousePressed(null);
-            c.setOnMouseDragged(null);
-            c.setOnMouseReleased(null);
-        }
-    }
     public void rotate(GridPane grid) {
         horizontal = !horizontal;
         boardCoordinates = new ArrayList<>();

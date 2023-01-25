@@ -271,7 +271,8 @@ public class GameController implements Initializable {
         }
         for(var ship : GlobalGameState.getInstance().initialShips){
             ship.addShipGrid(grid);
-            ship.disableDragging();
+            //ship.disableDragging();
+            UserGrid.setDisable(true);
         }
     }
 
