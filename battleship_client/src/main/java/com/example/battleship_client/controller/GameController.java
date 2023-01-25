@@ -104,6 +104,9 @@ public class GameController implements Initializable {
                         winner = mess;
                         changeScene();
                     });
+//                    Gson
+
+                    System.out.println();
                 }
                 else if(msg.content.equals("turn")){
                     if(msg.adds.get("your").equals("true")){

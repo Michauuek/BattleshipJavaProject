@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import static com.example.data.DatabaseFactory.getUsrByIdStat;
 import static com.example.data.DatabaseFactory.statement;
 
 public class UserRepository {
@@ -36,7 +37,8 @@ public class UserRepository {
     public static String getUsernameById(int id){
         var selectSql = "SELECT name FROM users WHERE id=" + id;
         try {
-            var resultSet = statement.executeQuery(selectSql);
+            getUsrByIdStat.setInt(1,id);
+            var resultSet = getUsrByIdStat.executeQuery(selectSql);
             if (resultSet.next()) {
                 return resultSet.getString("name");
             }

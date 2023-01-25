@@ -7,11 +7,13 @@ public class DatabaseFactory {
 
     static Connection connect;
     static Statement statement;
+    static PreparedStatement getUsrByIdStat;
 
     public static void connect() {
         try {
             connect = createConnection();
             statement = connect.createStatement();
+            getUsrByIdStat = connect.prepareStatement("SELECT name FROM users WHERE id=?");
 
             createUserTable();
             createGames();

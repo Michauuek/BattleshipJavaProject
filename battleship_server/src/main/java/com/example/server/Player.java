@@ -38,6 +38,7 @@ public class Player {
     @Setter
     private BoardModel board;
     private boolean[][] history = new boolean[10][10];
+    int id;
 
     private Thread readerThread = Thread.ofVirtual().unstarted(() -> {
         try {

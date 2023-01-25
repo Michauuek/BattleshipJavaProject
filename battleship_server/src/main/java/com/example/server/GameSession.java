@@ -1,6 +1,8 @@
 package com.example.server;
 
 
+import com.example.data.GameRepository;
+import com.example.data.UserRepository;
 import com.example.model.BoardModel;
 import com.example.model.Coordinate;
 import com.example.model.Message;
@@ -96,13 +98,36 @@ public class GameSession implements Runnable {
                     return;
             }
         }
+        GameRepository.addGame(sender.getId(),receiver.getId());
+
+        var lastGames = GameRepository.getLastGames(5);
+        String list = "";
+        if(lastGames != null) {
+
+            for(var game : lastGames){
+                System.out.println(game.getWinner() + " won, " + game.getLoser() + " lost");
+            }
+            Gson gson = new Gson();
+            list = gson.toJson(lastGames);
+        }
+
+        String finalList = list;
         sender.write(new Message("end", new HashMap<>() {{
             put("winner", "true");
+            put("list", finalList);
         }}));
 
         receiver.write(new Message("end", new HashMap<>() {{
             put("winner", "false");
+            put("list", finalList);
         }}));
+
+
+
+
+
+
+        //kill the game...
     }
     void broadcast(Message message) {
         firstPlayer.write(message);
@@ -154,7 +179,7 @@ public class GameSession implements Runnable {
     void handleCommands(Message message, Player sender, Player receiver) throws IOException {
         if(message.content.equals("greeting")) {
             sender.setName(message.adds.get("name"));
-            //UserRepository.addUser(sender.getName());
+            sender.id = UserRepository.addUser(sender.getName());
 
             Gson gson = new Gson();
             BoardModel board = gson.fromJson(message.adds.get("board"), BoardModel.class);
