@@ -13,13 +13,13 @@ The game has been designed to be flexible and cater to different playing styles,
 
 ## Screens
 Game setup
-![image](https://user-images.githubusercontent.com/95347958/214853138-a3810b0b-f47c-4495-893a-a3550e986ae4.png)
+![image](https://user-images.githubusercontent.com/95347958/214857025-e4b2c356-2d2e-40d8-b23f-00b18addbce1.png)
 
 Game with your turn
-![image](https://user-images.githubusercontent.com/95347958/214853441-b3620315-ecc7-4777-8e82-641833696638.png)
+![image](https://user-images.githubusercontent.com/95347958/214857122-186b69dc-6f16-40e8-9b70-5c310c64139b.png)
 
 Game with enemy at the move
-![image](https://user-images.githubusercontent.com/95347958/214853589-64c9ff05-d6a5-47e2-82cf-f658e72b4efe.png)
+![image](https://user-images.githubusercontent.com/95347958/214857179-9585da66-2e99-4035-b714-d7c672a1862d.png)
 
 ## Available commands:
 - /select <x> <y> - select a square
